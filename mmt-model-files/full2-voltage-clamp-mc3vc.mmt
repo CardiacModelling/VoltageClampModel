@@ -1,0 +1,94 @@
+[[model]]
+author: Chon Lok Lei
+name: compensated_voltage_clamp_ikr
+desc: """
+Myokit version of a simple model cell type-III (mc3) model under a realistic
+voltage clamp model with standard compensation.
+
+Units:
+    time in [ms]
+    voltage in [mV]
+    current in [pA]
+    capacitance in [pF]
+    resistance in [GOhm]
+"""
+
+# Initial values
+membrane.V = 0.0 [mV]
+mc.Ik = 0 [pA]
+voltageclamp.Vclamp = 0.0 [mV]
+voltageclamp.Vp = 0.0 [mV]
+voltageclamp.Iout = 0.0 [mV]
+
+
+[mc]
+use membrane.dVdt, membrane.V
+dot(Ik) = gk * (dVdt - Ik / ck)
+    in [pA]
+#ck = 100.0 * gk in [pF]  # for decay rate ~100 ms
+ck = 1000. in [pF]  # for decay rate ~100 ms
+gk = 10.0 [pA/mV]  # in O(100) pA range
+Im = gm * V
+gm = 2.0 [pA/mV]  # in O(100) pA range
+I = Ik + Im
+    desc: model cell current
+    in [pA]
+
+
+[engine]
+time = 0 bind time
+    in [ms]
+pace = 0 bind pace
+
+
+[membrane]
+use voltageclamp.Vp, voltageclamp.rseries, voltageclamp.voffset_eff
+cm = 100.0 [pF]  # in order of pF; TODO: fit
+dot(V) = dVdt
+dVdt = (Vp - V + voffset_eff) / tau - mc.I / cm
+    tau = cm * rseries in [ms]
+    desc: membane potential
+    in [mV]
+
+[voltageclamp]
+use membrane.V
+rseries = 10.0 * 1e-3 [GR]  # in order of MegaOhms; TODO: fit
+cprs = 4.0 [pF]  # Unknown value for 'parasitic' capacitance at electrode...
+cprs_est = 4.0 * 0.9 [pF]  # eff. parasitic capacitance at electrode; TODO: fit
+voffset_eff = 5 [mV]  # TODO: fit
+rseries_est = 0.9 * 10.0e-3 [GR]  # TODO: later this one use measured value
+cm_est = 0.9 * 100.0 [pF]  # TODO: similar to rseries_est, set value
+
+Vc = engine.pace
+    desc: command voltage
+    in [mV]
+
+tau_sum = 40e-3 in [ms]  # electronic delay term, ~ 5 - 70 microsecond
+dVclampdt = (Vc + Iout * rseries_est - Vclamp) / tau_sum
+    in [mV/ms]
+dot(Vclamp) = dVclampdt
+    desc: clamp voltage
+    in [mV]
+
+tau_clamp = 0.8 * 1e-3 in [ms]
+dVpdt = (Vclamp - Vp) / tau_clamp
+dot(Vp) = dVpdt
+    desc: pipette voltage
+    in [mV]
+
+dot(Iout) = (Iin - Iout) / tau
+    tau = 7.5 * 1e-3 in [ms]
+    desc: measured current
+    in [pA]
+
+Iin = (Vp - V + voffset_eff) / rseries + cprs * dVpdt - (cm_est + cprs_est) * dVclampdt
+
+
+#
+# Physical constants
+#
+[phys]
+R = 8.314472 [J/mol/K]
+T = 310 [K]  # 36-37oC (BT)
+F = 9.64853415e4 [C/mol]
+RTF = R * T / F * 1e3 in [mV]

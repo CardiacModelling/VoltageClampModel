@@ -1,0 +1,109 @@
+[[model]]
+author: Chon Lok Lei
+name: ideal_voltage_clamp_ikr
+desc: """
+Myokit version of a simple IKr model under an ideal voltage clamp.
+
+Units:
+    time in [ms]
+    voltage in [mV]
+    current in [pA]
+    capacitance in [pF]
+    resistance in [GOhm]
+"""
+
+# Initial values
+ikr.open = 0
+ikr.active = 1
+
+
+[ikr]
+use membrane.V
+IKr = g * open * active * (V - rev.EK)
+dot(open) = (inf - open) / tau
+    inf = k1 * tau
+    tau = 1 / (k1 + k2)
+    k1 = p1 * exp(p2 * V)
+    k2 = p3 * exp(-p4 * V)
+dot(active) = (inf - active) / tau
+    inf = k4 * tau
+    tau = 1 / (k3 + k4)
+    k3 = p5 * exp(p6 * V)
+    k4 = p7 * exp(-p8 * V)
+p1 = 2.26e-4 [1/ms]
+p2 = 0.0699 [1/mV]
+p3 = 3.45e-5 [1/ms]
+p4 = 0.05462 [1/mV]
+p5 = 0.0873 [1/ms]
+p6 = 8.91e-3 [1/mV]
+p7 = 5.15e-3 [1/ms]
+p8 = 0.03158 [1/mV]
+g = 0.1524 * 1e3 [pA/mV]  # in nA range
+
+
+[engine]
+time = 0 bind time
+    in [ms]
+pace = 0 bind pace
+
+
+[membrane]
+V = voltageclamp.Vp
+    desc: membane potential
+    in [mV]
+
+[voltageclamp]
+Vc = engine.pace
+    desc: command voltage
+    in [mV]
+Vp = Vc
+    desc: pipette voltage
+    in [mV]
+Iin = ikr.IKr
+    desc: measured current
+    in [pA]
+
+
+#
+# Ionic concentrations (clamp)
+#
+[potassium]
+Ki = 110 [mM]
+#Ki = 125 [mM]  # for iPSC solution
+Ko = 4 [mM]
+#Ko = 3.75 [mM]  # for iPSC solution
+
+[sodium]
+Nai = 10 [mM]
+#Nao = 150 [mM]
+Nao = 97.5 [mM]  # for hERG solution
+#Nao = 146.25 [mM]  # for iPSC solution
+
+[calcium]
+Cai = 1e-5 in [mM]
+Cao = 2.05 [mM]  # for hERG solution
+#Cao = 2.3 [mM]  # for iPSC solution
+
+
+#
+# Reversal parameters
+#
+[rev]
+use phys.RTF
+ECa = 0.5 * RTF * log(calcium.Cao / calcium.Cai)
+    in [mV]
+EK = RTF * log(potassium.Ko / potassium.Ki)
+    in [mV]
+ENa = RTF * log(sodium.Nao / sodium.Nai)
+    in [mV]
+
+
+#
+# Physical constants
+#
+[phys]
+R = 8.314472 [J/mol/K]
+T = 310 [K]  # 36-37oC (BT)
+#T = 297 [K]  # 24oC (RT)
+F = 9.64853415e4 [C/mol]
+RTF = R * T / F * 1e3 in [mV]
