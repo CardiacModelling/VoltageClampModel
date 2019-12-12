@@ -1,6 +1,7 @@
 # Voltage-Clamp Experiment Model
 
 A detailed mathematical modelling of voltage-clamp experiment.
+This repo contains the code for reproducing the results in our paper "*Accounting for voltage-clamp artefacts with a mathematical model unifies observed variability in ion channel kinetics recordings*". 
 
 
 ### Prerequisite
@@ -29,3 +30,9 @@ $ bash setup.sh
 
 `data`, `data-autoLC`, `manualselection`, `qc`: symbolic links to [hERGRapidCharacterisation](https://github.com/CardiacModelling/hERGRapidCharacterisation)
 
+
+## Acknowledging this work
+
+If you publish any work based on the contents of this repository please cite:
+
+[PLACEHOLDER]
