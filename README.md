@@ -7,10 +7,12 @@ This repo contains the code for reproducing the results in our paper "*Accountin
 ### Prerequisite
 
 1. Clone [hERGRapidCharacterisation](https://github.com/CardiacModelling/hERGRapidCharacterisation) to the relative path `../hERGRapidCharacterisation`.
-2. To setup, run
+2. To setup, either run (for Linux/macOS users)
 ```console
 $ bash setup.sh
 ```
+or
+install [PINTS](https://github.com/pints-team/pints) and [Myokit](http://myokit.org) manually with Python 3.5+.
 
 
 ### Results
