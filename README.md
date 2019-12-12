@@ -14,6 +14,9 @@ $ bash setup.sh
 
 ### Results
 
+[syn-same-kinetics](./syn-same-kinetics): Synthetic studies with the voltage-clamp experiment model.
+
+[fit-same-kinetics](./fit-same-kinetics): Application of the voltage-clamp experiment model to data in [hERGRapidCharacterisation](https://github.com/CardiacModelling/hERGRapidCharacterisation).
 
 
 ### Supporting files
