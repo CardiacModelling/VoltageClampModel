@@ -1,7 +1,7 @@
 # Voltage-Clamp Experiment Model
 
 A detailed mathematical modelling of voltage-clamp experiment.
-This repo contains the code for reproducing the results in our paper "*Accounting for voltage-clamp artefacts with a mathematical model unifies observed variability in ion channel kinetics recordings*". 
+This repo contains all data and code for reproducing the results in the paper "*Accounting for voltage-clamp artefacts with a mathematical model unifies observed variability in ion channel kinetics recordings*" by Chon Lok Lei, Michael Clerx, Dominic Whittaker, David Gavaghan, Teun de Boer, and Gary Mirams.
 
 
 ### Prerequisite
@@ -16,6 +16,8 @@ install [PINTS](https://github.com/pints-team/pints) and [Myokit](http://myokit.
 
 
 ### Results
+
+[model-cell-experiments](./model-cell-experiments): Application of the voltage-clamp experiment model to electrical model cell experiments.
 
 [syn-same-kinetics](./syn-same-kinetics): Synthetic studies with the voltage-clamp experiment model.
 
