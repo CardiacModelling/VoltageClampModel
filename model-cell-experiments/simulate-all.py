@@ -433,6 +433,7 @@ ax1_2.set_ylabel('Current\n(pA)', fontsize=12)
 #TODO set legend once outside
 ax1_2.legend(loc='lower right', bbox_to_anchor=(1, 1.02), ncol=2, bbox_transform=ax0.transAxes)
 
+ax1_1.text(-0.15, 0.95, '(A)', transform=ax1_1.transAxes, size=12, weight='bold')
 ax1_1.set_xlim((t_lower, t_upper))
 ax1_2.set_xlim((t_lower, t_upper))
 
@@ -447,6 +448,7 @@ ax2_2.plot(times_2[zoom], Iout_2[zoom], ls='--', label='Simulated $I_{out}$')
 ax2_2.set_ylim([-800, 1200])
 #ax2_2.set_ylabel('Current (pA)', fontsize=14)
 
+ax2_1.text(-0.15, 0.95, '(B)', transform=ax2_1.transAxes, size=12, weight='bold')
 ax2_1.set_xlim((t_lower, t_upper))
 ax2_2.set_xlim((t_lower, t_upper))
 
@@ -462,6 +464,7 @@ ax3_2.set_ylim([-400, 200])
 ax3_2.set_ylabel('Current\n(pA)', fontsize=12)
 ax3_2.set_xlabel('Time (ms)', fontsize=12)
 
+ax3_1.text(-0.15, 0.95, '(C)', transform=ax3_1.transAxes, size=12, weight='bold')
 ax3_1.set_xlim((t_lower, t_upper))
 ax3_2.set_xlim((t_lower, t_upper))
 
@@ -477,6 +480,7 @@ ax4_2.set_ylim([-800, 1200])
 #ax4_2.set_ylabel('Current (pA)', fontsize=14)
 ax4_2.set_xlabel('Time (ms)', fontsize=12)
 
+ax4_1.text(-0.15, 0.95, '(D)', transform=ax4_1.transAxes, size=12, weight='bold')
 ax4_1.set_xlim((t_lower, t_upper))
 ax4_2.set_xlim((t_lower, t_upper))
 
