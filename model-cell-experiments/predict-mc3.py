@@ -108,15 +108,15 @@ Vm = simulation['membrane.V']
 # Plot
 fig, axes = plt.subplots(2, 1, sharex=True, figsize=(14, 4))
 
-axes[0].plot(times, data_vc, c='#a6bddb', label=r'Measured $V_{cmd}$')
+#axes[0].plot(times, data_vc, c='#a6bddb', label=r'Measured $V_{cmd}$')
 axes[0].plot(times, data_cc, c='#feb24c', label=r'Measured $V_{m}$')
-axes[0].plot(times, Vc, ls='--', c='#045a8d', label=r'Input $V_{cmd}$')
+axes[0].plot(times, Vc, ls='-', c='#045a8d', label=r'Input $V_{cmd}$')
 axes[0].plot(times, Vm, ls='--', c='#bd0026', label=r'Predicted $V_{m}$')
 axes[0].set_ylabel('Voltage (mV)', fontsize=14)
 #axes[0].set_xticks([])
 axes[0].legend(ncol=legend_ncol[which_predict][0])
 
-axes[1].plot(times, data, alpha=0.5, label='Measurement')
+axes[1].plot(times, data, alpha=0.5, label=r'Measurement ($I_{out}$)')
 axes[1].plot(times, Iout, ls='--', label=current_label)
 axes[1].set_ylim([-800, 1200])  # TODO?
 axes[1].legend(ncol=legend_ncol[which_predict][1])
