@@ -387,34 +387,39 @@ plt.close()
 ###############################################################################
 
 fig = plt.figure(figsize=(10, 6))
-grid = plt.GridSpec(3 + 2 + 10 + 2 + 10, 2, hspace=0.0, wspace=0.2)
+grid = plt.GridSpec(3 + 5 + 10 + 2 + 10, 2, hspace=0.0, wspace=0.2)
 
 ax0 = fig.add_subplot(grid[0:3, :])
 
-ax1_1 = fig.add_subplot(grid[5:10, 0])
-ax1_2 = fig.add_subplot(grid[10:15, 0])
+ax1_1 = fig.add_subplot(grid[8:13, 0])
+ax1_2 = fig.add_subplot(grid[13:18, 0])
 ax1_1.set_xticklabels([])
 
-ax2_1 = fig.add_subplot(grid[5:10, 1])
-ax2_2 = fig.add_subplot(grid[10:15, 1])
+ax2_1 = fig.add_subplot(grid[8:13, 1])
+ax2_2 = fig.add_subplot(grid[13:18, 1])
 ax2_1.set_xticklabels([])
 
-ax3_1 = fig.add_subplot(grid[17:22, 0])
-ax3_2 = fig.add_subplot(grid[22:27, 0])
+ax3_1 = fig.add_subplot(grid[20:25, 0])
+ax3_2 = fig.add_subplot(grid[25:30, 0])
 ax3_1.set_xticklabels([])
 
-ax4_1 = fig.add_subplot(grid[17:22, 1])
-ax4_2 = fig.add_subplot(grid[22:27, 1])
+ax4_1 = fig.add_subplot(grid[20:25, 1])
+ax4_2 = fig.add_subplot(grid[25:30, 1])
 ax4_1.set_xticklabels([])
 
-t_lower = 0
-t_upper = 3400
+t_lower = 12400#0
+t_upper = 15400#3400
 zoom = np.where(((times_1 > t_lower) & (times_1 < t_upper)))[0]
+
+ax1_1.text(0.5, 1.2, 'Type I', transform=ax1_1.transAxes, size=12, weight='bold', horizontalalignment='center', verticalalignment='bottom')
+ax2_1.text(0.5, 1.2, 'Type II', transform=ax2_1.transAxes, size=12, weight='bold', horizontalalignment='center', verticalalignment='bottom')
+ax1_1.text(-0.3, 0, 'Uncompensated', transform=ax1_1.transAxes, rotation=90, size=12, weight='bold', horizontalalignment='right', verticalalignment='center')
+ax3_1.text(-0.3, 0, 'Compensated', transform=ax3_1.transAxes, rotation=90, size=12, weight='bold', horizontalalignment='right', verticalalignment='center')
 
 # Protocol
 ax0.plot(times_1, Vc_1, c='#045a8d', label=r'Input $V_{cmd}$')
 ax0.set_ylabel('Voltage\n(mV)', fontsize=12)
-#ax0.set_xlabel('Time (ms)', fontsize=12)
+ax0.set_xlabel('Time (ms)', fontsize=12)
 ax0.set_xlim((times_1[0], times_1[-1]))
 ax0.axvspan(t_lower, t_upper, alpha=0.25, color='#7f7f7f')
 
