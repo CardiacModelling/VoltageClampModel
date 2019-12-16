@@ -40,21 +40,21 @@ fakedatanoise = 20.0
 # Time
 times = np.arange(0, 15.2e3, 0.5)  # dt=0.5ms
 
-fig = plt.figure(figsize=(10, 3))
-grid = plt.GridSpec(2, 2, hspace=0, wspace=0)
+fig = plt.figure(figsize=(8, 5))
+grid = plt.GridSpec(3 + 3 + 1 + 2, 1, hspace=0, wspace=0)
 axes = np.empty(3, dtype=object)
 
-axes[0] = fig.add_subplot(grid[:1, :1])
-axes[1] = fig.add_subplot(grid[1:, :1])
-axes[2] = fig.add_subplot(grid[:, 1:])
+axes[0] = fig.add_subplot(grid[:3, :])
+axes[1] = fig.add_subplot(grid[3:6, :])
+axes[2] = fig.add_subplot(grid[7:, :])
 axes[0].set_xlim((times[0], times[-1]))
-axes[0].set_ylabel('Voltage (mV)')
+axes[0].set_ylabel('Voltage (mV)', fontsize=12)
 axes[0].set_xticks([])
 axes[1].set_xlim((times[0], times[-1]))
 axes[1].set_xlim([0, 15e3])
 axes[1].set_ylim([-600, 1750])
-axes[1].set_xlabel('Time (ms)')
-axes[1].set_ylabel('Current (pA)')
+axes[1].set_xlabel('Time (ms)', fontsize=12)
+axes[1].set_ylabel('Current (pA)', fontsize=12)
 
 err = []
 trueparams_all = []
@@ -117,11 +117,11 @@ sp_x = np.repeat(x, len(err))
 sp_y = err.flatten('F')
 sns.swarmplot(sp_x, sp_y, size=3, ax=axes[2])
 axes[2].set_xticks(x)
-axes[2].set_xticklabels(parameter_names)
-yticks = [-15, -10, -5, 0, 5, 10, 15]
+axes[2].set_xticklabels(parameter_names, fontsize=12)
+yticks = [-15, -7.5, 0, 7.5, 15]
 axes[2].set_yticks(yticks)
 axes[2].set_yticklabels(['%.1f' % i + '%' for i in yticks])
-axes[2].set_ylabel('Percentage error')
+axes[2].set_ylabel('Percentage error', fontsize=12)
 
 # Finishing
 axes[0].legend()
