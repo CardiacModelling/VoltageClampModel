@@ -64,7 +64,7 @@ for i_p, p in enumerate(p_all):
         alpha = 1
     else:
         i_c = 1
-        alpha = 0.2
+        alpha = 0.5
 
     # k1
     k1_hbm = p[1] * np.exp(p[2] * v * 1e-3)
@@ -148,11 +148,11 @@ axes[0, 1].axvline(r_vhalf[1], color=colour_list[2])
 axes[1, 0].axvline(a_tauv[1], color=colour_list[2])
 axes[1, 1].axvline(r_tauv[1], color=colour_list[2])
 
-axes[0, 0].hist(a_vhalf[2:], color=colour_list[1], alpha=0.5,
+axes[0, 0].hist(a_vhalf[2:], color=colour_list[1], alpha=0.75,
         label='Individual fits')
-axes[0, 1].hist(r_vhalf[2:], color=colour_list[1], alpha=0.5)
-axes[1, 0].hist(a_tauv[2:], color=colour_list[1], alpha=0.5)
-axes[1, 1].hist(r_tauv[2:], color=colour_list[1], alpha=0.5)
+axes[0, 1].hist(r_vhalf[2:], color=colour_list[1], alpha=0.75)
+axes[1, 0].hist(a_tauv[2:], color=colour_list[1], alpha=0.75)
+axes[1, 1].hist(r_tauv[2:], color=colour_list[1], alpha=0.75)
 
 axes[0, 0].legend()
 plt.tight_layout(pad=0.1, w_pad=0.5, h_pad=0.25)
