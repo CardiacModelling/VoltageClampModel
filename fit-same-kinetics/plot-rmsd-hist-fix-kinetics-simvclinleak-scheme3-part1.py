@@ -254,6 +254,12 @@ for prt in protocol_list:
 #
 # Plot
 #
+mid = []
+upper = []
+lower = []
+mid2 = []
+upper2 = []
+lower2 = []
 for i_prt, prt in enumerate(protocol_list):
 
     # Calculate axis index
@@ -498,6 +504,13 @@ for i_prt, prt in enumerate(protocol_list):
     n, b, _ = axes[ai + 4, aj].hist(rmsd, bins=bins, color='#d62728', alpha=0.25)
     n2, b2, _ = axes[ai + 4, aj].hist(rmsd2, bins=bins, color='#2ca02c', alpha=0.25)
 
+    mid.append(np.percentile(rmsd, 50))
+    upper.append(np.percentile(rmsd, 90))
+    lower.append(np.percentile(rmsd, 10))
+    mid2.append(np.percentile(rmsd2, 50))
+    upper2.append(np.percentile(rmsd2, 90))
+    lower2.append(np.percentile(rmsd2, 10))
+
     # Add labels
     rankedidx = []
     for i, v in enumerate(rankedvalues):
@@ -554,3 +567,65 @@ plt.savefig('%s/rmsd-hist-fix-kinetics-simvclinleak-scheme3-part1.png' % (savedi
         pad_inches=0, dpi=300)
 
 print('Done')
+
+
+#
+# Table
+#
+tex = ''
+tex += '\\begin{tabularx}{\\textwidth}{@{}l' \
+    + 'XXc' * (len(protocol_list) - 1) + 'XX@{}}\n'
+tex += '\\toprule\n'
+tex += '   '
+for i_prt, prt in enumerate(protocol_list):
+    # span 2 columns
+    if prt == 'staircaseramp':
+        tex += ' & \multicolumn{2}{c}{Cal.}'
+    else:
+        tex += ' & \multicolumn{2}{c}{Val.~%s}' % validation_idx[i_prt]
+
+    if i_prt < len(protocol_list) - 1:
+        tex += ' & \phantom{}'
+tex += ' \\\\\n'
+
+ii = 1
+for i_prt, prt in enumerate(protocol_list):
+    ii += 1
+    tex += '\\cmidrule{%s-%s}' % (ii, ii + 1)
+    ii += 2
+tex += '\n'
+
+tex += '   '
+for i_prt, prt in enumerate(protocol_list):
+    tex += ' & H1 & H2'
+    if i_prt < len(protocol_list) - 1:
+        tex += ' &'
+tex += ' \\\\\n'
+
+tex += '\\midrule\n'
+
+tex += 'Median'
+for i_prt, prt in enumerate(protocol_list):
+    tex += ' & %.2f & %.2f' % (mid[i_prt], mid2[i_prt])
+    if i_prt < len(protocol_list) - 1:
+        tex += ' &'
+tex += ' \\\\\n'
+
+tex += '10\\textsuperscript{th} \\%ile'
+for i_prt, prt in enumerate(protocol_list):
+    tex += ' & %.2f & %.2f' % (lower[i_prt], lower2[i_prt])
+    if i_prt < len(protocol_list) - 1:
+        tex += ' &'
+tex += ' \\\\\n'
+
+tex += '90\\textsuperscript{th} \\%ile'
+for i_prt, prt in enumerate(protocol_list):
+    tex += ' & %.2f & %.2f' % (upper[i_prt], upper2[i_prt])
+    if i_prt < len(protocol_list) - 1:
+        tex += ' &'
+tex += ' \\\\\n'
+tex += '\\bottomrule\n'
+tex += '\\end{tabularx}'
+
+print(tex)
+
