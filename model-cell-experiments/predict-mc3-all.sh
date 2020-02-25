@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-./predict-mc3.py staircase
-./predict-mc3.py sinewave
-./predict-mc3.py ap-lei
+python predict-mc3.py staircase
+python predict-mc3.py sinewave
+python predict-mc3.py ap-lei
 
