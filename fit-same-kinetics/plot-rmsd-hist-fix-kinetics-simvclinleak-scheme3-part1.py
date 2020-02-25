@@ -210,14 +210,14 @@ for i in range(int(len(protocol_list) / 2)):
 
 # Set labels
 axes[0, 0].set_ylabel('Voltage\n(mV)', fontsize=14)
-axes[1, 0].set_ylabel(u'Best\n(*)', fontsize=14, color='#d62728')
-axes[2, 0].set_ylabel(u'Median\n(\u2021)', fontsize=14, color='#d62728')
-axes[3, 0].set_ylabel(u'90%ile\n(#)', fontsize=14, color='#d62728')
+axes[1, 0].set_ylabel(u'Best\n(*)', fontsize=14, color='#d95f02')
+axes[2, 0].set_ylabel(u'Median\n(\u2021)', fontsize=14, color='#d95f02')
+axes[3, 0].set_ylabel(u'90%ile\n(#)', fontsize=14, color='#d95f02')
 axes[4, 0].set_ylabel('Frequency\n(N=%s)' % len(rmsd_cells), fontsize=14)
 axes[5, 0].set_ylabel('Voltage\n(mV)', fontsize=14)
-axes[6, 0].set_ylabel(u'Best\n(*)', fontsize=14, color='#d62728')
-axes[7, 0].set_ylabel(u'Median\n(\u2021)', fontsize=14, color='#d62728')
-axes[8, 0].set_ylabel(u'90%ile\n(#)', fontsize=14, color='#d62728')
+axes[6, 0].set_ylabel(u'Best\n(*)', fontsize=14, color='#d95f02')
+axes[7, 0].set_ylabel(u'Median\n(\u2021)', fontsize=14, color='#d95f02')
+axes[8, 0].set_ylabel(u'90%ile\n(#)', fontsize=14, color='#d95f02')
 axes[9, 0].set_ylabel('Frequency\n(N=%s)' % len(rmsd_cells), fontsize=14)
 
 axes[2, 0].text(-0.3, 0.5, 'Current (pA)', rotation=90, fontsize=18,
@@ -460,14 +460,14 @@ for i_prt, prt in enumerate(protocol_list):
             # simulation
             if prt == 'staircaseramp':
                 axes[ai + i_cell + 1, aj].plot(times * 1e-3, simulation, lw=2,
-                        c='#d62728', label='model fit to data')
+                        c='#d95f02', label='model fit to data')
                 axes[ai + i_cell + 1, aj].plot(times * 1e-3, simulationfixkinetics, lw=2,
-                        c='#006d2c', label='model (fix kinetics) fit to data')
+                        c='#1b9e77', label='model (fix kinetics) fit to data')
             else:
                 axes[ai + i_cell + 1, aj].plot(times * 1e-3, simulation, lw=2,
-                        c='#d62728', label='model prediction')
+                        c='#d95f02', label='model prediction')
                 axes[ai + i_cell + 1, aj].plot(times * 1e-3, simulationfixkinetics, lw=2,
-                        c='#006d2c', label='model (fix kinetics) prediction')
+                        c='#1b9e77', label='model (fix kinetics) prediction')
         else:
             iv_v = protocol_iv_v[prt]()  # mV
             # recording
@@ -479,12 +479,12 @@ for i_prt, prt in enumerate(protocol_list):
             iv_i = protocols.get_corrected_iv(simulation, times,
                                               *protocol_iv_args[prt]())
             axes[ai + i_cell + 1, aj].plot(iv_v, iv_i / np.max(iv_i), lw=2,
-                    alpha=1, c='#d62728', label='model prediction')
+                    alpha=1, c='#d95f02', label='model prediction')
             # simulationfixkinetics
             iv_i_fixkinetics = protocols.get_corrected_iv(simulationfixkinetics, times,
                                               *protocol_iv_args[prt]())
             axes[ai + i_cell + 1, aj].plot(iv_v, iv_i_fixkinetics / np.max(iv_i_fixkinetics), lw=2,
-                    alpha=1, c='#006d2c', label='model (fix kinetics) prediction')
+                    alpha=1, c='#1b9e77', label='model (fix kinetics) prediction')
             if prt == 'sactiv':
                 axes[ai + i_cell + 1, aj].set_ylim([-0.05, 1.05])
             elif prt == 'sinactiv':
@@ -501,7 +501,7 @@ for i_prt, prt in enumerate(protocol_list):
     rmse_range = rmse_max - rmse_min
     bins = np.linspace(rmse_min - 0.1 * rmse_range,
             rmse_max + 0.1 * rmse_range, 20)
-    n, b, _ = axes[ai + 4, aj].hist(rmsd, bins=bins, color='#d62728', alpha=0.25)
+    n, b, _ = axes[ai + 4, aj].hist(rmsd, bins=bins, color='#d95f02', alpha=0.25)
     n2, b2, _ = axes[ai + 4, aj].hist(rmsd2, bins=bins, color='#2ca02c', alpha=0.25)
 
     mid.append(np.percentile(rmsd, 50))
@@ -521,7 +521,7 @@ for i_prt, prt in enumerate(protocol_list):
         else:
             shift = 0
         axes[ai + 4, aj].text((b[idx] + b[idx + 1]) / 2., n[idx] + 3 + shift,
-                rankedlabels[i], fontsize=16, color='#d62728',
+                rankedlabels[i], fontsize=16, color='#d95f02',
                 ha='center', va='center')
         if n[idx] > 0.8 * max(np.max(n), np.max(n2)):
             axes[ai + 4, aj].set_ylim([0, max(np.max(n2), np.max(n)) + 8 + shift])
@@ -556,9 +556,9 @@ for i_prt, prt in enumerate(protocol_list):
 #axes[1, 1].legend()
 import matplotlib.patches as mpatches
 data_patch = mpatches.Patch(color='#9ecae1', label='Data')
-h1_patch = mpatches.Patch(color='#d62728', label='Hypothesis 1: independent kinetics models')
-h2_patch = mpatches.Patch(color='#006d2c', label='Hypothesis 2: identical kinetics models')
-axes[0, 0].legend(handles=[data_patch, h1_patch, h2_patch], loc='upper left', bbox_to_anchor=(.05, 2.5), ncol=3)
+h1_patch = mpatches.Patch(color='#d95f02', label='Hypothesis 1: independent kinetics models')
+h2_patch = mpatches.Patch(color='#1b9e77', label='Hypothesis 2: identical kinetics models')
+axes[0, 0].legend(handles=[data_patch, h1_patch, h2_patch], loc='upper left', bbox_to_anchor=(-.025, 2.75), fontsize=14, ncol=3)
 #grid.tight_layout(fig, pad=0.6, rect=(0.02, 0.0, 1, 0.99))  # not working...
 #grid.update(wspace=0.2, hspace=0.0)
 plt.savefig('%s/rmsd-hist-fix-kinetics-simvclinleak-scheme3-part1.pdf' % (savedir), bbox_inch='tight',
