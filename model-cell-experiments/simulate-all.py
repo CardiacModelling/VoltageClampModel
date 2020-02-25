@@ -429,14 +429,14 @@ ax1_1.plot(times_1[zoom], Vc_1[zoom], ls='-', c='#7f7f7f', label=r'Input $V_{cmd
 ax1_1.plot(times_1[zoom], Vm_1[zoom], ls='--', c='#bd0026', label=r'Simulated $V_{m}$')
 ax1_1.set_ylabel('Voltage\n(mV)', fontsize=12)
 #TODO set legend once outside
-ax1_1.legend(loc='lower left', bbox_to_anchor=(0, 1.02), ncol=3, bbox_transform=ax0.transAxes)
+ax1_1.legend(loc='lower left', bbox_to_anchor=(-0.01, 1.02), ncol=3, bbox_transform=ax0.transAxes)
 
 ax1_2.plot(times_1[zoom], data_1[zoom], label=r'Measured $I_{out}$')
-ax1_2.plot(times_1[zoom], Iout_1[zoom], alpha=0.8, ls='--', label='Simulated $I_{out}$')
+ax1_2.plot(times_1[zoom], Iout_1[zoom], ls='--', label='Simulated $I_{out}$')
 ax1_2.set_ylim([-400, 200])
 ax1_2.set_ylabel('Current\n(pA)', fontsize=12)
 #TODO set legend once outside
-ax1_2.legend(loc='lower right', bbox_to_anchor=(1, 1.02), ncol=2, bbox_transform=ax0.transAxes)
+ax1_2.legend(loc='lower right', bbox_to_anchor=(1.01, 1.02), ncol=2, bbox_transform=ax0.transAxes)
 
 ax1_1.text(-0.15, 0.95, '(A)', transform=ax1_1.transAxes, size=12, weight='bold')
 ax1_1.set_xlim((t_lower, t_upper))
@@ -449,7 +449,7 @@ ax2_1.plot(times_2[zoom], Vm_2[zoom], ls='--', c='#bd0026', label=r'Simulated $V
 #ax2_1.set_ylabel('Voltage (mV)', fontsize=14)
 
 ax2_2.plot(times_2[zoom], data_2[zoom], label=r'Measured $I_{out}$')
-ax2_2.plot(times_2[zoom], Iout_2[zoom], alpha=0.8, ls='--', label='Simulated $I_{out}$')
+ax2_2.plot(times_2[zoom], Iout_2[zoom], ls='--', label='Simulated $I_{out}$')
 ax2_2.set_ylim([-800, 1200])
 #ax2_2.set_ylabel('Current (pA)', fontsize=14)
 
@@ -464,7 +464,7 @@ ax3_1.plot(times_3[zoom], Vm_3[zoom], ls='--', c='#bd0026', label=r'Simulated $V
 ax3_1.set_ylabel('Voltage\n(mV)', fontsize=12)
 
 ax3_2.plot(times_3[zoom], data_3[zoom], label=r'Measured $I_{out}$')
-ax3_2.plot(times_3[zoom], Iout_3[zoom], alpha=0.8, ls='--', label='Simulated $I_{out}$')
+ax3_2.plot(times_3[zoom], Iout_3[zoom], ls='--', label='Simulated $I_{out}$')
 ax3_2.set_ylim([-400, 200])
 ax3_2.set_ylabel('Current\n(pA)', fontsize=12)
 ax3_2.set_xlabel('Time (ms)', fontsize=12)
@@ -480,7 +480,7 @@ ax4_1.plot(times_4[zoom], Vm_4[zoom], ls='--', c='#bd0026', label=r'Simulated $V
 #ax4_1.set_ylabel('Voltage (mV)', fontsize=14)
 
 ax4_2.plot(times_4[zoom], data_4[zoom], label=r'Measured $I_{out}$')
-ax4_2.plot(times_4[zoom], Iout_4[zoom], alpha=0.8, ls='--', label='Simulated $I_{out}$')
+ax4_2.plot(times_4[zoom], Iout_4[zoom], ls='--', label='Simulated $I_{out}$')
 ax4_2.set_ylim([-800, 1200])
 #ax4_2.set_ylabel('Current (pA)', fontsize=14)
 ax4_2.set_xlabel('Time (ms)', fontsize=12)
