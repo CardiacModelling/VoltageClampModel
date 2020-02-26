@@ -558,7 +558,7 @@ import matplotlib.patches as mpatches
 data_patch = mpatches.Patch(color='#9ecae1', label='Data')
 h1_patch = mpatches.Patch(color='#d95f02', label='Hypothesis 1: independent kinetics models')
 h2_patch = mpatches.Patch(color='#1b9e77', label='Hypothesis 2: identical kinetics models')
-axes[0, 0].legend(handles=[data_patch, h1_patch, h2_patch], loc='upper left', bbox_to_anchor=(-.025, 2.75), fontsize=14, ncol=3)
+axes[0, 0].legend(handles=[data_patch, h1_patch, h2_patch], loc='upper left', bbox_to_anchor=(-.025, 2.75), fontsize=14, ncol=3, columnspacing=5.5)
 #grid.tight_layout(fig, pad=0.6, rect=(0.02, 0.0, 1, 0.99))  # not working...
 #grid.update(wspace=0.2, hspace=0.0)
 plt.savefig('%s/rmsd-hist-fix-kinetics-simvclinleak-scheme3-part1.pdf' % (savedir), bbox_inch='tight',
