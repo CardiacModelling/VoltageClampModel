@@ -450,7 +450,7 @@ ax2_1.plot(times_2[zoom], Vm_2[zoom], ls='--', c='#bd0026', label=r'Simulated $V
 
 ax2_2.plot(times_2[zoom], data_2[zoom], label=r'Measured $I_{out}$')
 ax2_2.plot(times_2[zoom], Iout_2[zoom], ls='--', label='Simulated $I_{out}$')
-ax2_2.set_ylim([-800, 1200])
+ax2_2.set_ylim([-1200, 1200])
 #ax2_2.set_ylabel('Current (pA)', fontsize=14)
 
 ax2_1.text(-0.15, 0.95, '(B)', transform=ax2_1.transAxes, size=12, weight='bold')
@@ -481,7 +481,7 @@ ax4_1.plot(times_4[zoom], Vm_4[zoom], ls='--', c='#bd0026', label=r'Simulated $V
 
 ax4_2.plot(times_4[zoom], data_4[zoom], label=r'Measured $I_{out}$')
 ax4_2.plot(times_4[zoom], Iout_4[zoom], ls='--', label='Simulated $I_{out}$')
-ax4_2.set_ylim([-800, 1200])
+ax4_2.set_ylim([-1200, 1200])
 #ax4_2.set_ylabel('Current (pA)', fontsize=14)
 ax4_2.set_xlabel('Time (ms)', fontsize=12)
 
