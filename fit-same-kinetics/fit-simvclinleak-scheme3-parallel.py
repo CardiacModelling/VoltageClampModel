@@ -115,6 +115,14 @@ fit_seed = np.random.randint(0, 2**30)
 print('Fit seed: ', fit_seed)
 np.random.seed(fit_seed)
 
+# Leak param
+leakbeforeparam = np.loadtxt('../qc/' + file_name + '-staircaseramp-leak_before.txt')
+cell_id_file = '../qc/%s-staircaseramp-cell_id.txt' % file_name
+cell_ids = []
+with open(cell_id_file, 'r') as f:
+    for l in f:
+        if not l.startswith('#'):
+            cell_ids.append(l.split()[0])
 
 # Get cells
 selectedfile = '../manualselection/manualv2selected-%s.txt' % (file_name)
@@ -225,8 +233,10 @@ for cell in selectedwell:
     rseal, cm, rseries = get_qc('../qc', file_name, cell)
     print('Est. Rseal, Cm, Rseries:', rseal, cm, rseries, '(GOhm, pF, GOhm)')
     alpha = 0.8  # rseries %compensation
-    simvc_fix_values = [cm, rseries * alpha, rseries]
-    fix_p = get_fix_param(simvc_fix + ['voltageclamp.rseries'],
+    cell_idx = cell_ids.index(cell)
+    ga, Ea = leakbeforeparam[cell_idx]
+    simvc_fix_values = [cm, rseries * alpha, rseries] + [ga, Ea]
+    fix_p = get_fix_param(simvc_fix + ['voltageclamp.rseries', 'voltageclamp.gLeak_est', 'voltageclamp.ELeak_est'],
             simvc_fix_values)
 
     #
@@ -339,6 +349,7 @@ for _ in range(N):
                 final_posterior, x0,
                 method=pints.CMAES)
         opt.set_max_iterations(int(epsilon * n_iter))
+        opt.set_max_unchanged_iterations(iterations=50, threshold=1e4)
         opt.set_parallel(False)
 
         # Run optimisation
@@ -359,6 +370,7 @@ for _ in range(N):
                 final_posterior, x0,
                 method=pints.NelderMead)
         #opt.set_max_iterations(int((1 - epsilon) * n_iter))
+        opt.set_max_unchanged_iterations(iterations=50, threshold=1e3)
         opt.set_parallel(False)
 
         # Run optimisation
