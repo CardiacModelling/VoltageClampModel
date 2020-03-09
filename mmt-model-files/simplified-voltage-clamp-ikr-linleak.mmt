@@ -68,7 +68,7 @@ cm_est = 10.0 [pF]  # TODO: similar to rseries_est, set value
 Vc = engine.pace
     desc: command voltage
     in [mV]
-Vp = Vc + Iin * rseries_est
+Vp = Vc + membrane.Iion * rseries_est
     desc: pipette voltage
     in [mV]
 ## assume `Vp` -> `Vc + Iin * rseries_est`
@@ -76,13 +76,17 @@ Vp = Vc + Iin * rseries_est
 ## assume `Vp` -> `V_clamp`
 ## assume `cm` estimated perfectly
 ## assume `cprs` estimated perfectly
-Iin = membrane.Iion
+Iin = membrane.Iion - ILeak_est
     desc: measured current
     in [pA]
 ## assume linear leak residual
 gLeak = 10 [pA/mV]
 ELeak = -80 [mV]
-ILeak = gLeak * (V - ELeak) in [pA]
+ILeak_eff = gLeak * (V - ELeak) in [pA]
+gLeak_est = 0 [pA/mV]
+ELeak_est = -80 [mV]
+ILeak_est = gLeak_est * (V - ELeak_est) in [pA]
+ILeak = ILeak_eff + ILeak_est in [pA]
 
 
 #
