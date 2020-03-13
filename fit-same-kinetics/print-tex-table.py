@@ -22,7 +22,7 @@ HBM_mean = np.array([
     2.96e+1
 ]) * 1e-3  # V, s -> mV, ms
 fit = np.loadtxt('out/herg25oc1-scheme3-simvclinleak/' +
-        'herg25oc1-solution-209652396.txt')  # mV, ms
+        'herg25oc1-solution-717354021.txt')  # mV, ms
 
 tex = ""
 

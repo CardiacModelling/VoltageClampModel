@@ -117,7 +117,7 @@ file_list = [
 temperatures = np.array([25.0])
 temperatures += 273.15  # in K
 fit_seed = '542811797'
-fit_seed2 = '209652396'
+fit_seed2 = '717354021'
 
 file_name = file_list[0]
 temperature = temperatures[0]

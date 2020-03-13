@@ -16,7 +16,7 @@ if not os.path.isdir(savedir):
 
 # Load syn param from voltage-artefact
 path_to_file = './out/herg25oc1-scheme3-simvclinleak/' \
-        + 'herg25oc1-solution_i-209652396.txt'
+        + 'herg25oc1-solution_i-717354021.txt'
 param_exp = np.loadtxt(path_to_file)
 
 n_param = param_exp.shape[1]
