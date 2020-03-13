@@ -94,23 +94,6 @@ savepath = 'figs/membrane-voltage-scheme3'
 if not os.path.isdir(savepath):
     os.makedirs(savepath)
 
-# Load RMSD matrix
-rmsd_matrix_file = '../../hERGRapidCharacterisation/room-temperature-only/figs/rmsd-hist-%s-autoLC-releak/rmsd-matrix.txt' \
-                   % file_name
-rmsd_cells_file = '../../hERGRapidCharacterisation/room-temperature-only/figs/rmsd-hist-%s-autoLC-releak/rmsd-matrix-cells.txt' \
-                  % file_name
-
-rmsd_matrix = np.loadtxt(rmsd_matrix_file)
-
-with open(rmsd_matrix_file, 'r') as f:
-    rmsd_prt = f.readline().strip('\n').strip('#').split()
-
-rmsd_cells = []
-with open(rmsd_cells_file, 'r') as f:
-    for l in f:
-        if not l.startswith('#'):
-            rmsd_cells.append(l.strip('\n').split('-')[1])
-
 # Leak param
 leakbeforeparam = np.loadtxt('../qc/' + file_name + '-staircaseramp-leak_before.txt')
 leakafterparam = np.loadtxt('../qc/' + file_name + '-staircaseramp-leak_after.txt')
@@ -192,18 +175,9 @@ for prt in protocol_list:
             (files_dir, file_name, fit_seed))
 
     # Calculate ranking
-    rmsd = rmsd_matrix[:, rmsd_prt.index(prt)]
-    best_cell = np.argmin(rmsd)
-    median_cell = np.argsort(rmsd)[len(rmsd)//2]
-    p90_cell = np.argsort(rmsd)[int(len(rmsd)*0.9)]
-    rankedcells = [rmsd_cells[best_cell],
-                   rmsd_cells[median_cell],
-                   rmsd_cells[p90_cell]]
-    rankedvalues = [rmsd[best_cell],
-                    rmsd[median_cell],
-                    rmsd[p90_cell]]
+    rmsd = []
 
-    for i_cell, cell in enumerate(rankedcells):
+    for i_cell, cell in enumerate(selectedwell):
         # Data
         if prt == 'staircaseramp':
             data = np.loadtxt('%s/%s-%s-%s.csv' % (data_dir_staircase,
@@ -290,6 +264,8 @@ for prt in protocol_list:
         #simulation_2 += obtained_parameters[2] * (voltage_c - (-80)) # replace with g_leak^\dagger
         voltage_2 = model.voltage(times_sim, parameters=obtained_parameters)
 
+        rmsd.append(np.sqrt(np.mean((voltage_2 - voltage) ** 2)))
+
         #
         # Plot
         #
@@ -340,3 +316,11 @@ for prt in protocol_list:
         axes[1].legend()
         plt.savefig('%s/membrane-voltage-scheme3-%s' % (savepath, cell), dpi=200)
         plt.close()
+
+    cell_sorted = [x for _, x in sorted(zip(rmsd, selectedwell))]
+    ids = np.argsort(rmsd)
+    rmsd_sorted = np.asarray(rmsd)[ids]
+    np.savetxt('%s/membrane-voltage-scheme3-rmsd.txt' % (savepath), rmsd_sorted)
+    with open('%s/membrane-voltage-scheme3-cell.txt' % (savepath), 'w') as f:
+        for c in cell_sorted:
+            f.write(c + '\n')
