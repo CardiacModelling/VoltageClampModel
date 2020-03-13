@@ -18,7 +18,7 @@ file_name = 'herg25oc1'
 temperature = 25.0
 temperature += 273.15  # in K
 fit_seed = '542811797'
-fit_seed_scheme3 = '209652396'
+fit_seed_scheme3 = '717354021'
 
 # Load parameters
 hbm_mean = np.array([np.NaN, # paper 1 supplement HBM mean parameters
