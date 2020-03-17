@@ -42,8 +42,8 @@ sim2 = model.simulate(fit, times)
 fig, axes = plt.subplots(2, 1, sharex=True, figsize=(8, 3.5),
         gridspec_kw={'height_ratios': [1, 2]})
 axes[0].plot(times, voltage, c='#7f7f7f')
-axes[1].plot(times, sim1, label='Hypothesis 1')
-axes[1].plot(times, sim2, label='Hypothesis 2')
+axes[1].plot(times, sim1, label='Hypothesis 1', color='#d95f02')
+axes[1].plot(times, sim2, label='Hypothesis 2', color='#1b9e77')
 axes[0].set_ylabel('Voltage (mV)')
 axes[1].set_ylabel(r'Current ($g_{Kr}=1$)')
 axes[1].set_xlabel('Time (ms)')
@@ -59,8 +59,8 @@ mark_setup = [(2, 4),]
 for i_zoom, (w, h, loc) in enumerate(inset_setup):
     axins = inset_axes(axes[1], width=w, height=h, loc=loc,
             axes_kwargs={"facecolor" : "#f0f0f0"})
-    axins.plot(times, sim1, alpha=1)
-    axins.plot(times, sim2, alpha=1)
+    axins.plot(times, sim1, alpha=1, color='#d95f02')
+    axins.plot(times, sim2, alpha=1, color='#1b9e77')
     axins.set_xlim(set_xlim_ins[i_zoom])
     axins.set_ylim(set_ylim_ins[i_zoom])
     #axins.yaxis.get_major_locator().set_params(nbins=3)

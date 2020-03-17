@@ -49,7 +49,7 @@ for i in range(2):
     axes[-1, i].set_xlabel('Voltage [mV]', fontsize=14)
 v = np.linspace(-100, 60, 200)  # mV
 
-colour_list = ['#d62728', '#d9d9d9', '#31a354']
+colour_list = ['#d95f02', '#d9d9d9', '#1b9e77']
 
 a_vhalf = []
 r_vhalf = []
