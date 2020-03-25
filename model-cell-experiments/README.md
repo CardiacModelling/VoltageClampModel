@@ -2,6 +2,21 @@
 
 All electrical model cell experiments are within this directory.
 
+[Figure 4](figs/simulate-all-staircase.pdf): Run `simulate-all.py` with argument `staircase`.
+
+[Figure 5A](figs/predict-mc3nocomp-staircase.pdf), [B](figs/predict-mc3nocomp-ap-lei.pdf): Run `predict-mc3-all.sh`.
+
+Table 2, S1: Run `fit-mc.py` and `fit-mc3.py` to obtain the fitting results. Run `print-tex-table.py` to generate the table.
+
+[Figure S4A](figs/simulate-all-mcnocomp-staircase.pdf),
+[B](figs/simulate-all-mc3nocomp-staircase.pdf),
+[C](figs/simulate-all-mcauto-staircase.pdf),
+[d](figs/simulate-all-mc3auto-staircase.pdf): Run `simulate-all.sh`.
+
+[Figure S5A](figs/predict-mcnocomp-staircase.pdf), [B](figs/predict-mcnocomp-ap-lei.pdf): Run `predict-mc.py` with argument `staircase` (A) and `ap-lei` (B).
+
+Table S2: To generate results for Table S2, run `fit-mc3simvc.py`.
+
 
 ### Forward simulations
 
