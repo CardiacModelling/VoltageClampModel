@@ -34,7 +34,7 @@ It also contains results and code that are mentioned but not shown in the paper:
 
 ### Supporting files
 
-[lib](./lib): Contains all external Python libraries (require manual installation, see [README](./lib/README.md)) and other modules/utility functions.
+[lib](./lib): Contains all modules/utility functions.
 
 [mmt-model-files](./mmt-model-files): [Myokit](http://myokit.org/) model files, contains IKr model and voltage clamp experiment model etc.
 
