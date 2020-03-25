@@ -17,12 +17,19 @@ install [PINTS](https://github.com/pints-team/pints) and [Myokit](http://myokit.
 
 ### Results
 
+#### Section 3: Validating the mathematical model with electrical model cell experiments
 [model-cell-experiments](./model-cell-experiments): Application of the voltage-clamp experiment model to electrical model cell experiments.
 
+It contains results and code to reproduce Figures 4, 5; Table 2; Figures S4, S5; Tables S1, S2.
+
+#### Section 4: Application to variability in CHO-hERG1a patch-clamp data
 [syn-same-kinetics](./syn-same-kinetics): Synthetic studies with the voltage-clamp experiment model.
+
+It contains results and code to reproduce Figure S6.
 
 [fit-same-kinetics](./fit-same-kinetics): Application of the voltage-clamp experiment model to data in [hERGRapidCharacterisation](https://github.com/CardiacModelling/hERGRapidCharacterisation).
 
+It contains results and code to reproduce Figures 7, 8; Figures S7, S8, S9; Tables S3, S4.
 
 ### Supporting files
 
