@@ -29,7 +29,7 @@ It contains results and code to reproduce Figure S6.
 
 [herg-real-data](./herg-real-data): Application of the voltage-clamp experiment model to data in [hERGRapidCharacterisation](https://github.com/CardiacModelling/hERGRapidCharacterisation).
 
-It contains results and code to reproduce Figures 7, 8; Figures S7, S8, S9; Tables S3, S4.
+It contains results and code to reproduce Hypothesis 2: Figures 7, 8; Figures S7, S8, S9; Tables S3, S4.
 It also contains results and code that are mentioned but not shown in the paper: full voltage-clamp experiment model fitting to hERG data; independent kinetics with independent artefacts 'Hypothesis 3'.
 
 ### Supporting files
