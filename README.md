@@ -23,11 +23,11 @@ install [PINTS](https://github.com/pints-team/pints) and [Myokit](http://myokit.
 It contains results and code to reproduce Figures 4, 5; Table 2; Figures S4, S5; Tables S1, S2.
 
 #### Section 4: Application to variability in CHO-hERG1a patch-clamp data
-[syn-same-kinetics](./syn-same-kinetics): Synthetic studies with the voltage-clamp experiment model.
+[herg-syn-study](./herg-syn-study): Synthetic studies with the voltage-clamp experiment model.
 
 It contains results and code to reproduce Figure S6.
 
-[fit-same-kinetics](./fit-same-kinetics): Application of the voltage-clamp experiment model to data in [hERGRapidCharacterisation](https://github.com/CardiacModelling/hERGRapidCharacterisation).
+[herg-real-data](./herg-real-data): Application of the voltage-clamp experiment model to data in [hERGRapidCharacterisation](https://github.com/CardiacModelling/hERGRapidCharacterisation).
 
 It contains results and code to reproduce Figures 7, 8; Figures S7, S8, S9; Tables S3, S4.
 It also contains results and code that are mentioned but not shown in the paper: full voltage-clamp experiment model fitting to hERG data; independent kinetics with independent artefacts 'Hypothesis 3'.
