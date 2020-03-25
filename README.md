@@ -4,7 +4,9 @@ A detailed mathematical modelling of voltage-clamp experiment.
 This repo contains all data and code for reproducing the results in the paper "*Accounting for variability in ion current recordings using a mathematical model of artefacts in voltage-clamp experiments*" by Chon Lok Lei, Michael Clerx, Dominic Whittaker, David Gavaghan, Teun de Boer, and Gary Mirams.
 
 
-### Prerequisite
+### Installing
+
+To run the code to generate the data and figures shown in the paper, please follow these steps first:
 
 1. Clone [hERGRapidCharacterisation](https://github.com/CardiacModelling/hERGRapidCharacterisation) to the relative path `../hERGRapidCharacterisation`.
 2. To setup, either run (for Linux/macOS users)
@@ -18,29 +20,29 @@ install [PINTS](https://github.com/pints-team/pints) and [Myokit](http://myokit.
 ### Results
 
 #### Section 3: Validating the mathematical model with electrical model cell experiments
-[model-cell-experiments](./model-cell-experiments): Application of the voltage-clamp experiment model to electrical model cell experiments.
 
-It contains results and code to reproduce Figures 4, 5; Table 2; Figures S4, S5; Tables S1, S2.
+- [model-cell-experiments](./model-cell-experiments): Application of the voltage-clamp experiment model to electrical model cell experiments.
+  - contains results and code to reproduce Figures 4, 5; Table 2; Figures S4, S5; Tables S1, S2.
 
 #### Section 4: Application to variability in CHO-hERG1a patch-clamp data
-[herg-syn-study](./herg-syn-study): Synthetic studies with the voltage-clamp experiment model.
 
-It contains results and code to reproduce Figure S6.
+- [herg-syn-study](./herg-syn-study): Synthetic studies with the voltage-clamp experiment model.
+  - contains results and code to reproduce Figure S6.
 
-[herg-real-data](./herg-real-data): Application of the voltage-clamp experiment model to data in [hERGRapidCharacterisation](https://github.com/CardiacModelling/hERGRapidCharacterisation).
+- [herg-real-data](./herg-real-data): Application of the voltage-clamp experiment model to data in [hERGRapidCharacterisation](https://github.com/CardiacModelling/hERGRapidCharacterisation).
 
-It contains results and code to reproduce Hypothesis 2: Figures 7, 8; Figures S7, S8, S9; Tables S3, S4.
-It also contains results and code that are mentioned but not shown in the paper: full voltage-clamp experiment model fitting to hERG data; independent kinetics with independent artefacts 'Hypothesis 3'.
+  - Contains results and code to reproduce Hypothesis 2: Figures 7, 8; Figures S7, S8, S9; Tables S3, S4.
+  - Also contains results and code that are mentioned but not shown in the paper: full voltage-clamp experiment model fitting to hERG data; independent kinetics with independent artefacts 'Hypothesis 3'.
 
 ### Supporting files
 
-[lib](./lib): Contains all modules/utility functions.
+- [lib](./lib): Contains all modules/utility functions.
 
-[mmt-model-files](./mmt-model-files): [Myokit](http://myokit.org/) model files, contains IKr model and voltage clamp experiment model etc.
+- [mmt-model-files](./mmt-model-files): [Myokit](http://myokit.org/) model files, contains IKr model and voltage clamp experiment model etc.
 
-[protocol-time-series](./protocol-time-series): Contains protocols as time series, stored as `.csv` files, with time points (in `s`) and voltage (in `mV`)
+- [protocol-time-series](./protocol-time-series): Contains protocols as time series, stored as `.csv` files, with time points (in `s`) and voltage (in `mV`)
 
-`data`, `data-autoLC`, `manualselection`, `qc`: symbolic links to [hERGRapidCharacterisation](https://github.com/CardiacModelling/hERGRapidCharacterisation)
+- `data`, `data-autoLC`, `manualselection`, `qc`: symbolic links to [hERGRapidCharacterisation](https://github.com/CardiacModelling/hERGRapidCharacterisation)
 
 
 ## Acknowledging this work
