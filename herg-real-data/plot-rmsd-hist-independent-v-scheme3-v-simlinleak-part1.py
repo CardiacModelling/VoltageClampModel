@@ -118,7 +118,7 @@ file_list = [
 temperatures = np.array([25.0])
 temperatures += 273.15  # in K
 fit_seed = '542811797'
-fit_seed2 = '209652396'
+fit_seed2 = '717354021'
 
 file_name = file_list[0]
 temperature = temperatures[0]
@@ -226,14 +226,14 @@ for i in range(int(len(protocol_list) / 2)):
 
 # Set labels
 axes[0, 0].set_ylabel('Voltage\n[mV]', fontsize=14)
-axes[1, 0].set_ylabel(r'Best ($*$)', fontsize=14, color='#d62728')
-axes[2, 0].set_ylabel(u'Median (\u2021)', fontsize=14, color='#d62728')
-axes[3, 0].set_ylabel(r'90%ile (#)', fontsize=14, color='#d62728')
+axes[1, 0].set_ylabel(r'Best ($*$)', fontsize=14, color='#d95f02')
+axes[2, 0].set_ylabel(u'Median (\u2021)', fontsize=14, color='#d95f02')
+axes[3, 0].set_ylabel(r'90%ile (#)', fontsize=14, color='#d95f02')
 axes[4, 0].set_ylabel('Frequency\n[N=%s]' % len(rmsd_cells), fontsize=14)
 axes[5, 0].set_ylabel('Voltage\n[mV]', fontsize=14)
-axes[6, 0].set_ylabel(r'Best ($*$)', fontsize=14, color='#d62728')
-axes[7, 0].set_ylabel(u'Median (\u2021)', fontsize=14, color='#d62728')
-axes[8, 0].set_ylabel(r'90%ile (#)', fontsize=14, color='#d62728')
+axes[6, 0].set_ylabel(r'Best ($*$)', fontsize=14, color='#d95f02')
+axes[7, 0].set_ylabel(u'Median (\u2021)', fontsize=14, color='#d95f02')
+axes[8, 0].set_ylabel(r'90%ile (#)', fontsize=14, color='#d95f02')
 axes[9, 0].set_ylabel('Frequency\n[N=%s]' % len(rmsd_cells), fontsize=14)
 
 axes[2, 0].text(-0.25, 0.5, 'Current [pA]', rotation=90, fontsize=18,
@@ -516,18 +516,18 @@ for i_prt, prt in enumerate(protocol_list):
             # simulation
             if prt == 'staircaseramp':
                 axes[ai + i_cell + 1, aj].plot(times, simulation, lw=2,
-                        c='#d62728', label='Hypothesis 1 (fit)')
+                        c='#d95f02', label='Hypothesis 1')
                 axes[ai + i_cell + 1, aj].plot(times, simulationfixkinetics_s3, lw=2,
-                        c='#31a354', label='Hypothesis 2 (fit)')
+                        c='#1b9e77', label='Hypothesis 2')
                 axes[ai + i_cell + 1, aj].plot(times, simulationfixkinetics, lw=2,
-                        c='#9467bd', label='H1.5: reduced model cell-specific')
+                        c='#9467bd', label='Hypothesis 3')
             else:
                 axes[ai + i_cell + 1, aj].plot(times, simulation, lw=2,
-                        c='#d62728', label='H1 prediction')
+                        c='#d95f02', label='H1 prediction')
                 axes[ai + i_cell + 1, aj].plot(times, simulationfixkinetics_s3, lw=2,
-                        c='#31a354', label='H2 prediction')
+                        c='#1b9e77', label='H2 prediction')
                 axes[ai + i_cell + 1, aj].plot(times, simulationfixkinetics, lw=2,
-                        c='#9467bd', label='H1.5: reduced model cell-specific')
+                        c='#9467bd', label='H3 prediction')
         else:
             iv_v = protocol_iv_v[prt]() * 1000  # V -> mV
             # recording
@@ -539,12 +539,12 @@ for i_prt, prt in enumerate(protocol_list):
             iv_i = protocols.get_corrected_iv(simulation, times,
                                               *protocol_iv_args[prt]())
             axes[ai + i_cell + 1, aj].plot(iv_v, iv_i / np.max(iv_i), lw=2,
-                    alpha=1, c='#d62728', label='model prediction')
+                    alpha=1, c='#d95f02', label='model prediction')
             # simulationfixkinetics scheme3
             iv_i_fixkinetics_s3 = protocols.get_corrected_iv(simulationfixkinetics_s3, times,
                                               *protocol_iv_args[prt]())
             axes[ai + i_cell + 1, aj].plot(iv_v, iv_i_fixkinetics_s3 / np.max(iv_i_fixkinetics_s3), lw=2,
-                    alpha=1, c='#31a354', label='model (fix kinetics) prediction new')
+                    alpha=1, c='#1b9e77', label='model (fix kinetics) prediction new')
             # simulationfixkinetics
             iv_i_fixkinetics = protocols.get_corrected_iv(simulationfixkinetics, times,
                                               *protocol_iv_args[prt]())
@@ -565,8 +565,8 @@ for i_prt, prt in enumerate(protocol_list):
     rmse_max = max(np.max(rmsd), np.max(rmsd2))                                 
     rmse_range = rmse_max - rmse_min                                            
     bins = np.linspace(rmse_min - 0.1 * rmse_range, rmse_max + 0.1 * rmse_range, 20)
-    n, b, _ = axes[ai + 4, aj].hist(rmsd, bins=bins, color='#d62728', alpha=0.25)
-    n2, b2, _ = axes[ai + 4, aj].hist(rmsd2, bins=bins, color='#31a354', alpha=0.25)
+    n, b, _ = axes[ai + 4, aj].hist(rmsd, bins=bins, color='#d95f02', alpha=0.25)
+    n2, b2, _ = axes[ai + 4, aj].hist(rmsd2, bins=bins, color='#1b9e77', alpha=0.25)
     n3, b3, _ = axes[ai + 4, aj].hist(rmsd3, bins=bins, color='#8856a7', alpha=0.5)
 
     # Add labels
@@ -576,7 +576,7 @@ for i_prt, prt in enumerate(protocol_list):
         if idx in rankedidx:
             print('Ref. marker might clash with other markers...')
         axes[ai + 4, aj].text((b[idx] + b[idx + 1]) / 2., n[idx] + 3,
-                rankedlabels[i], fontsize=16, color='#d62728',
+                rankedlabels[i], fontsize=16, color='#d95f02',
                 ha='center', va='center')
         if n[idx] == np.max(n):
             axes[ai + 4, aj].set_ylim([0, n[idx] + 6])
@@ -588,7 +588,7 @@ for i_prt, prt in enumerate(protocol_list):
         if idx in rankedidx2:
             print('Ref. marker might clash with other markers...')
         axes[ai + 4, aj].text((b2[idx] + b2[idx + 1]) / 2., n2[idx] + 3,
-                rankedlabels[i], fontsize=16, color='#31a354',
+                rankedlabels[i], fontsize=16, color='#1b9e77',
                 ha='center', va='center')
         if n2[idx] == np.max(n2):
             axes[ai + 4, aj].set_ylim([0, n2[idx] + 6])
@@ -610,8 +610,14 @@ for i_prt, prt in enumerate(protocol_list):
 #
 # Final adjustment and save
 #
-axes[1, 0].legend()
-axes[1, 1].legend()
+#axes[1, 0].legend()
+#axes[1, 1].legend()
+import matplotlib.patches as mpatches
+data_patch = mpatches.Patch(color='#9ecae1', label='Data')
+h1_patch = mpatches.Patch(color='#d95f02', label='Hypothesis 1: independent kinetics models')
+h2_patch = mpatches.Patch(color='#1b9e77', label='Hypothesis 2: identical kinetics models')
+h3_patch = mpatches.Patch(color='#8856a7', label='Hypothesis 3: cell-specific conductance, kinetics and artefacts')
+axes[0, 0].legend(handles=[data_patch, h3_patch, h1_patch, h2_patch], loc='upper left', bbox_to_anchor=(-.025, 3.75), fontsize=14, ncol=2, columnspacing=5.5)
 #grid.tight_layout(fig, pad=0.6, rect=(0.02, 0.0, 1, 0.99))
 #grid.update(wspace=0.2, hspace=0.0)
 plt.savefig('%s/rmsd-hist-independent-v-scheme3-v-simlinleak-part1.png' % (savedir), bbox_inch='tight',
