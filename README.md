@@ -44,6 +44,8 @@ install [PINTS](https://github.com/pints-team/pints) and [Myokit](http://myokit.
 
 - `data`, `data-autoLC`, `manualselection`, `qc`: symbolic links to [hERGRapidCharacterisation](https://github.com/CardiacModelling/hERGRapidCharacterisation)
 
+- [cellml](./cellml): [CellML](https://www.cellml.org/) version of the models in [mmt-model-files](./mmt-model-files).
+
 
 ## Acknowledging this work
 
