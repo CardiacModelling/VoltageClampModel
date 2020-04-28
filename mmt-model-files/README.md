@@ -13,5 +13,4 @@ All the models are defined here. For syntax, see [Myokit](http://myokit.org/).
 
 Model files that are not shown in the paper.
 
-- [full2-voltage-clamp-mc3vc.mmt](full2-voltage-clamp-mc3vc.mmt): Full voltage-clamp experiment model for Type-II Model Cell model _without_ current-clamp.
 - [ideal-mc.mmt](ideal-mc.mmt): Ideal voltage-clamp model for Type-I Model Cell model.
