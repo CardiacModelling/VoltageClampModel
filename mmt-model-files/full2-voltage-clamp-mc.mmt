@@ -1,8 +1,8 @@
 [[model]]
 author: Chon Lok Lei
-name: compensated_voltage_clamp_ikr
+name: compensated_voltage_clamp_mc
 desc: """
-Myokit version of a simple model cell (mc) model under a realistic voltage
+Myokit version of the Type-I Model Cell (mc) model under a realistic voltage
 clamp model with standard compensation.
 
 Units:
@@ -77,12 +77,3 @@ dot(Iout) = (Iin - Iout) / tau
 
 Iin = (Vp - V + voffset_eff) / rseries + cprs * dVpdt - (cm_est + cprs_est) * dVclampdt
 
-
-#
-# Physical constants
-#
-[phys]
-R = 8.314472 [J/mol/K]
-T = 310 [K]  # 36-37oC (BT)
-F = 9.64853415e4 [C/mol]
-RTF = R * T / F * 1e3 in [mV]

@@ -1,6 +1,6 @@
 [[model]]
 author: Chon Lok Lei
-name: ideal_voltage_clamp_ikr
+name: ideal_voltage_clamp_mc
 desc: """
 Myokit version of a simple model cell (mc) model under an ideal voltage clamp.
 
@@ -43,47 +43,3 @@ Iin = mc.I
     desc: measured current
     in [pA]
 
-
-#
-# Ionic concentrations (clamp)
-#
-[potassium]
-Ki = 110 [mM]
-#Ki = 125 [mM]  # for iPSC solution
-Ko = 4 [mM]
-#Ko = 3.75 [mM]  # for iPSC solution
-
-[sodium]
-Nai = 10 [mM]
-#Nao = 150 [mM]
-Nao = 97.5 [mM]  # for hERG solution
-#Nao = 146.25 [mM]  # for iPSC solution
-
-[calcium]
-Cai = 1e-5 in [mM]
-Cao = 2.05 [mM]  # for hERG solution
-#Cao = 2.3 [mM]  # for iPSC solution
-
-
-#
-# Reversal parameters
-#
-[rev]
-use phys.RTF
-ECa = 0.5 * RTF * log(calcium.Cao / calcium.Cai)
-    in [mV]
-EK = RTF * log(potassium.Ko / potassium.Ki)
-    in [mV]
-ENa = RTF * log(sodium.Nao / sodium.Nai)
-    in [mV]
-
-
-#
-# Physical constants
-#
-[phys]
-R = 8.314472 [J/mol/K]
-T = 310 [K]  # 36-37oC (BT)
-#T = 297 [K]  # 24oC (RT)
-F = 9.64853415e4 [C/mol]
-RTF = R * T / F * 1e3 in [mV]

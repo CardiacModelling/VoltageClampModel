@@ -96,26 +96,13 @@ ILeak = ILeak_eff + ILeak_est in [pA]
 Ki = 110 [mM]
 Ko = 4 [mM]
 
-[sodium]
-Nai = 10 [mM]
-#Nao = 150 [mM]
-Nao = 97.5 [mM]
-
-[calcium]
-Cai = 1e-5 in [mM]
-Cao = 2.05 [mM]
-
 
 #
 # Reversal parameters
 #
 [rev]
 use phys.RTF
-ECa = 0.5 * RTF * log(calcium.Cao / calcium.Cai)
-    in [mV]
 EK = RTF * log(potassium.Ko / potassium.Ki)
-    in [mV]
-ENa = RTF * log(sodium.Nao / sodium.Nai)
     in [mV]
 
 
