@@ -1,486 +1,410 @@
-<?xml version="1.0" encoding="utf-8"?>
-<model name="generated_model" xmlns="http://www.cellml.org/cellml/1.0#" xmlns:cellml="http://www.cellml.org/cellml/1.0#">
-	<documentation xmlns="http://cellml.org/tmp-documentation">
-		<article>
-			<title>compensated_voltage_clamp_ikr</title>
-		</article>
-	</documentation>
-	<units name="ms">
-		<unit exponent="1" multiplier="0.001" units="second"/>
-	</units>
-	<units name="C_per_mol">
-		<unit exponent="1" units="second"/>
-		<unit exponent="1" units="ampere"/>
-		<unit exponent="-1" units="mole"/>
-	</units>
-	<units name="J_per_mol_per_K">
-		<unit exponent="1" multiplier="1000.0" units="gram"/>
-		<unit exponent="2" units="metre"/>
-		<unit exponent="-2" units="second"/>
-		<unit exponent="-1" units="kelvin"/>
-		<unit exponent="-1" units="mole"/>
-	</units>
-	<units name="mV">
-		<unit exponent="1" units="gram"/>
-		<unit exponent="2" units="metre"/>
-		<unit exponent="-3" units="second"/>
-		<unit exponent="-1" units="ampere"/>
-	</units>
-	<units name="pF">
-		<unit exponent="-1" multiplier="1e-15" units="gram"/>
-		<unit exponent="-2" units="metre"/>
-		<unit exponent="4" units="second"/>
-		<unit exponent="2" units="ampere"/>
-	</units>
-	<units name="pA">
-		<unit exponent="1" multiplier="1e-12" units="ampere"/>
-	</units>
-	<units name="nS">
-		<unit exponent="-1" multiplier="1e-12" units="gram"/>
-		<unit exponent="-2" units="metre"/>
-		<unit exponent="3" units="second"/>
-		<unit exponent="2" units="ampere"/>
-	</units>
-	<units name="R_times_1000000000">
-		<unit exponent="1" multiplier="1e+12" units="gram"/>
-		<unit exponent="2" units="metre"/>
-		<unit exponent="-3" units="second"/>
-		<unit exponent="-2" units="ampere"/>
-	</units>
-	<units name="A_per_F">
-		<unit exponent="1" multiplier="1000.0" units="gram"/>
-		<unit exponent="2" units="metre"/>
-		<unit exponent="-4" units="second"/>
-		<unit exponent="-1" units="ampere"/>
-	</units>
-	<component name="engine">
-		<variable name="time" public_interface="out" units="ms"/>
-		<math xmlns="http://www.w3.org/1998/Math/MathML"/>
-	</component>
-	<component name="phys">
-		<variable initial_value=" 9.64853414999999950e+04" name="F" units="dimensionless"/>
-		<variable initial_value="8.314472" name="R" units="dimensionless"/>
-		<variable name="RTF" units="mV"/>
-		<variable initial_value="310.0" name="T" units="dimensionless"/>
-		<math xmlns="http://www.w3.org/1998/Math/MathML">
-			<apply>
-				<eq/>
-				<ci>RTF</ci>
-				<apply>
-					<times/>
-					<apply>
-						<divide/>
-						<apply>
-							<times/>
-							<ci>R</ci>
-							<ci>T</ci>
-						</apply>
-						<ci>F</ci>
-					</apply>
-					<cn cellml:units="dimensionless">1000.0</cn>
-				</apply>
-			</apply>
-		</math>
-	</component>
-	<component name="mc">
-		<variable initial_value="1000.0" name="ck" units="pF"/>
-		<variable initial_value="0.0" name="Icc" units="pA"/>
-		<variable name="I" public_interface="out" units="pA"/>
-		<variable initial_value="0.0" name="Ik" units="pA"/>
-		<variable name="Im" units="dimensionless"/>
-		<variable initial_value="2.0" name="gm" units="dimensionless"/>
-		<variable initial_value="10.0" name="gk" units="dimensionless"/>
-		<variable name="time" public_interface="in" units="ms"/>
-		<variable name="rseries" public_interface="in" units="dimensionless"/>
-		<variable name="dVdt" public_interface="in" units="mV"/>
-		<variable name="cprs" public_interface="in" units="dimensionless"/>
-		<variable name="V" public_interface="in" units="dimensionless"/>
-		<math xmlns="http://www.w3.org/1998/Math/MathML">
-			<apply>
-				<eq/>
-				<apply>
-					<diff/>
-					<bvar>
-						<ci>time</ci>
-					</bvar>
-					<ci>Icc</ci>
-				</apply>
-				<apply>
-					<times/>
-					<ci>rseries</ci>
-					<apply>
-						<minus/>
-						<ci>dVdt</ci>
-						<apply>
-							<divide/>
-							<ci>Icc</ci>
-							<ci>cprs</ci>
-						</apply>
-					</apply>
-				</apply>
-			</apply>
-			<apply>
-				<eq/>
-				<ci>I</ci>
-				<apply>
-					<plus/>
-					<apply>
-						<plus/>
-						<ci>Ik</ci>
-						<ci>Im</ci>
-					</apply>
-					<ci>Icc</ci>
-				</apply>
-			</apply>
-			<apply>
-				<eq/>
-				<apply>
-					<diff/>
-					<bvar>
-						<ci>time</ci>
-					</bvar>
-					<ci>Ik</ci>
-				</apply>
-				<apply>
-					<times/>
-					<ci>gk</ci>
-					<apply>
-						<minus/>
-						<ci>dVdt</ci>
-						<apply>
-							<divide/>
-							<ci>Ik</ci>
-							<ci>ck</ci>
-						</apply>
-					</apply>
-				</apply>
-			</apply>
-			<apply>
-				<eq/>
-				<ci>Im</ci>
-				<apply>
-					<times/>
-					<ci>gm</ci>
-					<ci>V</ci>
-				</apply>
-			</apply>
-		</math>
-	</component>
-	<component name="stimulus">
-		<variable initial_value="2.0" name="duration" units="ms"/>
-		<variable name="pace" public_interface="out" units="dimensionless"/>
-		<variable name="ctime" units="ms"/>
-		<variable initial_value="1000.0" name="period" units="ms"/>
-		<variable initial_value="100.0" name="offset" units="ms"/>
-		<variable name="time" public_interface="in" units="ms"/>
-		<math xmlns="http://www.w3.org/1998/Math/MathML">
-			<apply>
-				<eq/>
-				<ci>pace</ci>
-				<piecewise>
-					<piece>
-						<cn cellml:units="dimensionless">1.0</cn>
-						<apply>
-							<and/>
-							<apply>
-								<geq/>
-								<ci>ctime</ci>
-								<ci>offset</ci>
-							</apply>
-							<apply>
-								<lt/>
-								<ci>ctime</ci>
-								<apply>
-									<plus/>
-									<ci>offset</ci>
-									<ci>duration</ci>
-								</apply>
-							</apply>
-						</apply>
-					</piece>
-					<otherwise>
-						<cn cellml:units="dimensionless">0.0</cn>
-					</otherwise>
-				</piecewise>
-			</apply>
-			<apply>
-				<eq/>
-				<ci>ctime</ci>
-				<apply>
-					<minus/>
-					<ci>time</ci>
-					<apply>
-						<times/>
-						<apply>
-							<floor/>
-							<apply>
-								<divide/>
-								<ci>time</ci>
-								<ci>period</ci>
-							</apply>
-						</apply>
-						<ci>period</ci>
-					</apply>
-				</apply>
-			</apply>
-		</math>
-	</component>
-	<component name="voltageclamp">
-		<variable name="dVpdt" units="dimensionless"/>
-		<variable initial_value="3.6" name="cprs_est" units="dimensionless"/>
-		<variable initial_value="90.0" name="cm_est" units="dimensionless"/>
-		<variable initial_value="5.0" name="voffset_eff" public_interface="out" units="dimensionless"/>
-		<variable initial_value="4.0" name="cprs" public_interface="out" units="dimensionless"/>
-		<variable initial_value="0.0" name="Iout" units="pA"/>
-		<variable initial_value="0.0" name="Vclamp" units="mV"/>
-		<variable initial_value="0.0" name="Vp" public_interface="out" units="mV"/>
-		<variable initial_value="0.01" name="rseries" public_interface="out" units="dimensionless"/>
-		<variable name="Vc" units="mV"/>
-		<variable initial_value="0.0008" name="tau_clamp" units="ms"/>
-		<variable name="Iin" units="dimensionless"/>
-		<variable initial_value="0.009" name="rseries_est" units="dimensionless"/>
-		<variable initial_value="0.04" name="tau_sum" units="ms"/>
-		<variable name="dVclampdt" units="A_per_F"/>
-		<variable name="voltageclamp_Iout_tau" public_interface="in" units="ms"/>
-		<variable name="time" public_interface="in" units="ms"/>
-		<variable name="pace" public_interface="in" units="dimensionless"/>
-		<variable name="V" public_interface="in" units="dimensionless"/>
-		<math xmlns="http://www.w3.org/1998/Math/MathML">
-			<apply>
-				<eq/>
-				<ci>dVpdt</ci>
-				<apply>
-					<divide/>
-					<apply>
-						<minus/>
-						<ci>Vclamp</ci>
-						<ci>Vp</ci>
-					</apply>
-					<ci>tau_clamp</ci>
-				</apply>
-			</apply>
-			<apply>
-				<eq/>
-				<apply>
-					<diff/>
-					<bvar>
-						<ci>time</ci>
-					</bvar>
-					<ci>Iout</ci>
-				</apply>
-				<apply>
-					<divide/>
-					<apply>
-						<minus/>
-						<ci>Iin</ci>
-						<ci>Iout</ci>
-					</apply>
-					<ci>voltageclamp_Iout_tau</ci>
-				</apply>
-			</apply>
-			<apply>
-				<eq/>
-				<apply>
-					<diff/>
-					<bvar>
-						<ci>time</ci>
-					</bvar>
-					<ci>Vclamp</ci>
-				</apply>
-				<ci>dVclampdt</ci>
-			</apply>
-			<apply>
-				<eq/>
-				<apply>
-					<diff/>
-					<bvar>
-						<ci>time</ci>
-					</bvar>
-					<ci>Vp</ci>
-				</apply>
-				<ci>dVpdt</ci>
-			</apply>
-			<apply>
-				<eq/>
-				<ci>Vc</ci>
-				<ci>pace</ci>
-			</apply>
-			<apply>
-				<eq/>
-				<ci>Iin</ci>
-				<apply>
-					<minus/>
-					<apply>
-						<plus/>
-						<apply>
-							<divide/>
-							<apply>
-								<plus/>
-								<apply>
-									<minus/>
-									<ci>Vp</ci>
-									<ci>V</ci>
-								</apply>
-								<ci>voffset_eff</ci>
-							</apply>
-							<ci>rseries</ci>
-						</apply>
-						<apply>
-							<times/>
-							<ci>cprs</ci>
-							<ci>dVpdt</ci>
-						</apply>
-					</apply>
-					<apply>
-						<times/>
-						<apply>
-							<plus/>
-							<ci>cm_est</ci>
-							<ci>cprs_est</ci>
-						</apply>
-						<ci>dVclampdt</ci>
-					</apply>
-				</apply>
-			</apply>
-			<apply>
-				<eq/>
-				<ci>dVclampdt</ci>
-				<apply>
-					<divide/>
-					<apply>
-						<minus/>
-						<apply>
-							<plus/>
-							<ci>Vc</ci>
-							<apply>
-								<times/>
-								<ci>Iout</ci>
-								<ci>rseries_est</ci>
-							</apply>
-						</apply>
-						<ci>Vclamp</ci>
-					</apply>
-					<ci>tau_sum</ci>
-				</apply>
-			</apply>
-		</math>
-	</component>
-	<component name="voltageclamp_Iout">
-		<variable initial_value="0.0075" name="voltageclamp_Iout_tau" public_interface="out" units="ms"/>
-		<math xmlns="http://www.w3.org/1998/Math/MathML"/>
-	</component>
-	<component name="membrane">
-		<variable initial_value="100.0" name="cm" public_interface="out" units="dimensionless"/>
-		<variable name="dVdt" public_interface="out" units="mV"/>
-		<variable initial_value="0.0" name="V" public_interface="out" units="dimensionless"/>
-		<variable name="voffset_eff" public_interface="in" units="dimensionless"/>
-		<variable name="membrane_dVdt_tau" public_interface="in" units="ms"/>
-		<variable name="Vp" public_interface="in" units="mV"/>
-		<variable name="I" public_interface="in" units="pA"/>
-		<variable name="time" public_interface="in" units="ms"/>
-		<math xmlns="http://www.w3.org/1998/Math/MathML">
-			<apply>
-				<eq/>
-				<ci>dVdt</ci>
-				<apply>
-					<minus/>
-					<apply>
-						<divide/>
-						<apply>
-							<plus/>
-							<apply>
-								<minus/>
-								<ci>Vp</ci>
-								<ci>V</ci>
-							</apply>
-							<ci>voffset_eff</ci>
-						</apply>
-						<ci>membrane_dVdt_tau</ci>
-					</apply>
-					<apply>
-						<divide/>
-						<ci>I</ci>
-						<ci>cm</ci>
-					</apply>
-				</apply>
-			</apply>
-			<apply>
-				<eq/>
-				<apply>
-					<diff/>
-					<bvar>
-						<ci>time</ci>
-					</bvar>
-					<ci>V</ci>
-				</apply>
-				<ci>dVdt</ci>
-			</apply>
-		</math>
-	</component>
-	<component name="membrane_dVdt">
-		<variable name="membrane_dVdt_tau" public_interface="out" units="ms"/>
-		<variable name="cm" public_interface="in" units="dimensionless"/>
-		<variable name="rseries" public_interface="in" units="dimensionless"/>
-		<math xmlns="http://www.w3.org/1998/Math/MathML">
-			<apply>
-				<eq/>
-				<ci>membrane_dVdt_tau</ci>
-				<apply>
-					<times/>
-					<ci>cm</ci>
-					<ci>rseries</ci>
-				</apply>
-			</apply>
-		</math>
-	</component>
-	<connection>
-		<map_components component_1="engine" component_2="stimulus"/>
-		<map_variables variable_1="time" variable_2="time"/>
-	</connection>
-	<connection>
-		<map_components component_1="voltageclamp" component_2="voltageclamp_Iout"/>
-		<map_variables variable_1="voltageclamp_Iout_tau" variable_2="voltageclamp_Iout_tau"/>
-	</connection>
-	<connection>
-		<map_components component_1="engine" component_2="voltageclamp"/>
-		<map_variables variable_1="time" variable_2="time"/>
-	</connection>
-	<connection>
-		<map_components component_1="engine" component_2="mc"/>
-		<map_variables variable_1="time" variable_2="time"/>
-	</connection>
-	<connection>
-		<map_components component_1="mc" component_2="voltageclamp"/>
-		<map_variables variable_1="rseries" variable_2="rseries"/>
-		<map_variables variable_1="cprs" variable_2="cprs"/>
-	</connection>
-	<connection>
-		<map_components component_1="mc" component_2="membrane"/>
-		<map_variables variable_1="dVdt" variable_2="dVdt"/>
-		<map_variables variable_1="V" variable_2="V"/>
-		<map_variables variable_1="I" variable_2="I"/>
-	</connection>
-	<connection>
-		<map_components component_1="stimulus" component_2="voltageclamp"/>
-		<map_variables variable_1="pace" variable_2="pace"/>
-	</connection>
-	<connection>
-		<map_components component_1="membrane" component_2="voltageclamp"/>
-		<map_variables variable_1="voffset_eff" variable_2="voffset_eff"/>
-		<map_variables variable_1="Vp" variable_2="Vp"/>
-		<map_variables variable_1="V" variable_2="V"/>
-	</connection>
-	<connection>
-		<map_components component_1="membrane" component_2="membrane_dVdt"/>
-		<map_variables variable_1="membrane_dVdt_tau" variable_2="membrane_dVdt_tau"/>
-		<map_variables variable_1="cm" variable_2="cm"/>
-	</connection>
-	<connection>
-		<map_components component_1="membrane_dVdt" component_2="voltageclamp"/>
-		<map_variables variable_1="rseries" variable_2="rseries"/>
-	</connection>
-	<connection>
-		<map_components component_1="engine" component_2="membrane"/>
-		<map_variables variable_1="time" variable_2="time"/>
-	</connection>
+<?xml version='1.0' encoding='UTF-8'?>
+<model xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:cellml="http://www.cellml.org/cellml/1.0#" xmlns:cmeta="http://www.cellml.org/metadata/1.0#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.cellml.org/cellml/1.0#" name="compensated_voltage_clamp_mc3">
+  <units name="A_per_F">
+    <unit units="gram" multiplier="1000"/>
+    <unit units="metre" exponent="2"/>
+    <unit units="second" exponent="-4"/>
+    <unit units="ampere" exponent="-1"/>
+  </units>
+  <units name="R_times_1e12">
+    <unit units="gram" multiplier="1000000000000"/>
+    <unit units="metre" exponent="2"/>
+    <unit units="second" exponent="-3"/>
+    <unit units="ampere" exponent="-2"/>
+  </units>
+  <units name="mV">
+    <unit units="gram"/>
+    <unit units="metre" exponent="2"/>
+    <unit units="second" exponent="-3"/>
+    <unit units="ampere" exponent="-1"/>
+  </units>
+  <units name="ms">
+    <unit units="second" multiplier="0.001"/>
+  </units>
+  <units name="nS">
+    <unit units="gram" exponent="-1" multiplier="1e-12"/>
+    <unit units="metre" exponent="-2"/>
+    <unit units="second" exponent="3"/>
+    <unit units="ampere" exponent="2"/>
+  </units>
+  <units name="pA">
+    <unit units="ampere" multiplier="1e-12"/>
+  </units>
+  <units name="pF">
+    <unit units="gram" exponent="-1" multiplier="1e-15"/>
+    <unit units="metre" exponent="-2"/>
+    <unit units="second" exponent="4"/>
+    <unit units="ampere" exponent="2"/>
+  </units>
+  <component name="engine">
+    <variable name="pace" units="dimensionless" public_interface="out" initial_value="0.0"/>
+    <variable name="time" units="ms" public_interface="out"/>
+  </component>
+  <component name="mc">
+    <variable name="I" units="pA" public_interface="out"/>
+    <variable name="Icc" units="pA" initial_value="0.0"/>
+    <variable name="Ik" units="pA" initial_value="0.0"/>
+    <variable name="Im" units="dimensionless"/>
+    <variable name="V" units="dimensionless" public_interface="in"/>
+    <variable name="ck" units="pF" initial_value="1000.0"/>
+    <variable name="cprs" units="dimensionless" public_interface="in"/>
+    <variable name="dVdt" units="mV" public_interface="in"/>
+    <variable name="gk" units="nS" initial_value="10.0"/>
+    <variable name="gm" units="nS" initial_value="2.0"/>
+    <variable name="rseries" units="dimensionless" public_interface="in"/>
+    <variable name="time" units="ms" public_interface="in"/>
+    <math xmlns="http://www.w3.org/1998/Math/MathML">
+      <apply>
+        <eq/>
+        <ci>I</ci>
+        <apply>
+          <plus/>
+          <apply>
+            <plus/>
+            <ci>Ik</ci>
+            <ci>Im</ci>
+          </apply>
+          <ci>Icc</ci>
+        </apply>
+      </apply>
+      <apply>
+        <eq/>
+        <apply>
+          <diff/>
+          <bvar>
+            <ci>time</ci>
+          </bvar>
+          <ci>Icc</ci>
+        </apply>
+        <apply>
+          <times/>
+          <ci>rseries</ci>
+          <apply>
+            <minus/>
+            <ci>dVdt</ci>
+            <apply>
+              <divide/>
+              <ci>Icc</ci>
+              <ci>cprs</ci>
+            </apply>
+          </apply>
+        </apply>
+      </apply>
+      <apply>
+        <eq/>
+        <apply>
+          <diff/>
+          <bvar>
+            <ci>time</ci>
+          </bvar>
+          <ci>Ik</ci>
+        </apply>
+        <apply>
+          <times/>
+          <ci>gk</ci>
+          <apply>
+            <minus/>
+            <ci>dVdt</ci>
+            <apply>
+              <divide/>
+              <ci>Ik</ci>
+              <ci>ck</ci>
+            </apply>
+          </apply>
+        </apply>
+      </apply>
+      <apply>
+        <eq/>
+        <ci>Im</ci>
+        <apply>
+          <times/>
+          <ci>gm</ci>
+          <ci>V</ci>
+        </apply>
+      </apply>
+    </math>
+  </component>
+  <component name="membrane">
+    <variable name="I" units="pA" public_interface="in"/>
+    <variable name="V" units="mV" public_interface="out" initial_value="0.0"/>
+    <variable name="Vp" units="mV" public_interface="in"/>
+    <variable name="cm" units="pF" initial_value="100.0"/>
+    <variable name="dVdt" units="mV" public_interface="out"/>
+    <variable name="membrane_dVdt_tau" units="ms"/>
+    <variable name="rseries" units="dimensionless" public_interface="in"/>
+    <variable name="time" units="ms" public_interface="in"/>
+    <variable name="voffset_eff" units="dimensionless" public_interface="in"/>
+    <math xmlns="http://www.w3.org/1998/Math/MathML">
+      <apply>
+        <eq/>
+        <apply>
+          <diff/>
+          <bvar>
+            <ci>time</ci>
+          </bvar>
+          <ci>V</ci>
+        </apply>
+        <ci>dVdt</ci>
+      </apply>
+      <apply>
+        <eq/>
+        <ci>dVdt</ci>
+        <apply>
+          <minus/>
+          <apply>
+            <divide/>
+            <apply>
+              <plus/>
+              <apply>
+                <minus/>
+                <ci>Vp</ci>
+                <ci>V</ci>
+              </apply>
+              <ci>voffset_eff</ci>
+            </apply>
+            <ci>membrane_dVdt_tau</ci>
+          </apply>
+          <apply>
+            <divide/>
+            <ci>I</ci>
+            <ci>cm</ci>
+          </apply>
+        </apply>
+      </apply>
+      <apply>
+        <eq/>
+        <ci>membrane_dVdt_tau</ci>
+        <apply>
+          <times/>
+          <ci>cm</ci>
+          <ci>rseries</ci>
+        </apply>
+      </apply>
+    </math>
+  </component>
+  <component name="voltageclamp">
+    <variable name="Iin" units="dimensionless"/>
+    <variable name="Iout" units="pA" initial_value="0.0"/>
+    <variable name="V" units="dimensionless" public_interface="in"/>
+    <variable name="Vc" units="mV"/>
+    <variable name="Vclamp" units="mV" initial_value="0.0"/>
+    <variable name="Vp" units="mV" public_interface="out" initial_value="0.0"/>
+    <variable name="cm_est" units="pF"/>
+    <variable name="cprs" units="pF" public_interface="out" initial_value="4.0"/>
+    <variable name="cprs_est" units="pF"/>
+    <variable name="dVclampdt" units="A_per_F"/>
+    <variable name="dVpdt" units="A_per_F"/>
+    <variable name="pace" units="dimensionless" public_interface="in"/>
+    <variable name="rseries" units="R_times_1e12" public_interface="out"/>
+    <variable name="rseries_est" units="R_times_1e12"/>
+    <variable name="tau_clamp" units="ms"/>
+    <variable name="tau_sum" units="ms" initial_value="0.04"/>
+    <variable name="time" units="ms" public_interface="in"/>
+    <variable name="voffset_eff" units="mV" public_interface="out" initial_value="5.0"/>
+    <variable name="voltageclamp_Iout_tau" units="ms"/>
+    <math xmlns="http://www.w3.org/1998/Math/MathML">
+      <apply>
+        <eq/>
+        <ci>Iin</ci>
+        <apply>
+          <minus/>
+          <apply>
+            <plus/>
+            <apply>
+              <divide/>
+              <apply>
+                <plus/>
+                <apply>
+                  <minus/>
+                  <ci>Vp</ci>
+                  <ci>V</ci>
+                </apply>
+                <ci>voffset_eff</ci>
+              </apply>
+              <ci>rseries</ci>
+            </apply>
+            <apply>
+              <times/>
+              <ci>cprs</ci>
+              <ci>dVpdt</ci>
+            </apply>
+          </apply>
+          <apply>
+            <times/>
+            <apply>
+              <plus/>
+              <ci>cm_est</ci>
+              <ci>cprs_est</ci>
+            </apply>
+            <ci>dVclampdt</ci>
+          </apply>
+        </apply>
+      </apply>
+      <apply>
+        <eq/>
+        <apply>
+          <diff/>
+          <bvar>
+            <ci>time</ci>
+          </bvar>
+          <ci>Iout</ci>
+        </apply>
+        <apply>
+          <divide/>
+          <apply>
+            <minus/>
+            <ci>Iin</ci>
+            <ci>Iout</ci>
+          </apply>
+          <ci>voltageclamp_Iout_tau</ci>
+        </apply>
+      </apply>
+      <apply>
+        <eq/>
+        <ci>Vc</ci>
+        <ci>pace</ci>
+      </apply>
+      <apply>
+        <eq/>
+        <apply>
+          <diff/>
+          <bvar>
+            <ci>time</ci>
+          </bvar>
+          <ci>Vclamp</ci>
+        </apply>
+        <ci>dVclampdt</ci>
+      </apply>
+      <apply>
+        <eq/>
+        <apply>
+          <diff/>
+          <bvar>
+            <ci>time</ci>
+          </bvar>
+          <ci>Vp</ci>
+        </apply>
+        <ci>dVpdt</ci>
+      </apply>
+      <apply>
+        <eq/>
+        <ci>cm_est</ci>
+        <apply>
+          <times/>
+          <cn cellml:units="dimensionless">0.9</cn>
+          <cn cellml:units="pF">100.0</cn>
+        </apply>
+      </apply>
+      <apply>
+        <eq/>
+        <ci>cprs_est</ci>
+        <apply>
+          <times/>
+          <cn cellml:units="dimensionless">4.0</cn>
+          <cn cellml:units="pF">0.9</cn>
+        </apply>
+      </apply>
+      <apply>
+        <eq/>
+        <ci>dVclampdt</ci>
+        <apply>
+          <divide/>
+          <apply>
+            <minus/>
+            <apply>
+              <plus/>
+              <ci>Vc</ci>
+              <apply>
+                <times/>
+                <ci>Iout</ci>
+                <ci>rseries_est</ci>
+              </apply>
+            </apply>
+            <ci>Vclamp</ci>
+          </apply>
+          <ci>tau_sum</ci>
+        </apply>
+      </apply>
+      <apply>
+        <eq/>
+        <ci>dVpdt</ci>
+        <apply>
+          <divide/>
+          <apply>
+            <minus/>
+            <ci>Vclamp</ci>
+            <ci>Vp</ci>
+          </apply>
+          <ci>tau_clamp</ci>
+        </apply>
+      </apply>
+      <apply>
+        <eq/>
+        <ci>rseries</ci>
+        <apply>
+          <times/>
+          <cn cellml:units="dimensionless">10.0</cn>
+          <cn cellml:units="R_times_1e12">0.001</cn>
+        </apply>
+      </apply>
+      <apply>
+        <eq/>
+        <ci>rseries_est</ci>
+        <apply>
+          <times/>
+          <cn cellml:units="dimensionless">0.9</cn>
+          <cn cellml:units="R_times_1e12">0.01</cn>
+        </apply>
+      </apply>
+      <apply>
+        <eq/>
+        <ci>tau_clamp</ci>
+        <apply>
+          <times/>
+          <cn cellml:units="dimensionless">0.8</cn>
+          <cn cellml:units="dimensionless">0.001</cn>
+        </apply>
+      </apply>
+      <apply>
+        <eq/>
+        <ci>voltageclamp_Iout_tau</ci>
+        <apply>
+          <times/>
+          <cn cellml:units="dimensionless">7.5</cn>
+          <cn cellml:units="dimensionless">0.001</cn>
+        </apply>
+      </apply>
+    </math>
+  </component>
+  <connection>
+    <map_components component_1="engine" component_2="mc"/>
+    <map_variables variable_1="time" variable_2="time"/>
+  </connection>
+  <connection>
+    <map_components component_1="engine" component_2="membrane"/>
+    <map_variables variable_1="time" variable_2="time"/>
+  </connection>
+  <connection>
+    <map_components component_1="engine" component_2="voltageclamp"/>
+    <map_variables variable_1="pace" variable_2="pace"/>
+    <map_variables variable_1="time" variable_2="time"/>
+  </connection>
+  <connection>
+    <map_components component_1="mc" component_2="membrane"/>
+    <map_variables variable_1="I" variable_2="I"/>
+    <map_variables variable_1="V" variable_2="V"/>
+    <map_variables variable_1="dVdt" variable_2="dVdt"/>
+  </connection>
+  <connection>
+    <map_components component_1="mc" component_2="voltageclamp"/>
+    <map_variables variable_1="cprs" variable_2="cprs"/>
+    <map_variables variable_1="rseries" variable_2="rseries"/>
+  </connection>
+  <connection>
+    <map_components component_1="membrane" component_2="voltageclamp"/>
+    <map_variables variable_1="V" variable_2="V"/>
+    <map_variables variable_1="Vp" variable_2="Vp"/>
+    <map_variables variable_1="rseries" variable_2="rseries"/>
+    <map_variables variable_1="voffset_eff" variable_2="voffset_eff"/>
+  </connection>
 </model>
