@@ -52,6 +52,6 @@ install [PINTS](https://github.com/pints-team/pints) and [Myokit](http://myokit.
 If you publish any work based on the contents of this repository please cite:
 
 Lei, C.L., Clerx, M., Whittaker, D.G., Gavaghan, D.J., de Boer, T.P. and Mirams, G.R.
-(2019).
+(2020).
 [Accounting for variability in ion current recordings using a mathematical model of artefacts in voltage-clamp experiments](https://doi.org/10.1101/2019.12.20.884353).
 _bioRxiv_, 2019.12.20.884353.
