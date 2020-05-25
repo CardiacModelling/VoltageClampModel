@@ -2,6 +2,7 @@
 
 A detailed mathematical modelling of voltage-clamp experiment.
 This repo contains all data and code for reproducing the results in the paper "*Accounting for variability in ion current recordings using a mathematical model of artefacts in voltage-clamp experiments*" by Chon Lok Lei, Michael Clerx, Dominic Whittaker, David Gavaghan, Teun de Boer, and Gary Mirams.
+[doi:10.1098/rsta.2019.0348](https://doi.org/10.1098/rsta.2019.0348).
 
 
 ### Installing
@@ -49,9 +50,9 @@ install [PINTS](https://github.com/pints-team/pints) and [Myokit](http://myokit.
 
 ## Acknowledging this work
 
-If you publish any work based on the contents of this repository please cite:
+If you publish any work based on the contents of this repository please cite ([CITATION file](CITATION)):
 
-Lei, C.L., Clerx, M., Whittaker, D.G., Gavaghan, D.J., de Boer, T.P. and Mirams, G.R.
+Lei, C.L., Clerx, M., Whittaker, D.G., Gavaghan D.J., de Boer, T.P. and Mirams, G.R.
 (2020).
-[Accounting for variability in ion current recordings using a mathematical model of artefacts in voltage-clamp experiments](https://doi.org/10.1101/2019.12.20.884353).
-_bioRxiv_, 2019.12.20.884353.
+[Accounting for variability in ion current recordings using a mathematical model of artefacts in voltage-clamp experiments](https://doi.org/10.1098/rsta.2019.0348).
+Philosophical Transactions of the Royal Society A, 378: 20190348.
