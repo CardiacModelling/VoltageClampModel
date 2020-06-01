@@ -68,13 +68,16 @@ class Model(pints.ForwardModel):
         # Load model
         model = myokit.load_model(model_file)
         # Set temperature
-        model.get('phys.T').set_rhs(temperature)
-        if temperature == 37.0 + 273.15 and effEK:
-            print('Using effective EK for 37oC data')
-            model.get('potassium.Ko').set_rhs(
-                    110 * np.exp( -92.630662854828572 / \
-                    (8.314472 * (273.15 + 37) / 9.64853415e4 * 1000))
-                    )
+        try:
+            model.get('phys.T').set_rhs(temperature)
+            if temperature == 37.0 + 273.15 and effEK:
+                print('Using effective EK for 37oC data')
+                model.get('potassium.Ko').set_rhs(
+                        110 * np.exp( -92.630662854828572 / \
+                        (8.314472 * (273.15 + 37) / 9.64853415e4 * 1000))
+                        )
+        except KeyError:
+            pass
 
         # Compute model EK
         const_R = 8.314472  # J/mol/K
