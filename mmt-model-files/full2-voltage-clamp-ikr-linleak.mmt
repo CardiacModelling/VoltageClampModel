@@ -17,6 +17,7 @@ Units:
 membrane.V = -80.0 [mV]
 voltageclamp.Vclamp = -80.0 [mV]
 voltageclamp.Vp = -80.0 [mV]
+voltageclamp.Vest = -80.0 [mV]
 voltageclamp.Iout = 0.0 [mV]
 ikr.open = 0
 ikr.active = 1
@@ -63,41 +64,62 @@ dot(V) = (Vp - V + voffset_eff) / tau - Iion / cm
 
 [voltageclamp]
 use membrane.V
+# Parameters
 rseries = 10.0 * 1e-3 [GR]  # in order of MegaOhms; TODO: fit
 cprs = 4.0 [pF]  # Unknown value for 'parasitic' capacitance at electrode...
 cprs_est = 4.0 * 0.9 [pF]  # eff. parasitic capacitance at electrode; TODO: fit
 voffset_eff = 5 [mV]  # TODO: fit
 rseries_est = 0.9 * 10.0e-3 [GR]  # TODO: later this one use measured value
 cm_est = 0.9 * 100.0 [pF]  # TODO: similar to rseries_est, set value
+alpha = 0.8 [1]  # NOTE: percentage of compensation, this is included in rseries_est already
 
+# Command voltage
 Vc = engine.pace
     desc: command voltage
     in [mV]
 
+# Rs compensation and summing delay
 tau_sum = 40e-3 in [ms]  # electronic delay term, ~ 5 - 70 microsecond
-dVclampdt = (Vc + Iout * rseries_est - Vclamp) / tau_sum
+dVclampdt = (Vc + (Iout + cm_est * dVestdt) * rseries_est - Vclamp) / tau_sum
     in [mV/ms]
 dot(Vclamp) = dVclampdt
     desc: clamp voltage
     in [mV]
 
+# Supercharging
+dVestdt = piecewise(
+    cm_est < 1e-6, 0,
+    rseries_est < 1e-6, 0,
+    (Vc - Vest) / ((1 - alpha) * cm_est * rseries_est/alpha)
+)
+dot(Vest) = dVestdt
+    in [mV]
+
+# Amplifier delay
 tau_clamp = 0.8 * 1e-3 in [ms]
 dVpdt = (Vclamp - Vp) / tau_clamp
 dot(Vp) = dVpdt
     desc: pipette voltage
     in [mV]
 
+# Feedback delay
 dot(Iout) = (Iin - Iout) / tau
     tau = 7.5 * 1e-3 in [ms]
     desc: measured current
+    in [pA]
+
+Iin = (
+        (Vp - V + voffset_eff) / rseries
+        + cprs * dVpdt
+        - cprs_est * dVclampdt
+        - cm_est * if(rseries_est < 1e-6, dVclampdt, dVestdt)
+    )
     in [pA]
 
 ## assume linear leak residual
 gLeak = 2 [pA/mV]
 ELeak = -80 [mV]
 ILeak = gLeak * (V - ELeak) in [pA]
-
-Iin = (Vp - V + voffset_eff) / rseries + cprs * dVpdt - (cm_est + cprs_est) * dVclampdt
 
 
 #
