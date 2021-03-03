@@ -24,7 +24,7 @@ voltageclamp.Iout = 0.0 [mV]
 
 [mc]
 use membrane.V, membrane.dVdt
-I = g * V + Icc
+I = g * V + Icc in [pA]
 g = 0.1524 * 1e3 [pA/mV]  # in nA range
 dot(Icc) = voltageclamp.rseries * (dVdt - Icc / voltageclamp.cprs)
     in [pA]
@@ -39,11 +39,11 @@ pace = 0 bind pace
 [membrane]
 use voltageclamp.Vp, voltageclamp.rseries, voltageclamp.voffset_eff
 cm = 100.0 [pF]  # in order of pF; TODO: fit
-dot(V) = dVdt
+dot(V) = dVdt in [mV]
 dVdt = (Vp - V + voffset_eff) / tau - mc.I / cm
     tau = cm * rseries in [ms]
     desc: membane potential
-    in [mV]
+    in [mV/ms]
 
 [voltageclamp]
 use membrane.V
@@ -73,13 +73,13 @@ dVestdt = piecewise(
     cm_est < 1e-6, 0,
     rseries_est < 1e-6, 0,
     (Vc - Vest) / ((1 - alpha) * cm_est * rseries_est/alpha)
-)
+) in [mV/ms]
 dot(Vest) = dVestdt
     in [mV]
 
 # Amplifier delay
 tau_clamp = 0.8 * 1e-3 in [ms]
-dVpdt = (Vclamp - Vp) / tau_clamp
+dVpdt = (Vclamp - Vp) / tau_clamp in [mV/ms]
 dot(Vp) = dVpdt
     desc: pipette voltage
     in [mV]

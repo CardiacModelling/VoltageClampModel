@@ -19,23 +19,26 @@ voltageclamp.Vclamp = -80.0 [mV]
 voltageclamp.Vp = -80.0 [mV]
 voltageclamp.Vest = -80.0 [mV]
 voltageclamp.Iout = 0.0 [mV]
-ikr.open = 0
-ikr.active = 1
+ikr.open = 0 [1]
+ikr.active = 1 [1]
 
 
 [ikr]
 use membrane.V
 IKr = g * open * active * (V - rev.EK)
+    in [pA]
 dot(open) = (inf - open) / tau
     inf = k1 * tau
     tau = 1 / (k1 + k2)
     k1 = p1 * exp(p2 * V)
     k2 = p3 * exp(-p4 * V)
+    in [1]
 dot(active) = (inf - active) / tau
     inf = k4 * tau
     tau = 1 / (k3 + k4)
     k3 = p5 * exp(p6 * V)
     k4 = p7 * exp(-p8 * V)
+    in [1]
 p1 = 2.26e-4 [1/ms]
 p2 = 0.0699 [1/mV]
 p3 = 3.45e-5 [1/ms]
@@ -56,6 +59,7 @@ pace = 0 bind pace
 [membrane]
 use voltageclamp.Vp, voltageclamp.rseries, voltageclamp.voffset_eff
 Iion = ikr.IKr + voltageclamp.ILeak
+    in [pA]
 cm = 100.0 [pF]  # in order of pF; TODO: fit
 dot(V) = (Vp - V + voffset_eff) / tau - Iion / cm
     tau = cm * rseries in [ms]
@@ -91,13 +95,13 @@ dVestdt = piecewise(
     cm_est < 1e-6, 0,
     rseries_est < 1e-6, 0,
     (Vc - Vest) / ((1 - alpha) * cm_est * rseries_est/alpha)
-)
+) in [mV/ms]
 dot(Vest) = dVestdt
     in [mV]
 
 # Amplifier delay
 tau_clamp = 0.8 * 1e-3 in [ms]
-dVpdt = (Vclamp - Vp) / tau_clamp
+dVpdt = (Vclamp - Vp) / tau_clamp in [mV/ms]
 dot(Vp) = dVpdt
     desc: pipette voltage
     in [mV]
