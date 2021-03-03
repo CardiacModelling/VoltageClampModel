@@ -1,64 +1,64 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<model xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:cellml="http://www.cellml.org/cellml/1.0#" xmlns:cmeta="http://www.cellml.org/metadata/1.0#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.cellml.org/cellml/1.0#" name="compensated_voltage_clamp_ikr">
+<model xmlns="http://www.cellml.org/cellml/1.0#" xmlns:cellml="http://www.cellml.org/cellml/1.0#" xmlns:cmeta="http://www.cellml.org/metadata/1.0#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" name="compensated_voltage_clamp_ikr">
   <units name="A_per_F">
     <unit units="gram" multiplier="1000"/>
-    <unit units="metre" exponent="2"/>
-    <unit units="second" exponent="-4"/>
-    <unit units="ampere" exponent="-1"/>
+    <unit units="metre" exponent="2.0"/>
+    <unit units="second" exponent="-4.0"/>
+    <unit units="ampere" exponent="-1.0"/>
   </units>
   <units name="C_per_mol">
     <unit units="second"/>
     <unit units="ampere"/>
-    <unit units="mole" exponent="-1"/>
+    <unit units="mole" exponent="-1.0"/>
   </units>
   <units name="J_per_mol_per_K">
     <unit units="gram" multiplier="1000"/>
-    <unit units="metre" exponent="2"/>
-    <unit units="second" exponent="-2"/>
-    <unit units="kelvin" exponent="-1"/>
-    <unit units="mole" exponent="-1"/>
+    <unit units="metre" exponent="2.0"/>
+    <unit units="second" exponent="-2.0"/>
+    <unit units="kelvin" exponent="-1.0"/>
+    <unit units="mole" exponent="-1.0"/>
   </units>
-  <units name="R_times_1e12">
+  <units name="Ohm_times_1e12">
     <unit units="gram" multiplier="1000000000000"/>
-    <unit units="metre" exponent="2"/>
-    <unit units="second" exponent="-3"/>
-    <unit units="ampere" exponent="-2"/>
+    <unit units="metre" exponent="2.0"/>
+    <unit units="second" exponent="-3.0"/>
+    <unit units="ampere" exponent="-2.0"/>
   </units>
   <units name="mM">
-    <unit units="metre" exponent="-3"/>
+    <unit units="metre" exponent="-3.0"/>
     <unit units="mole"/>
   </units>
   <units name="mS_per_uF">
-    <unit units="second" exponent="-1" multiplier="1000"/>
+    <unit units="second" exponent="-1.0" multiplier="1000"/>
   </units>
   <units name="mV">
     <unit units="gram"/>
-    <unit units="metre" exponent="2"/>
-    <unit units="second" exponent="-3"/>
-    <unit units="ampere" exponent="-1"/>
+    <unit units="metre" exponent="2.0"/>
+    <unit units="second" exponent="-3.0"/>
+    <unit units="ampere" exponent="-1.0"/>
   </units>
   <units name="ms">
     <unit units="second" multiplier="0.001"/>
   </units>
   <units name="nS">
-    <unit units="gram" exponent="-1" multiplier="1e-12"/>
-    <unit units="metre" exponent="-2"/>
-    <unit units="second" exponent="3"/>
-    <unit units="ampere" exponent="2"/>
+    <unit units="gram" exponent="-1.0" multiplier="1e-12"/>
+    <unit units="metre" exponent="-2.0"/>
+    <unit units="second" exponent="3.0"/>
+    <unit units="ampere" exponent="2.0"/>
   </units>
   <units name="pA">
     <unit units="ampere" multiplier="1e-12"/>
   </units>
   <units name="pF">
-    <unit units="gram" exponent="-1" multiplier="1e-15"/>
-    <unit units="metre" exponent="-2"/>
-    <unit units="second" exponent="4"/>
-    <unit units="ampere" exponent="2"/>
+    <unit units="gram" exponent="-1.0" multiplier="1e-15"/>
+    <unit units="metre" exponent="-2.0"/>
+    <unit units="second" exponent="4.0"/>
+    <unit units="ampere" exponent="2.0"/>
   </units>
   <units name="per_mV">
-    <unit units="gram" exponent="-1"/>
-    <unit units="metre" exponent="-2"/>
-    <unit units="second" exponent="3"/>
+    <unit units="gram" exponent="-1.0"/>
+    <unit units="metre" exponent="-2.0"/>
+    <unit units="second" exponent="3.0"/>
     <unit units="ampere"/>
   </units>
   <component name="engine">
@@ -67,7 +67,7 @@
   </component>
   <component name="ikr">
     <variable name="EK" units="mV" public_interface="in"/>
-    <variable name="IKr" units="mV" public_interface="out"/>
+    <variable name="IKr" units="pA" public_interface="out"/>
     <variable name="V" units="mV" public_interface="in"/>
     <variable name="active" units="dimensionless" initial_value="1.0"/>
     <variable name="g" units="nS"/>
@@ -275,16 +275,16 @@
     </math>
   </component>
   <component name="membrane">
-    <variable name="IKr" units="dimensionless" public_interface="in"/>
+    <variable name="IKr" units="pA" public_interface="in"/>
     <variable name="ILeak" units="pA" public_interface="in"/>
     <variable name="Iion" units="pA"/>
     <variable name="V" units="mV" public_interface="out" initial_value="-80.0"/>
     <variable name="Vp" units="mV" public_interface="in"/>
     <variable name="cm" units="pF" initial_value="100.0"/>
     <variable name="membrane_V_tau" units="ms"/>
-    <variable name="rseries" units="dimensionless" public_interface="in"/>
+    <variable name="rseries" units="Ohm_times_1e12" public_interface="in"/>
     <variable name="time" units="ms" public_interface="in"/>
-    <variable name="voffset_eff" units="dimensionless" public_interface="in"/>
+    <variable name="voffset_eff" units="mV" public_interface="in"/>
     <math xmlns="http://www.w3.org/1998/Math/MathML">
       <apply>
         <eq/>
@@ -338,7 +338,7 @@
     </math>
   </component>
   <component name="phys">
-    <variable name="F" units="C_per_mol" initial_value=" 9.64853414999999950e+04"/>
+    <variable name="F" units="C_per_mol" initial_value="9.64853414999999950e+04"/>
     <variable name="R" units="J_per_mol_per_K" initial_value="8.314472"/>
     <variable name="RTF" units="mV" public_interface="out"/>
     <variable name="T" units="kelvin" initial_value="310.0"/>
@@ -368,8 +368,8 @@
   </component>
   <component name="rev">
     <variable name="EK" units="mV" public_interface="out"/>
-    <variable name="Ki" units="dimensionless" public_interface="in"/>
-    <variable name="Ko" units="dimensionless" public_interface="in"/>
+    <variable name="Ki" units="mM" public_interface="in"/>
+    <variable name="Ko" units="mM" public_interface="in"/>
     <variable name="RTF" units="mV" public_interface="in"/>
     <math xmlns="http://www.w3.org/1998/Math/MathML">
       <apply>
@@ -393,21 +393,24 @@
   <component name="voltageclamp">
     <variable name="ELeak" units="mV"/>
     <variable name="ILeak" units="pA" public_interface="out"/>
-    <variable name="Iin" units="dimensionless"/>
+    <variable name="Iin" units="pA"/>
     <variable name="Iout" units="pA" initial_value="0.0"/>
     <variable name="V" units="mV" public_interface="in"/>
     <variable name="Vc" units="mV"/>
     <variable name="Vclamp" units="mV" initial_value="-80.0"/>
+    <variable name="Vest" units="mV" initial_value="-80.0"/>
     <variable name="Vp" units="mV" public_interface="out" initial_value="-80.0"/>
+    <variable name="alpha" units="dimensionless" initial_value="0.8"/>
     <variable name="cm_est" units="pF"/>
     <variable name="cprs" units="pF" initial_value="4.0"/>
     <variable name="cprs_est" units="pF"/>
     <variable name="dVclampdt" units="A_per_F"/>
+    <variable name="dVestdt" units="A_per_F"/>
     <variable name="dVpdt" units="A_per_F"/>
     <variable name="gLeak" units="nS" initial_value="2.0"/>
     <variable name="pace" units="dimensionless" public_interface="in"/>
-    <variable name="rseries" units="R_times_1e12" public_interface="out"/>
-    <variable name="rseries_est" units="R_times_1e12"/>
+    <variable name="rseries" units="Ohm_times_1e12" public_interface="out"/>
+    <variable name="rseries_est" units="Ohm_times_1e12"/>
     <variable name="tau_clamp" units="ms"/>
     <variable name="tau_sum" units="ms" initial_value="0.04"/>
     <variable name="time" units="ms" public_interface="in"/>
@@ -441,34 +444,50 @@
         <apply>
           <minus/>
           <apply>
-            <plus/>
+            <minus/>
             <apply>
-              <divide/>
+              <plus/>
               <apply>
-                <plus/>
+                <divide/>
                 <apply>
-                  <minus/>
-                  <ci>Vp</ci>
-                  <ci>V</ci>
+                  <plus/>
+                  <apply>
+                    <minus/>
+                    <ci>Vp</ci>
+                    <ci>V</ci>
+                  </apply>
+                  <ci>voffset_eff</ci>
                 </apply>
-                <ci>voffset_eff</ci>
+                <ci>rseries</ci>
               </apply>
-              <ci>rseries</ci>
+              <apply>
+                <times/>
+                <ci>cprs</ci>
+                <ci>dVpdt</ci>
+              </apply>
             </apply>
             <apply>
               <times/>
-              <ci>cprs</ci>
-              <ci>dVpdt</ci>
+              <ci>cprs_est</ci>
+              <ci>dVclampdt</ci>
             </apply>
           </apply>
           <apply>
             <times/>
-            <apply>
-              <plus/>
-              <ci>cm_est</ci>
-              <ci>cprs_est</ci>
-            </apply>
-            <ci>dVclampdt</ci>
+            <ci>cm_est</ci>
+            <piecewise>
+              <piece>
+                <ci>dVclampdt</ci>
+                <apply>
+                  <lt/>
+                  <ci>rseries_est</ci>
+                  <cn cellml:units="dimensionless">1e-06</cn>
+                </apply>
+              </piece>
+              <otherwise>
+                <ci>dVestdt</ci>
+              </otherwise>
+            </piecewise>
           </apply>
         </apply>
       </apply>
@@ -514,6 +533,17 @@
           <bvar>
             <ci>time</ci>
           </bvar>
+          <ci>Vest</ci>
+        </apply>
+        <ci>dVestdt</ci>
+      </apply>
+      <apply>
+        <eq/>
+        <apply>
+          <diff/>
+          <bvar>
+            <ci>time</ci>
+          </bvar>
           <ci>Vp</ci>
         </apply>
         <ci>dVpdt</ci>
@@ -548,7 +578,15 @@
               <ci>Vc</ci>
               <apply>
                 <times/>
-                <ci>Iout</ci>
+                <apply>
+                  <plus/>
+                  <ci>Iout</ci>
+                  <apply>
+                    <times/>
+                    <ci>cm_est</ci>
+                    <ci>dVestdt</ci>
+                  </apply>
+                </apply>
                 <ci>rseries_est</ci>
               </apply>
             </apply>
@@ -556,6 +594,55 @@
           </apply>
           <ci>tau_sum</ci>
         </apply>
+      </apply>
+      <apply>
+        <eq/>
+        <ci>dVestdt</ci>
+        <piecewise>
+          <piece>
+            <cn cellml:units="dimensionless">0.0</cn>
+            <apply>
+              <lt/>
+              <ci>cm_est</ci>
+              <cn cellml:units="dimensionless">1e-06</cn>
+            </apply>
+          </piece>
+          <piece>
+            <cn cellml:units="dimensionless">0.0</cn>
+            <apply>
+              <lt/>
+              <ci>rseries_est</ci>
+              <cn cellml:units="dimensionless">1e-06</cn>
+            </apply>
+          </piece>
+          <otherwise>
+            <apply>
+              <divide/>
+              <apply>
+                <minus/>
+                <ci>Vc</ci>
+                <ci>Vest</ci>
+              </apply>
+              <apply>
+                <divide/>
+                <apply>
+                  <times/>
+                  <apply>
+                    <times/>
+                    <apply>
+                      <minus/>
+                      <cn cellml:units="dimensionless">1.0</cn>
+                      <ci>alpha</ci>
+                    </apply>
+                    <ci>cm_est</ci>
+                  </apply>
+                  <ci>rseries_est</ci>
+                </apply>
+                <ci>alpha</ci>
+              </apply>
+            </apply>
+          </otherwise>
+        </piecewise>
       </apply>
       <apply>
         <eq/>
@@ -576,7 +663,7 @@
         <apply>
           <times/>
           <cn cellml:units="dimensionless">10.0</cn>
-          <cn cellml:units="R_times_1e12">0.001</cn>
+          <cn cellml:units="Ohm_times_1e12">0.001</cn>
         </apply>
       </apply>
       <apply>
@@ -585,7 +672,7 @@
         <apply>
           <times/>
           <cn cellml:units="dimensionless">0.9</cn>
-          <cn cellml:units="R_times_1e12">0.01</cn>
+          <cn cellml:units="Ohm_times_1e12">0.01</cn>
         </apply>
       </apply>
       <apply>
