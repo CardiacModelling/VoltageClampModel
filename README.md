@@ -5,6 +5,7 @@ This repo contains all data and code for reproducing the results in the paper "*
 [doi:10.1098/rsta.2019.0348](https://doi.org/10.1098/rsta.2019.0348).
 A permanently archived version for reproducing the results in the paper is available on Zenodo at <https://doi.org/10.5281/zenodo.3754184>.
 
+_NOTE: The latest version of this model includes the supercharging compensation, following the equations in Chapter 6 of [Chon Lok Lei's thesis](https://ora.ox.ac.uk/objects/uuid:528c2771-ae4f-4f3c-b649-44904acdf259)._
 
 ### Installing
 
