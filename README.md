@@ -5,7 +5,7 @@ A detailed mathematical model of a voltage-clamp experiment with imperfect patch
 ## Release Notes
 
 ### March 2021
-The latest version of this repository includes supercharging compensation, following the equations in Chapter 6 of [Chon Lok Lei's thesis](https://ora.ox.ac.uk/objects/uuid:528c2771-ae4f-4f3c-b649-44904acdf259)._
+The latest version of this repository includes supercharging compensation, following the equations in Chapter 6 of [Chon Lok Lei's thesis](https://ora.ox.ac.uk/objects/uuid:528c2771-ae4f-4f3c-b649-44904acdf259).
 
 ### April 2020
 This repo contains all data and code for reproducing the results in the paper "*Accounting for variability in ion current recordings using a mathematical model of artefacts in voltage-clamp experiments*" by Chon Lok Lei, Michael Clerx, Dominic Whittaker, David Gavaghan, Teun de Boer, and Gary Mirams.
