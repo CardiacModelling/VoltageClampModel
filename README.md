@@ -1,11 +1,16 @@
 # Voltage-Clamp Experiment Model
 
-A detailed mathematical modelling of voltage-clamp experiment.
+A detailed mathematical model of a voltage-clamp experiment with imperfect patch-clamp amplifier compensations
+
+## Release Notes
+
+### March 2021
+The latest version of this repository includes supercharging compensation, following the equations in Chapter 6 of [Chon Lok Lei's thesis](https://ora.ox.ac.uk/objects/uuid:528c2771-ae4f-4f3c-b649-44904acdf259)._
+
+### April 2020
 This repo contains all data and code for reproducing the results in the paper "*Accounting for variability in ion current recordings using a mathematical model of artefacts in voltage-clamp experiments*" by Chon Lok Lei, Michael Clerx, Dominic Whittaker, David Gavaghan, Teun de Boer, and Gary Mirams.
 [doi:10.1098/rsta.2019.0348](https://doi.org/10.1098/rsta.2019.0348).
-A permanently archived version for reproducing the results in the paper is available on Zenodo at <https://doi.org/10.5281/zenodo.3754184>.
-
-_NOTE: The latest version of this model includes the supercharging compensation, following the equations in Chapter 6 of [Chon Lok Lei's thesis](https://ora.ox.ac.uk/objects/uuid:528c2771-ae4f-4f3c-b649-44904acdf259)._
+A permanently archived version (without supercharging) for reproducing the results in the paper is available [as a tagged release](https://github.com/CardiacModelling/VoltageClampModel/releases/tag/v1) or on Zenodo at <https://doi.org/10.5281/zenodo.3754184>.
 
 ### Installing
 
