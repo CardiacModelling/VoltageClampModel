@@ -30,7 +30,7 @@ dot(Ik) = gk * (dVdt - Ik / ck)
 #ck = 100.0 * gk in [pF]  # for decay rate ~100 ms
 ck = 1000. in [pF]  # for decay rate ~100 ms
 gk = 10.0 [pA/mV]  # in O(100) pA range
-Im = gm * V
+Im = gm * V in [pA]
 gm = 2.0 [pA/mV]  # in O(100) pA range
 dot(Icc) = voltageclamp.rseries * (dVdt - Icc / voltageclamp.cprs)
     in [pA]
@@ -48,7 +48,7 @@ pace = 0 bind pace
 [membrane]
 use voltageclamp.Vp, voltageclamp.rseries, voltageclamp.voffset_eff
 cm = 100.0 [pF]  # in order of pF; TODO: fit
-dot(V) = dVdt
+dot(V) = dVdt in [mV/ms]
 dVdt = (Vp - V + voffset_eff) / tau - mc.I / cm
     tau = cm * rseries in [ms]
     desc: membane potential
@@ -83,13 +83,13 @@ dVestdt = piecewise(
     cm_est < 1e-6, 0,
     rseries_est < 1e-6, 0,
     (Vc - Vest) / ((1 - alpha) * cm_est * rseries_est/alpha)
-)
+) in [mV/ms]
 dot(Vest) = dVestdt
     in [mV]
 
 # Amplifier delay
 tau_clamp = 0.8 * 1e-3 in [ms]
-dVpdt = (Vclamp - Vp) / tau_clamp
+dVpdt = (Vclamp - Vp) / tau_clamp in [mV/ms]
 dot(Vp) = dVpdt
     desc: pipette voltage
     in [mV]
