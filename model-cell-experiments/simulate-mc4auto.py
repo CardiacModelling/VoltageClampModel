@@ -48,7 +48,8 @@ if not os.path.isdir(savedir):
 # Load data
 #'''
 import util
-idx = [4, data_idx[which_sim], 0] # 5 = 80% Rs + pred
+n_experiment = 4 # Check the lab record (docx)
+idx = [n_experiment, data_idx[which_sim], 0]
 f = 'data/20230510-Cfast_auto.dat'
 #f = 'data/20230510.dat'
 whole_data, times = util.load(f, idx, vccc=True)
@@ -56,6 +57,7 @@ times = times * 1e3  # s -> ms
 data_cc = whole_data[3] * 1e3  # V -> mV
 data_vc = whole_data[1] * 1e3  # V -> mV
 data = (whole_data[0] + whole_data[2]) * 1e12  # A -> pA
+alpha_r, alpha_p = util.mc4_experiment_alphas[n_experiment]
 '''
 times = np.arange(0, 120, 0.05) #TODO
 #'''
@@ -102,8 +104,8 @@ p = [
     7.2,#0.0001,#7.2,  # pF; Cprs*
     44.,  # pF; Cm*
     30.04e-3,  # GOhm; Rs*
-    0.8,  # alpha_R
-    0.8,  # alpha_P
+    alpha_r,  # alpha_R
+    alpha_p,  # alpha_P
 ]
 
 # Simulate
