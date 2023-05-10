@@ -48,7 +48,11 @@ if not os.path.isdir(savedir):
 # Load data
 #'''
 import util
-n_experiment = 4 # Check the lab record (docx)
+try:
+    # Check the lab record (docx) for details
+    n_experiment = int(sys.argv[2])
+except IndexError:
+    n_experiment = 4  # 80% (Rs + pred)
 idx = [n_experiment, data_idx[which_sim], 0]
 f = 'data/20230510-Cfast_auto.dat'
 #f = 'data/20230510.dat'
