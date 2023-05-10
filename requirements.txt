@@ -1,2 +1,2 @@
 pints==0.3.0
-myokit==1.32.0
+myokit>=1.33.0
