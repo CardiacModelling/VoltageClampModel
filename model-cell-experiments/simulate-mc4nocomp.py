@@ -15,7 +15,7 @@ Simulation for single model cell experiment data with amplifier settings.
 """
 
 sim_list = ['staircase', 'sinewave', 'ap-beattie', 'ap-lei', 'nav']
-data_idx = {'staircase': 1, 'sinewave': 0, 'ap-beattie': 2, 'ap-lei': 3}
+data_idx = {'staircase': 2, 'sinewave': 1, 'ap-lei': 3, 'nav': 0, 'ramps':4}
 protocol_list = {
     'nav': lambda x: (x, np.loadtxt('../protocol-time-series/ina-steps.txt')),
     'staircase': 'staircase-ramp.csv',
@@ -45,17 +45,18 @@ if not os.path.isdir(savedir):
     os.makedirs(savedir)
 
 # Load data
-'''
+#'''
 import util
-idx = [0, data_idx[which_sim], 0]
-f = 'data/20191011_mc3re_nocomp.dat'
+idx = [0, data_idx[which_sim], 0] # 0 = no compensation
+#f = 'data/20230510-Cfast_auto.dat'
+f = 'data/20230510.dat'
 whole_data, times = util.load(f, idx, vccc=True)
 times = times * 1e3  # s -> ms
-data_cc = whole_data[2] * 1e3  # V -> mV
+data_cc = whole_data[3] * 1e3  # V -> mV
 data_vc = whole_data[1] * 1e3  # V -> mV
-data = (whole_data[0] + whole_data[3]) * 1e12  # A -> pA
+data = (whole_data[0] + whole_data[2]) * 1e12  # A -> pA
 '''
-times = np.arange(0, 5000, 0.1) #TODO
+times = np.arange(0, 120, 0.05) #TODO
 #'''
 #out = np.array([times * 1e-3, data_vc]).T
 #np.savetxt('recorded-voltage.csv', out, delimiter=',', comments='',
@@ -81,11 +82,13 @@ parameters = [
     'voltageclamp.cprs_est',
     'voltageclamp.cm_est',
     'voltageclamp.rseries_est',
+    'voltageclamp.alpha_r',
+    'voltageclamp.alpha_p',
 ]
 model.set_parameters(parameters)
 
 # Set parameters
-#''' What we have in the circuit
+# What we have in the circuit
 p = [
     1./0.01,#1./0.01,#1. / 0.1,  # pA/mV = 1/GOhm; g_kinetics
     100.,#100.,#1000.,  # pF; C_kinetics
@@ -97,21 +100,9 @@ p = [
     0.,  # pF; Cprs*
     0.,  # pF; Cm*
     0.,  # GOhm; Rs*
+    0.,  # alpha_R
+    0.,  # alpha_P
 ]
-''' What the machine thought
-p = [
-    1. / 0.1,  # pA/mV = 1/GOhm; g_kinetics
-    1000.,  # pF; C_kinetics
-    1. / 0.5,  # pA/mV = 1/GOhm; g_membrane
-    8.88,  # pF; Cprs
-    41.19,  # pF; Cm
-    33.6e-3,  # GOhm; Rs
-    -1.2,  # mV; Voffset+
-    0.,  # pF; Cprs*
-    0.,  # pF; Cm*
-    0.,  # GOhm; Rs*
-]
-#'''
 
 # Simulate
 extra_log = ['voltageclamp.Vc', 'membrane.V']
@@ -123,18 +114,17 @@ Vm = simulation['membrane.V']
 # Plot
 fig, axes = plt.subplots(2, 1, sharex=True, figsize=(7, 5))
 
-#axes[0].plot(times, data_vc, c='#a6bddb', label=r'Measured $V_{cmd}$')
-#axes[0].plot(times, data_cc, c='#feb24c', label=r'Measured $V_{m}$')
+axes[0].plot(times, data_vc, c='#a6bddb', label=r'Measured $V_{cmd}$')
+axes[0].plot(times, data_cc, c='#feb24c', label=r'Measured $V_{m}$')
 axes[0].plot(times, Vc, ls='--', c='#045a8d', label=r'Input $V_{cmd}$')
 axes[0].plot(times, Vm, ls='--', c='#bd0026', label=r'Simulated $V_{m}$')
 axes[0].set_ylabel('Voltage (mV)', fontsize=14)
 #axes[0].set_xticks([])
 axes[0].legend(ncol=legend_ncol[which_sim][0])
 
-#axes[1].plot(times, data, alpha=0.5, label='Measurement')
+axes[1].plot(times, data, alpha=0.5, label='Measurement')
 axes[1].plot(times, Iout, ls='--', label='Simulation')
 #axes[1].set_ylim([-800, 1200])  # TODO?
-axes[1].set_xlim([2635, 2695])
 axes[1].legend(ncol=legend_ncol[which_sim][1])
 axes[1].set_ylabel('Current (pA)', fontsize=14)
 axes[1].set_xlabel('Time (ms)', fontsize=14)

@@ -16,7 +16,7 @@ Units:
 # Initial values
 membrane.V = 0.0 [mV]
 mc.Ik = 0 [pA]
-mc.Icc = 0 [pA]  # Current leaked through Rs, Cprs connected to the CC.
+#mc.Icc = 0 [pA]  # Current leaked through Rs, Cprs connected to the CC.
 voltageclamp.Vclamp = 0.0 [mV]
 voltageclamp.Vp = 0.0 [mV]
 voltageclamp.Vest = 0.0 [mV]
@@ -27,14 +27,13 @@ voltageclamp.Iout = 0.0 [mV]
 use membrane.dVdt, membrane.V
 dot(Ik) = gk * (dVdt - Ik / ck)
     in [pA]
-#ck = 100.0 * gk in [pF]  # for decay rate ~100 ms
 ck = 100. in [pF]  # for decay rate ~10 ms
-gk = 500.0 [pA/mV]  # in O(5000) pA range
+gk = 1e2 [pA/mV]  # in O(5000) pA range
 Im = gm * V in [pA]
-gm = 100.0 [pA/mV]  # in O(5000) pA range
-dot(Icc) = voltageclamp.rseries * (dVdt - Icc / voltageclamp.cprs)
-    in [pA]
-I = Ik + Im + Icc
+gm = 1e1 [pA/mV]  # in O(5000) pA range
+#dot(Icc) = voltageclamp.rseries * (dVdt - Icc / voltageclamp.cprs)
+#    in [pA]
+I = Ik + Im #+ Icc
     desc: model cell current
     in [pA]
 
@@ -47,7 +46,7 @@ pace = 0 bind pace
 
 [membrane]
 use voltageclamp.Vp, voltageclamp.rseries, voltageclamp.voffset_eff
-cm = 100.0 [pF]  # in order of pF; TODO: fit
+cm = 44.0 [pF]  # in order of pF; TODO: fit
 dot(V) = dVdt in [mV/ms]
 dVdt = (Vp - V + voffset_eff) / tau - mc.I / cm
     tau = cm * rseries in [ms]
@@ -57,13 +56,14 @@ dVdt = (Vp - V + voffset_eff) / tau - mc.I / cm
 [voltageclamp]
 use membrane.V
 # Parameters
-rseries = 10.0 * 1e-3 [GR]  # in order of MegaOhms; TODO: fit
-cprs = 4.0 [pF]  # Unknown value for 'parasitic' capacitance at electrode...
-cprs_est = 4.0 * 0.9 [pF]  # eff. parasitic capacitance at electrode; TODO: fit
-voffset_eff = 5 [mV]  # TODO: fit
-rseries_est = 0.9 * 10.0e-3 [GR]  # TODO: later this one use measured value
-cm_est = 0.9 * 100.0 [pF]  # TODO: similar to rseries_est, set value
-alpha = 0.8 [1]  # NOTE: percentage of compensation, this is included in rseries_est already
+rseries = 30.0 * 1e-3 [GR]  # in order of MegaOhms; TODO: fit
+cprs = 4.7 [pF]  # Unknown value for 'parasitic' capacitance at electrode...
+cprs_est = 4.7 * 0.9 [pF]  # eff. parasitic capacitance at electrode; TODO: fit
+voffset_eff = 0 [mV]  # TODO: fit
+rseries_est = 0.9 * 30.0e-3 [GR]  # TODO: later this one use measured value
+cm_est = 0.9 * 44.0 [pF]  # TODO: similar to rseries_est, set value
+alpha_r = 0.8 [1]  # Percentage of Rs compensation
+alpha_p = 0.8 [1]  # Percentage of prediction/supercharging
 
 # Command voltage
 Vc = engine.pace
@@ -72,7 +72,7 @@ Vc = engine.pace
 
 # Rs compensation and summing delay
 tau_sum = 40e-3 in [ms]  # electronic delay term, ~ 5 - 70 microsecond
-dVclampdt = (Vc + (Iout + cm_est * dVestdt) * rseries_est - Vclamp) / tau_sum
+dVclampdt = (Vc + (Iout * alpha_r + cm_est * dVestdt * alpha_p) * rseries_est - Vclamp) / tau_sum
     in [mV/ms]
 dot(Vclamp) = dVclampdt
     desc: clamp voltage
@@ -82,7 +82,7 @@ dot(Vclamp) = dVclampdt
 dVestdt = piecewise(
     cm_est < 1e-6, 0,
     rseries_est < 1e-6, 0,
-    (Vc - Vest) / ((1 - alpha) * cm_est * rseries_est/alpha)
+    (Vc - Vest) / ((1 - alpha_p) * cm_est * rseries_est)
 ) in [mV/ms]
 dot(Vest) = dVestdt
     in [mV]
