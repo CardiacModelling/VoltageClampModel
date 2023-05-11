@@ -43,3 +43,16 @@ mc4_experiment_alphas = { # exp#: (alpha_r, alpha_p)
     14: (0.95, 0.8),
     15: (0.95, 0.95),
 }
+
+
+def generate_ramps_protocol_csv():
+    dt = 1e-2
+    t1 = np.arange(0, 50, dt); t2 = np.arange(50, 250+dt, dt)
+    v1 = -80*np.ones(t1.shape); v2 = 50*np.ones(t2.shape)
+    t = np.concatenate((t1, t2)); v = np.concatenate((v1, v2))
+    np.savetxt('ramps_%s.csv' % 0, np.array([t*1e-3, v]).T, delimiter=',', header='"time","voltage"', comments='')
+    for i in range(1, 10):
+        t1 = np.arange(0, 50, dt); t2 = np.arange(50, 50 + i*10, dt); t3 = np.arange(50 + i*10, 250+dt, dt)
+        v1 = -80*np.ones(t1.shape); v2 = -80 + (50+80)/(i*10) * (t2-50); v3 = 50*np.ones(t3.shape)
+        t = np.concatenate((t1, t2, t3)); v = np.concatenate((v1, v2, v3))
+        np.savetxt('ramps_%s.csv' % i, np.array([t*1e-3, v]).T, delimiter=',', header='"time","voltage"', comments='')

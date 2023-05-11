@@ -9,22 +9,26 @@ import matplotlib
 import matplotlib.pyplot as plt
 import pints
 
-import model as m; m.vhold = 0
+import model as m; m.vhold = -40
 
 """
 Simulation for single model cell experiment data with amplifier settings.
 """
 
-sim_list = ['staircase', 'sinewave', 'ap-beattie', 'ap-lei', 'nav']
+saveas = 'mc4auto'
+
+sim_list = ['staircase', 'sinewave', 'ap-beattie', 'ap-lei', 'nav', 'ramps']
 data_idx = {'staircase': 2, 'sinewave': 1, 'ap-lei': 3, 'nav': 0, 'ramps':4}
 protocol_list = {
-    'nav': lambda x: (x, np.loadtxt('../protocol-time-series/ina-steps.txt')),
-    'staircase': 'staircase-ramp.csv',
-    'sinewave': 'sinewave-ramp.csv',
-    'ap-beattie': 'ap-beattie.csv',
-    'ap-lei': 'ap-lei.csv'}
+    'nav': [lambda x: (x, np.loadtxt('nav-step.txt'))],
+    'ramps': ['ramps/ramps_%s.csv' % i for i in range(10)],
+    'staircase': ['staircase-ramp.csv'],
+    'sinewave': ['sinewave-ramp.csv'],
+    'ap-beattie': ['ap-beattie.csv'],
+    'ap-lei': ['ap-lei.csv']}
 legend_ncol = {
     'nav': (2, 1),
+    'ramps': (2, 1),
     'staircase': (2, 1),
     'sinewave': (1, 1),
     'ap-beattie': (4, 2),
@@ -46,39 +50,31 @@ if not os.path.isdir(savedir):
     os.makedirs(savedir)
 
 # Load data
-#'''
 import util
 try:
     # Check the lab record (docx) for details
     n_experiment = int(sys.argv[2])
 except IndexError:
     n_experiment = 4  # 80% (Rs + pred)
-idx = [n_experiment, data_idx[which_sim], 0]
 f = 'data/20230510-Cfast_auto.dat'
 #f = 'data/20230510.dat'
-whole_data, times = util.load(f, idx, vccc=True)
+n_sweeps = 10 if which_sim == 'ramps' else 1
+data_ccs, data_vcs, datas = [], [], []
+for i_sweep in range(n_sweeps):
+    idx = [n_experiment, data_idx[which_sim], i_sweep]
+    whole_data, times = util.load(f, idx, vccc=True)
+    data_ccs.append( whole_data[3] * 1e3 )  # V -> mV
+    data_vcs.append( whole_data[1] * 1e3 )  # V -> mV
+    datas.append( (whole_data[0] + whole_data[2]) * 1e12 )  # A -> pA
 times = times * 1e3  # s -> ms
-data_cc = whole_data[3] * 1e3  # V -> mV
-data_vc = whole_data[1] * 1e3  # V -> mV
-data = (whole_data[0] + whole_data[2]) * 1e12  # A -> pA
 alpha_r, alpha_p = util.mc4_experiment_alphas[n_experiment]
-'''
-times = np.arange(0, 120, 0.05) #TODO
-#'''
 
 #out = np.array([times * 1e-3, data_vc]).T
 #np.savetxt('recorded-voltage.csv', out, delimiter=',', comments='',
 #        header='\"time\",\"voltage\"')
 
-saveas = 'mc4auto'
 
 # Model
-model = m.Model('../mmt-model-files/full2-voltage-clamp-mc4.mmt',
-                protocol_def=protocol_list[which_sim],
-                temperature=273.15 + 23.0,  # K
-                transform=None,
-                readout='voltageclamp.Iout',
-                useFilterCap=False)
 parameters = [
     'mc.gk',
     'mc.ck',
@@ -93,9 +89,7 @@ parameters = [
     'voltageclamp.alpha_r',
     'voltageclamp.alpha_p',
 ]
-model.set_parameters(parameters)
 
-# Set parameters
 # What we have in the circuit
 p = [
     1./0.01,  # pA/mV = 1/GOhm; g_kinetics
@@ -112,26 +106,40 @@ p = [
     alpha_p,  # alpha_P
 ]
 
-# Simulate
 extra_log = ['voltageclamp.Vc', 'membrane.V']
-simulation = model.simulate(p, times, extra_log=extra_log)
-Iout = simulation['voltageclamp.Iout']
-Vc = simulation['voltageclamp.Vc']
-Vm = simulation['membrane.V']
+
+Iouts, Vcs, Vms = [], [], []
+for i_sweep in range(n_sweeps):
+    model = m.Model('../mmt-model-files/full2-voltage-clamp-mc4.mmt',
+                    protocol_def=protocol_list[which_sim][i_sweep],
+                    temperature=273.15 + 23.0,  # K
+                    transform=None,
+                    readout='voltageclamp.Iout',
+                    useFilterCap=False)
+    model.set_parameters(parameters)
+
+    # Simulate
+    simulation = model.simulate(p, times, extra_log=extra_log)
+    Iouts.append( simulation['voltageclamp.Iout'] )
+    Vcs.append( simulation['voltageclamp.Vc'] )
+    Vms.append( simulation['membrane.V'] )
+
 
 # Plot
 fig, axes = plt.subplots(2, 1, sharex=True, figsize=(7, 5))
 
-axes[0].plot(times, data_vc, c='#a6bddb', label=r'Measured $V_{cmd}$')
-axes[0].plot(times, data_cc, c='#feb24c', label=r'Measured $V_{m}$')
-axes[0].plot(times, Vc, ls='--', c='#045a8d', label=r'Input $V_{cmd}$')
-axes[0].plot(times, Vm, ls='--', c='#bd0026', label=r'Simulated $V_{m}$')
+for i, (data_vc, data_cc, Vc, Vm) in enumerate(zip(data_vcs, data_ccs, Vcs, Vms)):
+    axes[0].plot(times, data_vc, c='#a6bddb', label='_' if i else r'Measured $V_{cmd}$')
+    axes[0].plot(times, data_cc, c='#feb24c', label='_' if i else r'Measured $V_{m}$')
+    axes[0].plot(times, Vc, ls='--', c='#045a8d', label='_' if i else r'Input $V_{cmd}$')
+    axes[0].plot(times, Vm, ls='--', c='#bd0026', label='_' if i else r'Simulated $V_{m}$')
 axes[0].set_ylabel('Voltage (mV)', fontsize=14)
 #axes[0].set_xticks([])
 axes[0].legend(ncol=legend_ncol[which_sim][0])
 
-axes[1].plot(times, data, alpha=0.5, label='Measurement')
-axes[1].plot(times, Iout, ls='--', label='Simulation')
+for i, (data, Iout) in enumerate(zip(datas, Iouts)):
+    axes[1].plot(times, data, alpha=0.5, c='C0', label='_' if i else 'Measurement')
+    axes[1].plot(times, Iout, ls='--', c='C1', label='_' if i else 'Simulation')
 #axes[1].set_ylim([-800, 1200])  # TODO?
 axes[1].legend(ncol=legend_ncol[which_sim][1])
 axes[1].set_ylabel('Current (pA)', fontsize=14)
