@@ -89,7 +89,7 @@ p = [
     100.,  # pF; C_kinetics
     1./0.1,  # pA/mV = 1/GOhm; g_membrane
     4.7,  # pF; Cprs
-    44.,  # pF; Cm
+    44.,  # pF; Cm (NOTE: +10pF ?!)
     30e-3,  # GOhm; Rs
     0,  # mV; Voffset+
     0.,  # pF; Cprs*
