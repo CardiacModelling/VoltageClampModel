@@ -111,6 +111,7 @@ p = [
     None,  # alpha_R
     None,  # alpha_P
     110e-3, # tau_out: 110e-3ms
+    # For alpha=95%, probably need tau_out=155e-3ms and 30% reduction in Cm*?
 ]
 i_alpha_r, i_alpha_p = -3, -2
 
