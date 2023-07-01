@@ -5,9 +5,10 @@ sys.path.append('../lib/')
 import os
 import numpy as np
 import matplotlib
-#matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import pints
+import seaborn as sns
+from matplotlib.colors import ListedColormap
 
 import model as m; m.vhold = -40
 
@@ -131,9 +132,13 @@ for i_sweep in range(n_sweeps):
     models[i_sweep].set_parameters(parameters)
 
 # Figure setup
-fig, axes = plt.subplots(2, 1, figsize=(8, 5.5), sharex='all', sharey='row')
+fig, axes = plt.subplots(2, 1, figsize=(7, 5), sharex='all', sharey='row')
+
+colour_list = sns.color_palette('coolwarm',
+                                n_colors=len(n_experiments[n_group])).as_hex()
 
 # Iterate through experiments and load data/simulate/plot
+alphas = []
 for i_experiment, n_experiment in enumerate(n_experiments[n_group]):
 
     # Get data
@@ -149,6 +154,7 @@ for i_experiment, n_experiment in enumerate(n_experiments[n_group]):
 
     p[i_alpha_r] = alpha_r
     p[i_alpha_p] = alpha_p
+    alphas.append((alpha_r, alpha_p))
 
     # Simulate
     Iouts, Vcs, Vms = [], [], []
@@ -159,33 +165,49 @@ for i_experiment, n_experiment in enumerate(n_experiments[n_group]):
         Vms.append( simulation['membrane.V'] )
 
     # Plot
+    c = colour_list[i_experiment]
     ax = axes[0]
-    ax.set_ylabel(r'$\alpha_R=$'f'{alpha_r*100}%\n'r'$\alpha_P=$'f'{alpha_p*100}%')
+    #ax.set_ylabel(r'$\alpha_R=$'f'{alpha_r*100}%\n'r'$\alpha_P=$'f'{alpha_p*100}%')
     times_x = times - wins[which_sim][0]
     for i, (data_vc, data_cc, Vc, Vm) in enumerate(zip(data_vcs, data_ccs, Vcs, Vms)):
-        ax.plot(times_x, data_vc, c='#bdbdbd', label='_' if i else r'Measured $V_{cmd}$')
-        ax.plot(times_x, Vc, ls='--', c='#7f7f7f', label='_' if i else r'Input $V_{cmd}$')
-        ax.plot(times_x, data_cc, c='C0', label='_' if i else r'Measured $V_{m}$')
-        ax.plot(times_x, Vm, ls='--', c='C1', label='_' if i else r'Simulated $V_{m}$')
+        ax.plot(times_x, data_vc, c='#bdbdbd', label='_' if i or i_experiment else r'Measured $V_{cmd}$')
+        ax.plot(times_x, Vc, ls='--', c='#7f7f7f', label='_' if i or i_experiment else r'Input $V_{cmd}$')
+        ax.plot(times_x, data_cc, c=c, alpha=0.75, label='_' if i or i_experiment else r'Measured $V_{m}$')
+        ax.plot(times_x, Vm, ls='--', c=c, label='_' if i or i_experiment else r'Simulated $V_{m}$')
 
     ax = axes[1]
     for i, (data, Iout) in enumerate(zip(datas, Iouts)):
-        ax.plot(times_x, data, c='C0', label='_' if i else r'Measured $I_{out}$')
-        ax.plot(times_x, Iout, ls='--', c='C1', label='_' if i else r'Simulated $I_{out}$')
+        ax.plot(times_x, data, c=c, label='_' if i or i_experiment else r'Measured $I_{out}$')
+        ax.plot(times_x, Iout, ls='--', c=c, label='_' if i or i_experiment else r'Simulated $I_{out}$')
 
 axes[0].set_ylabel('Voltage (mV)')
 axes[1].set_ylabel('Current (pA)')
-#axes[0, 0].legend(loc='lower right', ncol=legend_ncol[which_sim][0],
-#        bbox_to_anchor=(1.015, 1.25), fontsize=10,
-#        bbox_transform=axes[0, 0].transAxes)
-#axes[0, 1].legend(loc='lower right', ncol=legend_ncol[which_sim][1],
-#        bbox_to_anchor=(1.015, 1.25), fontsize=10,
-#        bbox_transform=axes[0, 1].transAxes)
+axes[0].legend(loc='upper left', #ncol=legend_ncol[which_sim][0],
+        bbox_to_anchor=(1.02, 1.), fontsize=10,
+        bbox_transform=axes[0].transAxes)
+axes[1].legend(loc='upper left', #ncol=legend_ncol[which_sim][1],
+        bbox_to_anchor=(1.02, 1.), fontsize=10,
+        bbox_transform=axes[1].transAxes)
 axes[-1].set_xlabel('Time (ms)')
 
 axes[0].set_xlim(wins[which_sim] - wins[which_sim][0])
+fig.align_labels()
 plt.tight_layout()
-plt.subplots_adjust(hspace=0)
+#plt.subplots_adjust(hspace=0)
+
+# Colorbar
+fig.subplots_adjust(top=0.9)
+cbar_ax = fig.add_axes([0.1, 0.95, 0.8, 0.0325])
+cmap = ListedColormap(colour_list)
+cbar = matplotlib.colorbar.ColorbarBase(cbar_ax, cmap=cmap,
+                                        orientation='horizontal')
+cbar.ax.get_xaxis().set_ticks([])
+for j, x in enumerate(alphas):
+    alpha_r, alpha_p = x
+    cbar.ax.text((2 * j + 1) / (2 * len(alphas)), .5,
+                 f'{int(alpha_r*100)}%, {int(alpha_p*100)}%',
+                 ha='center', va='center', fontsize=10)
+cbar.set_label(r'Series resistance compensation ($\alpha_R$) and supercharging ($\alpha_P$)')
 
 plt.savefig('%s/simulate-%s-2-%s-group%s.pdf' % (savedir, saveas, which_sim, n_group), format='pdf')
 plt.savefig('%s/simulate-%s-2-%s-group%s' % (savedir, saveas, which_sim, n_group), dpi=300)
