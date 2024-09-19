@@ -181,8 +181,8 @@ for i_col, n_group in enumerate(n_groups):
             ax.plot(times_x, Iout, ls='--', c=c, label='_' if i or i_experiment else r'Sim. $I_{out}$')
 
     if i_col == 0:
-        axes[0].set_ylabel('Voltage (mV)', fontsize=12)
-        axes[1].set_ylabel('Current (pA)', fontsize=12)
+        axes[0].set_ylabel('Voltage (mV)', fontsize=13)
+        axes[1].set_ylabel('Current (pA)', fontsize=13)
     if i_col == 2:
         axes[0].legend(loc='upper left', #ncol=legend_ncol[which_sim][0],
                 bbox_to_anchor=(1.02, 1.), fontsize=10,
@@ -190,7 +190,7 @@ for i_col, n_group in enumerate(n_groups):
         axes[1].legend(loc='upper left', #ncol=legend_ncol[which_sim][1],
                 bbox_to_anchor=(1.02, 1.), fontsize=10,
                 bbox_transform=axes[1].transAxes)
-    axes[-1].set_xlabel('Time (ms)', fontsize=12)
+    axes[-1].set_xlabel('Time (ms)', fontsize=13)
 
     fig.align_labels()
     #plt.subplots_adjust(hspace=0)
