@@ -7,7 +7,15 @@ Philosophical Transactions of the Royal Society A, 378: 20190348.
 
 https://doi.org/10.1098/rsta.2019.0348
 
-A BibTeX entry for LaTeX users is
+Lei, C.L., Clark, A.P., Clerx, M., Wei, S., Bloothooft, M., de Boer, T.P., Christini, D.J., Krogh-Madsen, T., and Mirams, G.R.
+(2025).
+Resolving Artifacts in Voltage-Clamp Experiments with Computational Modeling: An Application to Fast Sodium Current Recordings.
+Advanced Science, 12, 30: e00691.
+
+https://doi.org/10.1002/advs.202500691
+
+
+BibTeX entries for LaTeX users are
 
 @article{Lei2020Variability,
   author = {Lei, Chon Lok  and Clerx, Michael  and Whittaker, Dominic G.  and Gavaghan, David J.  and de Boer, Teun P.  and Mirams, Gary R. },
@@ -20,4 +28,17 @@ A BibTeX entry for LaTeX users is
   doi = {10.1098/rsta.2019.0348},
   URL = {https://royalsocietypublishing.org/doi/abs/10.1098/rsta.2019.0348},
   eprint = {https://royalsocietypublishing.org/doi/pdf/10.1098/rsta.2019.0348}
+}
+
+@article{Lei2025Artifacts,
+  author = {Lei, Chon Lok and Clark, Alexander P. and Clerx, Michael and Wei, Siyu and Bloothooft, Meye and de Boer, Teun P. and Christini, David J. and Krogh-Madsen, Trine and Mirams, Gary R.},
+  title = {Resolving Artifacts in Voltage-Clamp Experiments with Computational Modeling: An Application to Fast Sodium Current Recordings},
+  journal = {Advanced Science},
+  volume = {12},
+  number = {30},
+  pages = {e00691},
+  year = {2025},
+  doi = {https://doi.org/10.1002/advs.202500691},
+  URL = {https://advanced.onlinelibrary.wiley.com/doi/abs/10.1002/advs.202500691},
+  eprint = {https://advanced.onlinelibrary.wiley.com/doi/pdf/10.1002/advs.202500691}
 }
