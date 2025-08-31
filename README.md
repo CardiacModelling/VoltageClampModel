@@ -5,7 +5,7 @@ A detailed mathematical model of a voltage-clamp experiment with imperfect patch
 ## Release Notes
 
 ### March 2021
-The latest version of this repository includes supercharging compensation, following the equations in Chapter 6 of [Chon Lok Lei's thesis](https://ora.ox.ac.uk/objects/uuid:528c2771-ae4f-4f3c-b649-44904acdf259).
+The latest version of this repository includes supercharging compensation, following the equations in the paper "*Resolving Artifacts in Voltage-Clamp Experiments with Computational Modeling: An Application to Fast Sodium Current Recordings*" by Chon Lok Lei, Alexander P. Clark, Michael Clerx, Siyu Wei, Meye Bloothooft, Teun P. de Boer, David J. Christini, Trine Krogh-Madsen, and Gary R. Mirams ([doi:10.1002/advs.202500691](https://doi.org/10.1002/advs.202500691)), as well as in Chapter 6 of [Chon Lok Lei's thesis](https://ora.ox.ac.uk/objects/uuid:528c2771-ae4f-4f3c-b649-44904acdf259).
 
 ### April 2020
 This repo contains all data and code for reproducing the results in the paper "*Accounting for variability in ion current recordings using a mathematical model of artefacts in voltage-clamp experiments*" by Chon Lok Lei, Michael Clerx, Dominic Whittaker, David Gavaghan, Teun de Boer, and Gary Mirams.
@@ -63,3 +63,8 @@ Lei, C.L., Clerx, M., Whittaker, D.G., Gavaghan D.J., de Boer, T.P. and Mirams, 
 (2020).
 [Accounting for variability in ion current recordings using a mathematical model of artefacts in voltage-clamp experiments](https://doi.org/10.1098/rsta.2019.0348).
 Philosophical Transactions of the Royal Society A, 378: 20190348.
+
+Lei, C.L., Clark, A.P., Clerx, M., Wei, S., Bloothooft, M., de Boer, T.P., Christini, D.J., Krogh-Madsen, T., and Mirams, G.R.
+(2025).
+[Resolving Artifacts in Voltage-Clamp Experiments with Computational Modeling: An Application to Fast Sodium Current Recordings](https://doi.org/10.1002/advs.202500691).
+Advanced Science, 12, 30: 12, e00691.
