@@ -7,3 +7,5 @@
 5. Bessel filter ODEs [![github](../img/github.svg)](5-bessel-filter-odes.ipynb) [![nbviewer](../img/nbviewer.svg)](https://nbviewer.jupyter.org/github/CardiacModelling/VoltageClampModel-new/tree/main/tutorial/appendix-a/5-bessel-filter-odes.ipynb)
 6. Stimulus filter [![github](../img/github.svg)](6-stimulus-filter.ipynb) [![nbviewer](../img/nbviewer.svg)](https://nbviewer.jupyter.org/github/CardiacModelling/VoltageClampModel-new/tree/main/tutorial/appendix-a/6-stimulus-filter.ipynb)
 
+[↩ Back to the tutorial index](../README.md)
+
