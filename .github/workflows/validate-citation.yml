@@ -3,19 +3,34 @@ on:
   push:
     branches:
       - main
+    paths:
+      - CITATION.cff
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
     branches:
       - '**'
+    paths:
+      - CITATION.cff
 
 jobs:
-  Validate-CITATION-cff:
+  validate-cff:
     runs-on: ubuntu-latest
     name: Validate CITATION.cff
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Validate CITATION.cff
-        uses: dieghernan/cff-validator@v4
+      - name: Configure Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+          cache: 'pip'
+          cache-dependency-path: setup.py
+
+      - name: Install dependencies
+        run: |
+          python -m pip install cffconvert
+
+      - name: Validate
+        run: |
+          python -m cffconvert --validate
