@@ -1,15 +1,20 @@
 [[model]]
 name: voltage-clamp-model-level-3
-version: 20251212
+version: 20260305
 mmt_authors: Michael Clerx
-display_name: Voltage clamp model level 3
+display_name: Voltage clamp model, level 3
 desc: """
     "Level 3" simplified model of a voltage-clamp experiment [1-6].
 
-    This version no longer includes capacitative currents or their compensation.
+    Simplifications:
+    
+    - L1: Output filters replaced by a single filter. All filters implemented
+      as first order.
+    - L2: Idealised op-amp, without stray capacitance Cf.
+    - L3: Removed fast capacitative current and its cancellation.
 
-    [1] Clerx, M. (2025) Voltage-clamp notebooks.
-        https://github.com/CardiacModelling/voltage-clamp-notebooks
+    [1] Clerx, M. (2026) Voltage-clamp notebooks.
+        https://github.com/CardiacModelling/VoltageClampModel
 
     [2] Lei, C. L., Clerx, M., Whittaker, D. G., Gavaghan, D. J., De Boer, T.
         P., & Mirams, G. R. (2020) Accounting for variability in ion current

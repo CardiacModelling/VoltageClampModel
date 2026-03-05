@@ -1,0 +1,110 @@
+[[model]]
+name: voltage-clamp-model-lei-2020-reimplementation
+version: 20260305
+mmt_authors: Michael Clerx
+display_name: Voltage clamp model, Lei et al. 2020
+desc: """
+    Model of a patch-clamp amplifier [1].
+
+    This is a reimplementation of the model described in [1].
+    
+    Parameter values in this reimplementation are chosen to provide similar
+    results to the "level 1" simplification in [2].
+
+    [1] Lei, C. L., Clark, A. P., Clerx, M., Wei, S., Bloothooft, M., De Boer,
+        T., Christini, D. J., Krogh-Madsen, T., & Mirams, G. R. (2025)
+        Resolving Artifacts in Voltage-Clamp Experiments with Computational
+        Modeling: An Application to Fast Sodium Current Recordings. Advanced
+        Science.
+        https://doi.org/10.1002/advs.202500691
+
+    [2] Clerx, M. (2026) Voltage-clamp notebooks.
+        https://github.com/CardiacModelling/VoltageClampModel
+       
+"""
+amp.Vm = -120
+amp.Vp = -120
+amp.Vr = -120
+amp.I_obs = 0
+
+[engine]
+time = 0 [ms] in [ms] bind time
+pace = 0 bind pace
+
+[amp]
+I = 10 [nS] * Vm
+    in [pA]
+alpha = 0.7 : The fraction of series resistance compensation
+E_off = 1 [mV] in [mV] : The remaining voltage offset (after correction)
+Rs = 5e-3 [GOhm] in [GOhm] : The true series resistance
+Rs_est = 4.5e-3 [GOhm] in [GOhm] : The estimated series resistance
+Cm = 25 [pF] in [pF] : The true membrane capacitance
+Cm_est = 27 [pF] in [pF] : The estimated membrane capacitance
+Cp = 5 [pF] in [pF] : The true pipette or parasitic capacitance
+Cp_est = 5.5 [pF] in [pF] : The estimated Cp
+# Values below are chosen to match the level 1 simplification
+tau_clamp = 0.001 [ms] in [ms] : The time constant by which the amplifier filters Vr
+tau_out = 0.37 [ms] in [ms] : The time constant by which the amplifier filters I_in
+tau_sum = 0.02 [ms] in [ms] : The time constant by which the reference voltages are filtered
+
+# Leak current
+g_leak = 0.5 [nS] in [nS]
+E_leak = 10 [mV] in [mV]
+I_leak = g_leak * (Vm - E_leak)
+    in [pA]
+
+# Voltage clamp and compensations
+dot(Vm) = (Vp + E_off - Vm) / (Rs * Cm) - (I_leak + I) / Cm
+    in [mV]
+dot(Vp) = (Vr - Vp) / tau_clamp
+    in [mV]
+dot(Vr) = (Vc + alpha * Rs_est * I_obs - Vr) / tau_sum
+    in [mV]
+Vc = engine.pace * 1 [mV]
+    in [mV]
+I_in = I + I_leak + Cm * dot(Vm) + Cp * dot(Vp) - Cm_est * dot(Vr) - Cp_est * dot(Vr)
+    in [pA]
+
+# Output
+dot(I_obs) = (I_in - I_obs) / tau_out
+    in [pA]
+
+[[protocol]]
+# Level Start   Length  Period  Multiplier
+-120    0       2       0       0
++40     1       2       0       0
+
+[[script]]
+import myokit
+import matplotlib.pyplot as plt
+import numpy as np
+
+m = get_model()
+p = get_protocol()
+s = myokit.Simulation(m, p)
+
+dt = 1e-6
+s.pre(1)
+d = s.run(1 - dt)
+d = s.run(1 + dt, log=d).npview()
+t = d.time()
+
+fig = plt.figure(figsize=(9, 5))
+fig.subplots_adjust(0.1, 0.1, 0.99, 0.99, wspace=0.3)
+
+ax = fig.add_subplot(1, 2, 1)
+ax.set_xlabel('Time (ms)')
+ax.set_ylabel('V (mV)')
+ax.plot(t, d['amp.Vc'], label='Vc')
+ax.plot(t, d['amp.Vm'], label='Vm')
+ax.legend()
+
+ax = fig.add_subplot(1, 2, 2)
+ax.set_xlabel('Time (ms)')
+ax.set_ylabel('I (pA)')
+ax.plot(t, d['amp.I'], label='I')
+ax.plot(t, d['amp.I_obs'], label='I_obs')
+ax.legend()
+
+plt.show()
+

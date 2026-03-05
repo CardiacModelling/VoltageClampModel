@@ -1,16 +1,18 @@
 [[model]]
 name: voltage-clamp-model-level-1
-version: 20251212
+version: 20260305
 mmt_authors: Michael Clerx
-display_name: Voltage clamp model level 1
+display_name: Voltage clamp model, level 1
 desc: """
     "Level 1" simplified model of a voltage-clamp experiment [1-6].
 
-    This version of the model has 3 instead of 4 filters, which all implemented
-    as simple first order filters.
+    Simplifications:
+    
+    - L1: Output filters replaced by a single filter. All filters implemented
+      as first order.
 
-    [1] Clerx, M. (2025) Voltage-clamp notebooks.
-        https://github.com/CardiacModelling/voltage-clamp-notebooks
+    [1] Clerx, M. (2026) Voltage-clamp notebooks.
+        https://github.com/CardiacModelling/VoltageClampModel
 
     [2] Lei, C. L., Clerx, M., Whittaker, D. G., Gavaghan, D. J., De Boer, T.
         P., & Mirams, G. R. (2020) Accounting for variability in ion current

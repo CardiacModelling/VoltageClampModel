@@ -1,19 +1,23 @@
 [[model]]
-name: voltage-clamp-model-level-4
+name: voltage-clamp-model-lei-2025-reimplementation
 version: 20260305
 mmt_authors: Michael Clerx
-display_name: Voltage clamp model, level 4
+display_name: Voltage clamp model, Lei et al. 2025
 desc: """
-    "Level 4" simplified model of a voltage-clamp experiment [1-6].
+    Model of a patch-clamp amplifier [1].
 
-    Simplifications:
+    This is a reimplementation of the model described in [1].
+    Setting beta=0 reduces it to the model in [2].
     
-    - L2: Idealised op-amp, without stray capacitance Cf.
-    - L3: Removed fast capacitative current and its cancellation.
-    - L4: All filters removed.
+    Parameter values in this reimplementation are chosen to provide similar
+    results to the "level 1" simplification in [3].
 
-    [1] Clerx, M. (2026) Voltage-clamp notebooks.
-        https://github.com/CardiacModelling/VoltageClampModel
+    [1] Lei, C. L., Clark, A. P., Clerx, M., Wei, S., Bloothooft, M., De Boer,
+        T., Christini, D. J., Krogh-Madsen, T., & Mirams, G. R. (2025)
+        Resolving Artifacts in Voltage-Clamp Experiments with Computational
+        Modeling: An Application to Fast Sodium Current Recordings. Advanced
+        Science.
+        https://doi.org/10.1002/advs.202500691
 
     [2] Lei, C. L., Clerx, M., Whittaker, D. G., Gavaghan, D. J., De Boer, T.
         P., & Mirams, G. R. (2020) Accounting for variability in ion current
@@ -21,32 +25,15 @@ desc: """
         experiments. Phil. Trans. R. Soc. A. 378: 20190348
         https://doi.org/10.1098/rsta.2019.0348
 
-    [3] Lei, C. L., Clark, A. P., Clerx, M., Wei, S., Bloothooft, M., De Boer,
-        T., Christini, D. J., Krogh-Madsen, T., & Mirams, G. R. (2025)
-        Resolving Artifacts in Voltage-Clamp Experiments with Computational
-        Modeling: An Application to Fast Sodium Current Recordings. Advanced
-        Science.
-        https://doi.org/10.1002/advs.202500691
-
-    [4] Abrasheva, V. O., Kovalenko, S. G., Slotvitsky, M., Romanova, S. A.,
-        Aitova, A. A., Frolova, S., Tsvelaya, V., & Syunyaev, R. A. (2024)
-        Human sodium current voltage-dependence at physiological temperature
-        measured by coupling a patch-clamp experiment to a mathematical model.
-        J. Physiol., 602: 633-661.
-        https://doi.org/10.1113/JP285162
-
-    [5] Weerakoon, P., Culurciello, E., Klemic, K. G., & Sigworth, F. J. (2009)
-        An Integrated Patch-Clamp Potentiostat With Electrode Compensation.
-        IEEE Trans. Biomed. Circ. 3-2: 117-125
-        https://doi.org/10.1109/TBCAS.2008.2005419
-
-    [6] Sigworth, F. J. (1995) Electronic design of the patch clamp.
-        In: Single-channel recording (1995): 95-127.
-        https://doi.org/10.1007/978-1-4419-1229-9_4
-
+    [3] Clerx, M. (2026) Voltage-clamp notebooks.
+        https://github.com/CardiacModelling/VoltageClampModel
+       
 """
 amp.Vm = -120
+amp.Vp = -120
+amp.Vr = -120
 amp.Ve = -120
+amp.I_obs = 0
 
 [engine]
 time = 0 [ms] in [ms] bind time
@@ -62,6 +49,12 @@ Rs = 5e-3 [GOhm] in [GOhm] : The true series resistance
 Rs_est = 4.5e-3 [GOhm] in [GOhm] : The estimated series resistance
 Cm = 25 [pF] in [pF] : The true membrane capacitance
 Cm_est = 27 [pF] in [pF] : The estimated membrane capacitance
+Cp = 5 [pF] in [pF] : The true pipette or parasitic capacitance
+Cp_est = 5.5 [pF] in [pF] : The estimated Cp
+# Values below are chosen to match the level 1 simplification
+tau_clamp = 0.001 [ms] in [ms] : The time constant by which the amplifier filters Vr
+tau_out = 0.13 [ms] in [ms] : The time constant by which the amplifier filters I_in
+tau_sum = 0.02 [ms] in [ms] : The time constant by which the reference voltages are filtered
 
 # Leak current
 g_leak = 0.5 [nS] in [nS]
@@ -70,8 +63,11 @@ I_leak = g_leak * (Vm - E_leak)
     in [pA]
 
 # Voltage clamp and compensations
-dot(Vm) = (Vc + E_off - Vm - (alpha - beta) * Rs_est * Cm_est * dot(Ve)
-           ) / (Cm * Rs - alpha * Cm * Rs_est) - I_leak / Cm - I / Cm
+dot(Vm) = (Vp + E_off - Vm) / (Rs * Cm) - (I_leak + I) / Cm
+    in [mV]
+dot(Vp) = (Vr - Vp) / tau_clamp
+    in [mV]
+dot(Vr) = (Vc + alpha * Rs_est * I_obs + beta * Rs_est * Cm_est * dot(Ve) - Vr) / tau_sum
     in [mV]
 dot(Ve) = (Vc - Ve) / if(tau_e < 1e-8 [ms], 1e-8 [ms], tau_e)
     in [mV]
@@ -79,9 +75,11 @@ dot(Ve) = (Vc - Ve) / if(tau_e < 1e-8 [ms], 1e-8 [ms], tau_e)
         in [ms]
 Vc = engine.pace * 1 [mV]
     in [mV]
+I_in = I + I_leak + Cm * dot(Vm) + Cp * dot(Vp) - Cm_est * dot(Ve) - Cp_est * dot(Vr)
+    in [pA]
 
 # Output
-I_obs = I + I_leak + Cm * dot(Vm) - Cm_est * dot(Ve)
+dot(I_obs) = (I_in - I_obs) / tau_out
     in [pA]
 
 [[protocol]]

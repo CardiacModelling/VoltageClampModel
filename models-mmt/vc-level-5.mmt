@@ -1,16 +1,23 @@
 [[model]]
 name: voltage-clamp-model-level-5
-version: 20250708
+version: 20260305
 mmt_authors: Michael Clerx
-display_name: Voltage clamp model level 5
+display_name: Voltage clamp model, level 5
 desc: """
     "Level 5" simplified model of a voltage-clamp experiment [1-6].
 
     This version assumes perfect slow capacitance cancellation.
 
-    [1] Clerx, M. (2025) Voltage-clamp notebooks.
-        https://github.com/CardiacModelling/voltage-clamp-notebooks
-       
+    Simplifications:
+    
+    - L2: Idealised op-amp, without stray capacitance Cf.
+    - L3: Removed fast capacitative current and its cancellation.
+    - L4: All filters removed.
+    - L5: Removed charging current and its cancellation.
+
+    [1] Clerx, M. (2026) Voltage-clamp notebooks.
+        https://github.com/CardiacModelling/VoltageClampModel
+
     [2] Lei, C. L., Clerx, M., Whittaker, D. G., Gavaghan, D. J., De Boer, T.
         P., & Mirams, G. R. (2020) Accounting for variability in ion current
         recordings using a mathematical model of artefacts in voltage-clamp

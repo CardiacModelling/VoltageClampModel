@@ -1,0 +1,74 @@
+[[model]]
+name: voltage-clamp-bath
+version: 20250708
+mmt_authors: Michael Clerx
+display_name: Pipette in bath
+desc: """
+    Simplified model of a voltage-clamp experiment, at the stage where the
+    pipette is in the bath, touching a cell, or with an unbroken giga-seal
+    connection.
+
+    [1] Clerx, M. (2025) Voltage-clamp notebooks.
+        https://github.com/CardiacModelling/voltage-clamp-notebooks
+
+"""
+amp.Vs = 0 [mV]
+
+[engine]
+time = 0 [ms] in [ms] bind time
+pace = 0 bind pace
+
+[amp]
+Rs = 4e-3 [GOhm] in [GOhm] : The true series resistance
+Cp = 6 [pF] in [pF] : The true pipette capacitance
+Cp_est = 0 [pF] in [pF] : The compensated pipette resistance
+tau_s = 0.025 [ms] in [ms] : Stimulus filter time constant
+E_off = 12 [mV] in [mV] : The remaining voltage offset after correction
+Vc = engine.pace * 1 [mV]
+    in [mV]
+dot(Vs) = (Vc - Vs) / tau_s
+    in [mV]
+I_obs = (Vs + E_off) / Rs + (Cp - Cp_est) * dot(Vs)
+    desc: The output current
+    in [pA]
+
+[[protocol]]
+# Level Start   Length  Period  Multiplier
+-120    0       2       0       0
++40     1       2       0       0
+
+[[script]]
+import myokit
+import matplotlib.pyplot as plt
+import numpy as np
+
+m = get_model()
+p = get_protocol()
+s = myokit.Simulation(m, p)
+
+dt = 1e-6
+s.pre(1)
+d = s.run(1 - dt)
+d = s.run(1 + dt, log=d).npview()
+t = d.time()
+
+fig = plt.figure(figsize=(9, 5))
+fig.subplots_adjust(0.1, 0.1, 0.99, 0.99, wspace=0.3)
+
+ax = fig.add_subplot(1, 2, 1)
+ax.set_xlabel('Time (ms)')
+ax.set_ylabel('V (mV)')
+ax.plot(t, d['amp.Vc'], label='Vc')
+ax.plot(t, d['amp.Vs'], label='Vs')
+ax.plot(t, d['amp.Vm'], label='Vm')
+ax.legend()
+
+ax = fig.add_subplot(1, 2, 2)
+ax.set_xlabel('Time (ms)')
+ax.set_ylabel('I (pA)')
+ax.plot(t, d['amp.I'], label='I')
+ax.plot(t, d['amp.I_obs'], label='I_obs')
+ax.legend()
+
+plt.show()
+
