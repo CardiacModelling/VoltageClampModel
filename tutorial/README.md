@@ -10,15 +10,27 @@ A list of references and further reading is provided [here](./references.ipynb).
 [↩ Back to the main repository](../)
 
 
-## Modelling patch-clamp experiments [![github](./img/github.svg)](./1-modelling-patch-clamp.ipynb) [![nbviewer](./img/nbviewer.svg)](https://nbviewer.jupyter.org/github/CardiacModelling/VoltageClampModel-new/tree/main/tutorial/1-modelling-patch-clamp.ipynb)
+## Modelling patch-clamp experiments 
+[![github](./img/github.svg)](./1-modelling-patch-clamp.ipynb)
+[![nbviewer](./img/nbviewer.svg)](https://nbviewer.jupyter.org/github/CardiacModelling/VoltageClampModel-new/tree/main/tutorial/1-modelling-patch-clamp.ipynb)
+
 The first notebook describes the uncompensated patch-clamp set up, and derives an ODE model from the electrical schematics.
 
-## Modelling electronic compensation [![github](./img/github.svg)](./2-compensation.ipynb) [![nbviewer](./img/nbviewer.svg)](https://nbviewer.jupyter.org/github/CardiacModelling/VoltageClampModel-new/tree/main/tutorial/2-compensation.ipynb)
+## Modelling electronic compensation
+[![github](./img/github.svg)](./2-compensation.ipynb)
+[![nbviewer](./img/nbviewer.svg)](https://nbviewer.jupyter.org/github/CardiacModelling/VoltageClampModel-new/tree/main/tutorial/2-compensation.ipynb)
+
 The model is updated to include the compensation circuitry commonly used in patch-clamp amplifiers.
 
-## Simulating a manual patch clamp experiment [![github](./img/github.svg)](./3-simulations.ipynb) [![nbviewer](./img/nbviewer.svg)](https://nbviewer.jupyter.org/github/CardiacModelling/VoltageClampModel-new/tree/main/tutorial/3-simulations.ipynb)
+## Simulating a manual patch clamp experiment 
+[![github](./img/github.svg)](./3-simulations.ipynb) 
+[![nbviewer](./img/nbviewer.svg)](https://nbviewer.jupyter.org/github/CardiacModelling/VoltageClampModel-new/tree/main/tutorial/3-simulations.ipynb)
+
 We walk through and simulate the early steps of a manual patch-clamp experiment.
 
-## Simplified models [![github](./img/github.svg)](./4-simplified.ipynb) [![nbviewer](./img/nbviewer.svg)](https://nbviewer.jupyter.org/github/CardiacModelling/VoltageClampModel-new/tree/main/tutorial/4-simplified.ipynb)
+## Simplified models 
+[![github](./img/github.svg)](./4-simplified.ipynb) 
+[![nbviewer](./img/nbviewer.svg)](https://nbviewer.jupyter.org/github/CardiacModelling/VoltageClampModel-new/tree/main/tutorial/4-simplified.ipynb)
+
 In the final notebook, we derive simplified models and compare with previous work
 
