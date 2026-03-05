@@ -7,7 +7,7 @@ To view the notebooks, use the GitHub or nbviewer links below, or clone the repo
 
 A list of references and further reading is provided [here](./references.ipynb).
 
-[↩ Back to the main repository](../)
+[↩ Back to the main repository](https://github.com/CardiacModelling/VoltageClampModel-new)
 
 
 ## Modelling patch-clamp experiments 
