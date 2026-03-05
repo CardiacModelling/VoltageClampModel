@@ -1,9 +1,10 @@
+title: Voltage clamp model
+message: "If you use this repository, please cite it using the preferred citation in this meta data."
 cff-version: 1.2.0
-message: If you use this software, please cite it using the preferred citation listed in this meta data.
-repository-code: https://github.com/CardiacModelling/VoltageClampModel
 authors:
   - family-names: Gary R.
     given-names: Mirams' Lab
+repository-code: https://github.com/CardiacModelling/VoltageClampModel
 preferred-citation:
   title: "Resolving Artifacts in Voltage-Clamp Experiments with Computational Modeling: An Application to Fast Sodium Current Recordings."
   authors:
