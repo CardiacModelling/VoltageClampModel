@@ -1,0 +1,63 @@
+cff-version: 1.2.0
+message: If you use this software, please cite it using the preferred citation listed in this meta data.
+repository-code: https://github.com/CardiacModelling/VoltageClampModel
+authors:
+  - family-names: Gary R.
+    given-names: Mirams' lab
+preferred-citation:
+  title: Resolving Artifacts in Voltage-Clamp Experiments with Computational Modeling: An Application to Fast Sodium Current Recordings.
+  authors:
+    - family-names: Lei
+      given-names: "Chon Lok"
+    - family-names: Clark
+      given-names: Alexander P.
+    - family-names: Clerx
+      given-names: Michael
+    - family-names: Wei
+      given-names: Siyu
+    - family-names: Bloothooft
+      given-names: Meye
+    - family-names: de Boer
+      given-names: Teun P.
+    - family-names: Christini
+      given-names: David J.
+    - family-names: Krogh-Madsen
+      given-names: Trine
+    - family-names: Mirams
+      given-names: Gary R.
+  journal: Advanced Science
+  year: 2025
+  volume: 12
+  issue: 30
+  start: e00691
+  type: article
+  identifiers:
+    - description: The published paper
+      type: doi
+      value: 10.1002/advs.202500691
+references:
+  - title: Accounting for variability in ion current recordings using a mathematical model of artefacts in voltage-clamp experiments.
+    authors:
+      - family-names: Lei
+        given-names: "Chon Lok"
+      - family-names: Clerx
+        given-names: Michael
+      - family-names: Whittaker
+        given-names: Dominic G.
+      - family-names: Gavaghan
+        given-names: David J.
+      - family-names: de Boer
+        given-names: Teun P.
+      - family-names: Mirams
+        given-names: Gary R.
+    journal: Philosophical Transactions of the Royal Society A: Mathematical, Physical and Engineering Sciences
+    year: 2020
+    volume: 378
+    issue: 2173
+    start: 20190348
+    type: article
+    identifiers:
+      - description: The published paper
+        type: doi
+        value: 10.1098/rsta.2019.0348
+
