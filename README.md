@@ -29,7 +29,7 @@ For slower currents, levels 4 or 5 can be used.
 
 ## Tutorials
 
-To understand these models, we provide [four tutorial notebooks](tutorial).
+To understand these models, we provide [four tutorial notebooks](./tutorial/README.md).
 
 The first derives a basic model of a patch clamp amplifier, and the second adds compensation and filtering, leading to the "Level 0" model.
 In the third notebook, this model is used to simulate the early stages of a (manual) patch-clamp experiment.
