@@ -33,5 +33,17 @@ We walk through and simulate the early steps of a manual patch-clamp experiment.
 [![github](./img/github.svg)](./4-simplified.ipynb) 
 [![nbviewer](./img/nbviewer.svg)](https://nbviewer.jupyter.org/github/CardiacModelling/VoltageClampModel-new/tree/main/tutorial/4-simplified.ipynb)
 
-In the final notebook, we derive simplified models and compare with previous work
+In the final notebook, we derive simplified models and compare with previous work.
+
+---
+
+## Appendices
+
+Finally, there are several appendices:
+
+- [Appendix A](./appendix-a) adds details on electronics and filters.
+- [Appendix B](./appendix-b) looks at details of the model derivation.
+- [Appendix C](./appendix-c) **provides default parameter values**, and amplifier-specific ones.
+- [Appendix D](./appendix-d) discusses remaining sources of error.
+- [Appendix E](./appendix-e) looks at Rs and Cm estimates.
 
