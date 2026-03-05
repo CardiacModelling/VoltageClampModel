@@ -1,0 +1,153 @@
+[[model]]
+name: voltage-clamp-model-level-2y
+version: 20251212
+mmt_authors: Michael Clerx
+display_name: Voltage clamp model level 2y
+desc: """
+    "Level 2y" simplified model of a voltage-clamp experiment [1-6].
+
+    This is a transitional model, showing half the changes made in the "level 2"
+    simplification. Here, we have removed the stray capacitance Cf, but not used
+    the ideal op-amp assumption.
+
+    [1] Clerx, M. (2025) Voltage-clamp notebooks.
+        https://github.com/CardiacModelling/voltage-clamp-notebooks
+
+    [2] Lei, C. L., Clerx, M., Whittaker, D. G., Gavaghan, D. J., De Boer, T.
+        P., & Mirams, G. R. (2020) Accounting for variability in ion current
+        recordings using a mathematical model of artefacts in voltage-clamp
+        experiments. Phil. Trans. R. Soc. A. 378: 20190348
+        https://doi.org/10.1098/rsta.2019.0348
+
+    [3] Lei, C. L., Clark, A. P., Clerx, M., Wei, S., Bloothooft, M., De Boer,
+        T., Christini, D. J., Krogh-Madsen, T., & Mirams, G. R. (2025)
+        Resolving Artifacts in Voltage-Clamp Experiments with Computational
+        Modeling: An Application to Fast Sodium Current Recordings. Advanced
+        Science.
+        https://doi.org/10.1002/advs.202500691
+
+    [4] Abrasheva, V. O., Kovalenko, S. G., Slotvitsky, M., Romanova, S. A.,
+        Aitova, A. A., Frolova, S., Tsvelaya, V., & Syunyaev, R. A. (2024)
+        Human sodium current voltage-dependence at physiological temperature
+        measured by coupling a patch-clamp experiment to a mathematical model.
+        J. Physiol., 602: 633-661.
+        https://doi.org/10.1113/JP285162
+
+    [5] Weerakoon, P., Culurciello, E., Klemic, K. G., & Sigworth, F. J. (2009)
+        An Integrated Patch-Clamp Potentiostat With Electrode Compensation.
+        IEEE Trans. Biomed. Circ. 3-2: 117-125
+        https://doi.org/10.1109/TBCAS.2008.2005419
+
+    [6] Sigworth, F. J. (1995) Electronic design of the patch clamp.
+        In: Single-channel recording (1995): 95-127.
+        https://doi.org/10.1007/978-1-4419-1229-9_4
+
+"""
+amp.Vm = -120
+amp.Vp = -120
+amp.Vo = -120
+amp.Ve = -120
+amp.Vrc = -120
+amp.Vs = -120
+amp.V_obs = -120
+
+[engine]
+time = 0 [ms] in [ms] bind time
+pace = 0 bind pace
+
+[amp]
+I = 10 [nS] * Vm
+    in [pA]
+alpha = 0.7 : The fraction of series resistance compensation
+beta = 0.7 : The fraction of series resistance prediction
+E_off = 1 [mV] in [mV] : The remaining voltage offset (after correction)
+Rs = 5e-3 [GOhm] in [GOhm] : The true series resistance
+Rs_est = 4.5e-3 [GOhm] in [GOhm] : The estimated series resistance
+Cm = 25 [pF] in [pF] : The true membrane capacitance
+Cm_est = 27 [pF] in [pF] : The estimated membrane capacitance
+Cp = 5 [pF] in [pF] : The true pipette or parasitic capacitance
+Cp_est = 5.5 [pF] in [pF] : The estimated Cp
+Rf = 0.5 [GOhm] in [GOhm] : The feedback resistance
+tau_a = 13e-6 [ms] in [ms] : The amplifier time constant
+Cf = 5e-3 [pF] in [pF] : The apparent feedback capacitance
+tau_rc = 10e-3 [ms] in [ms] : The time constant of the series resistance compensation filter
+tau_s = 0.025 [ms] in [ms] : Stimulus filter time constant
+fo = 10 [kHz] in [kHz] : Output filter cut-off frequency
+
+# Leak current
+g_leak = 0.5 [nS] in [nS]
+E_leak = 10 [mV] in [mV]
+I_leak = g_leak * (Vm - E_leak)
+    in [pA]
+
+# Voltage clamp and compensations
+dot(Vm) = (Vp + E_off - Vm) / (Rs * Cm) - I_leak / Cm - I / Cm
+    in [mV]
+dot(Vp) = ((Vo - Vp) / Rf - (Vp + E_off - Vm) / Rs + Cm_est * dot(Ve) + Cp_est * dVr) / Cp
+    in [mV]
+dot(Vo) = (Vr - Vp) / tau_a
+    in [mV]
+Vr = alpha * Rs_est / Rf * Vrc + (Vs - beta * Ve) / (1 - beta)
+    in [mV]
+dVr = alpha * Rs_est / Rf * dot(Vrc) + (dot(Vs) - beta * dot(Ve)) / (1 - beta)
+    in [mV/ms]
+dot(Ve) = (Vs - Ve) / if(tau_e < 1e-8 [ms], 1e-8 [ms], tau_e)
+    in [mV]
+    tau_e = (1 - beta) * Rs_est * Cm_est
+        in [ms]
+dot(Vrc) = (Vo - Vr - Vrc) / tau_rc
+    in [mV]
+dot(Vs) = (Vc - Vs) / tau_s
+    in [mV]
+Vc = engine.pace * 1 [mV]
+    in [mV]
+dot(V_obs) = (Vo - Vr - V_obs) / (tau_o)
+    in [mV]
+    tau_o = 1 / (2 * 3.14159 * fo)
+        in [ms]
+
+# Output
+I_obs = V_obs / Rf
+    desc: The output current
+    in [pA]
+
+[[protocol]]
+# Level Start   Length  Period  Multiplier
+-120    0       2       0       0
++40     1       2       0       0
+
+[[script]]
+import myokit
+import matplotlib.pyplot as plt
+import numpy as np
+
+m = get_model()
+p = get_protocol()
+s = myokit.Simulation(m, p)
+
+dt = 1e-6
+s.pre(1)
+d = s.run(1 - dt)
+d = s.run(1 + dt, log=d).npview()
+t = d.time()
+
+fig = plt.figure(figsize=(9, 5))
+fig.subplots_adjust(0.1, 0.1, 0.99, 0.99, wspace=0.3)
+
+ax = fig.add_subplot(1, 2, 1)
+ax.set_xlabel('Time (ms)')
+ax.set_ylabel('V (mV)')
+ax.plot(t, d['amp.Vc'], label='Vc')
+ax.plot(t, d['amp.Vs'], label='Vs')
+ax.plot(t, d['amp.Vm'], label='Vm')
+ax.legend()
+
+ax = fig.add_subplot(1, 2, 2)
+ax.set_xlabel('Time (ms)')
+ax.set_ylabel('I (pA)')
+ax.plot(t, d['amp.I'], label='I')
+ax.plot(t, d['amp.I_obs'], label='I_obs')
+ax.legend()
+
+plt.show()
+

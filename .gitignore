@@ -1,11 +1,15 @@
-# Compile python
-*.pyc
-__pycache__
-
-# Jupyter notebooks
-.ipynb_checkpoints
-
 # Virtual environments
 .venv
 venv
 env
+
+# Compiled python
+*.pyc
+__pycache__
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints
+
+# Tools
+.DS_Store
+.vscode

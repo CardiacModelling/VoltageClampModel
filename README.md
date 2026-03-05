@@ -1,6 +1,8 @@
 # Voltage clamp model
 
-This repository contains up-to-date and reference versions of the voltage clamp model used in Lei et al. 2000, 2005, and other publications.
+This repository contains up-to-date and reference versions of the voltage clamp model used in Lei et al. 2020, 2025, and other publications.
+
+_Note: This URL used to host the data for the 2020 Lei et al. publication, which has been moved to https://github.com/CardiacModelling/VoltageClampModel2020_
 
 ## The latest model
 
@@ -60,7 +62,7 @@ BibTeX entry:
 }
 ```
 
-Code: https://github.com/CardiacModelling/VoltageClampModel2000
+Code: https://github.com/CardiacModelling/VoltageClampModel2020
 
 ## Acknowledging this work
 
