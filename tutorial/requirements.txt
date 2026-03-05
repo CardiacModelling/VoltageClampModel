@@ -1,0 +1,5 @@
+myokit>=1.33.0
+pints>=0.6.0
+jupyter
+sympy
+scipy
