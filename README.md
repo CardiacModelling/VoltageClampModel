@@ -2,13 +2,12 @@
 
 This repository contains up-to-date and reference versions of the voltage clamp model used in Lei et al. 2000, 2005, and other publications.
 
-
 ## The latest model
 
 
 
 
-### Tutorials
+## Tutorials
 
 
 ## Previous versions
@@ -17,10 +16,10 @@ This repository contains up-to-date and reference versions of the voltage clamp 
 
 The first published version was in
 
-**Accounting for variability in ion current recordings using a mathematical model of artefacts in voltage-clamp experiments.**
-Lei, C.L., Clerx, M., Whittaker, D.G., Gavaghan D.J., de Boer, T.P. and Mirams, G.R. (2020).
-Philosophical Transactions of the Royal Society A, 378: 20190348.
-https://doi.org/10.1098/rsta.2019.0348
+> Accounting for variability in ion current recordings using a mathematical model of artefacts in voltage-clamp experiments.
+  Lei, C.L., Clerx, M., Whittaker, D.G., Gavaghan D.J., de Boer, T.P. and Mirams, G.R. (2020).
+  Philosophical Transactions of the Royal Society A, 378: 20190348.
+  https://doi.org/10.1098/rsta.2019.0348
 
 BibTeX entry:
 ```
