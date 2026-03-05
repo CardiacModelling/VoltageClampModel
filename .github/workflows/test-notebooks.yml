@@ -1,0 +1,37 @@
+name: Tutorials
+
+on:
+  schedule:
+    # 4am on friday (minute, hour, day, month, day-of-the-week)
+    - cron:  '0 4 * * 5'
+
+jobs:
+
+  build-and-test:
+    name: Tutorials
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set up Python 3.15
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.14
+          architecture: x64
+
+      - name: install system dependencies
+        run: |
+          sudo ./.github/workflows/install-ubuntu-dependencies.sh
+
+      - name: install python dependencies
+        run: |
+          python --version
+          python -m pip install --upgrade pip setuptools wheel
+          python -m pip install -r requirements.txt
+
+      - name: test notebooks
+        run: |
+          cd tutorial
+          python test.py
+
