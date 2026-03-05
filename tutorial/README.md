@@ -7,6 +7,9 @@ To view the notebooks, use the GitHub or nbviewer links below, or clone the repo
 
 A list of references and further reading is provided [here](./references.ipynb).
 
+[↩ Back to the main repository](../)
+
+
 ## Modelling patch-clamp experiments 
 [![github](./img/github.svg)](./1-modelling-patch-clamp.ipynb)
 [![nbviewer](./img/nbviewer.svg)](https://nbviewer.jupyter.org/github/CardiacModelling/VoltageClampModel-new/tree/main/tutorial/1-modelling-patch-clamp.ipynb)
@@ -20,7 +23,7 @@ The first notebook describes the uncompensated patch-clamp set up, and derives a
 The model is updated to include the compensation circuitry commonly used in patch-clamp amplifiers.
 
 ## Simulating a manual patch clamp experiment 
-[![github](../img/github.svg)](./3-simulations.ipynb) 
+[![github](./img/github.svg)](./3-simulations.ipynb) 
 [![nbviewer](./img/nbviewer.svg)](https://nbviewer.jupyter.org/github/CardiacModelling/VoltageClampModel-new/tree/main/tutorial/3-simulations.ipynb)
 
 We walk through and simulate the early steps of a manual patch-clamp experiment.
@@ -31,5 +34,3 @@ We walk through and simulate the early steps of a manual patch-clamp experiment.
 
 In the final notebook, we derive simplified models and compare with previous work
 
-
-[↩ Back to the main repository](../)
