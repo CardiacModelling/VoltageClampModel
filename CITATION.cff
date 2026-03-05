@@ -3,7 +3,7 @@ message: If you use this software, please cite it using the preferred citation l
 repository-code: https://github.com/CardiacModelling/VoltageClampModel
 authors:
   - family-names: Gary R.
-    given-names: Mirams' lab
+    given-names: Mirams' Lab
 preferred-citation:
   title: "Resolving Artifacts in Voltage-Clamp Experiments with Computational Modeling: An Application to Fast Sodium Current Recordings."
   authors:
@@ -25,7 +25,7 @@ preferred-citation:
       given-names: Trine
     - family-names: Mirams
       given-names: Gary R.
-  journal: Advanced Science
+  journal: "Advanced Science"
   year: 2025
   volume: 12
   issue: 30
@@ -36,7 +36,7 @@ preferred-citation:
       type: doi
       value: 10.1002/advs.202500691
 references:
-  - title: Accounting for variability in ion current recordings using a mathematical model of artefacts in voltage-clamp experiments.
+  - title: "Accounting for variability in ion current recordings using a mathematical model of artefacts in voltage-clamp experiments."
     authors:
       - family-names: Lei
         given-names: "Chon Lok"
@@ -50,7 +50,7 @@ references:
         given-names: Teun P.
       - family-names: Mirams
         given-names: Gary R.
-    journal: Philosophical Transactions of the Royal Society A: Mathematical, Physical and Engineering Sciences
+    journal: "Philosophical Transactions of the Royal Society A: Mathematical, Physical and Engineering Sciences"
     year: 2020
     volume: 378
     issue: 2173
