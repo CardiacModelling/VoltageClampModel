@@ -17,12 +17,18 @@ This repository contains up-to-date and reference versions of the voltage clamp 
 
 The "supercharging" or "prediction" pathway was added in
 
-**Resolving Artifacts in Voltage-Clamp Experiments with Computational Modeling: An Application to Fast Sodium Current Recordings.**
-Lei, C.L., Clark, A.P., Clerx, M., Wei, S., Bloothooft, M., de Boer, T.P., Christini, D.J., Krogh-Madsen, T., and Mirams, G.R. (2025).
-Advanced Science, 12, 30: e00691.
-https://doi.org/10.1002/advs.202500691
-
-with code archived at https://github.com/CardiacModelling/VoltageClampModel2000
+- **Resolving Artifacts in Voltage-Clamp Experiments with Computational Modeling: An Application to Fast Sodium Current Recordings.**
+  Lei, C.L., Clark, A.P., Clerx, M., Wei, S., Bloothooft, M., de Boer, T.P., Christini, D.J., Krogh-Madsen, T., and Mirams, G.R. (2025).
+  Advanced Science, 12, 30: e00691.
+  https://doi.org/10.1002/advs.202500691
+- Code: https://github.com/CardiacModelling/VoltageClampModel2000
+- Bibtex: ```
+    Hello
+    I
+    am
+    multi
+    line
+  ```
 
 ### Lei et al. 2000
 
