@@ -7,3 +7,4 @@
 5. Leak (unfinished) [![github](../img/github.svg)](5-leak-correction.ipynb) [![nbviewer](../img/nbviewer.svg)](https://nbviewer.jupyter.org/github/CardiacModelling/VoltageClampModel-new/tree/main/tutorial/5-leak-correction.ipynb)
 6. Handling remaining capacitance artefacts (unfinished) [![github](../img/github.svg)](6-remaining-Cp-artefacts.ipynb) [![nbviewer](../img/nbviewer.svg)](https://nbviewer.jupyter.org/github/CardiacModelling/VoltageClampModel-new/tree/main/tutorial/6-remaining-Cp-artefacts.ipynb)
 
+[↩ Back to the tutorial index](../README.md)

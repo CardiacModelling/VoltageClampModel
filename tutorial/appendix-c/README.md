@@ -4,3 +4,4 @@
 2. Default parameter values used in examples  [![github](../img/github.svg)](2-parameter-defaults.ipynb) [![nbviewer](../img/nbviewer.svg)](https://nbviewer.jupyter.org/github/CardiacModelling/VoltageClampModel-new/tree/main/tutorial/appendix-c/2-parameter-defaults.ipynb)
 3. Parameter values, estimates for different amplifiers etc. [![github](../img/github.svg)](3-parameter-values.ipynb) [![nbviewer](../img/nbviewer.svg)](https://nbviewer.jupyter.org/github/CardiacModelling/VoltageClampModel-new/tree/main/tutorial/appendix-c/3-parameter-values.ipynb)
 
+[↩ Back to the tutorial index](../README.md)
