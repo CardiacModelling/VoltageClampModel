@@ -2,8 +2,8 @@ name: Tutorials
 
 on:
   schedule:
-    # 4am on friday (minute, hour, day, month, day-of-the-week)
-    - cron:  '0 4 * * 5'
+    # 10am on friday (minute, hour, day, month, day-of-the-week)
+    - cron:  '0 10 * * 5'
 
 jobs:
 
@@ -28,10 +28,9 @@ jobs:
         run: |
           python --version
           python -m pip install --upgrade pip setuptools wheel
-          python -m pip install -r requirements.txt
+          python -m pip install -r tutorial/requirements.txt
 
       - name: test notebooks
         run: |
-          cd tutorial
-          python test.py
+          python tutorial/test.py
 

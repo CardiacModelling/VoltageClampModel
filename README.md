@@ -18,7 +18,7 @@ In addition to this full-featured model, we now also provide a series of increas
 - "Level 4" removes all filtering entirely.
 - "Level 5" assumes perfect slow capacitance cancellation (but imperfect series resistance compensation).
 
-All models are provided in Myokit ([models-mmt](./models-mmt)) and CellML ([models-mmt](./models-mmt)) formats.
+All models are provided in Myokit ([models-mmt](./models-mmt)) and CellML ([models-cellml](./models-cellml)) formats.
 
 ### Which model should I use?
 
