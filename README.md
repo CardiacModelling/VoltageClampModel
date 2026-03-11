@@ -38,7 +38,7 @@ The final notebook derives the simplifications, and shows how they relate to our
 
 ## Previous versions
 
-### Lei et al. 2000
+### Lei et al. 2020
 
 The first published version was in
 
