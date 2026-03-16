@@ -90,5 +90,5 @@ Code: https://github.com/CardiacModelling/VoltageClampModel2020
 
 ## Acknowledging this work
 
-If you publish any work based on the contents of this repository please cite the papers listed above, or use the information in [our CITATION.cff](CITATION.cff).
+If you publish any work based on the contents of this repository please cite the papers listed above.
 
