@@ -39,7 +39,8 @@ def test_notebooks(root='.'):
 
             # Test notebooks
             if os.path.splitext(filename)[1] == '.ipynb':
-                print('Testing ' + path + '.'*(max(0, 70 - len(path))), end='')
+                print(f'Testing {path}' + '.' * (max(0, 70 - len(path))),
+                      end='')
                 sys.stdout.flush()
                 res = test_notebook(root, filename)
                 if res is None:

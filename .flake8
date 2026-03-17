@@ -1,0 +1,19 @@
+[flake8]
+exclude=
+    .git,
+    .github,
+    venv,
+ignore=
+    # Block comment should start with '# '
+    E265,
+    # "Do not assign a labmda expression, use a def".
+    E731,
+    # Ambiguous variable names
+    E741,
+    # Blank line at end of file
+    W391,
+    # Binary operator on new line
+    W503,
+    # Line break after binary operator
+    W504,
+
