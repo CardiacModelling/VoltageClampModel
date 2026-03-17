@@ -1,13 +1,13 @@
 [[model]]
 name: voltage-clamp-model-level-4
-version: 20260305
+version: 20260317
 mmt_authors: Michael Clerx
-display_name: Voltage clamp model, level 4
+display_name: L4 VC Model
 desc: """
     "Level 4" simplified model of a voltage-clamp experiment [1-6].
 
     Simplifications:
-    
+
     - L2: Idealised op-amp, without stray capacitance Cf.
     - L3: Removed fast capacitative current and its cancellation.
     - L4: All filters removed.
@@ -45,8 +45,8 @@ desc: """
         https://doi.org/10.1007/978-1-4419-1229-9_4
 
 """
-amp.Vm = -120
-amp.Ve = -120
+amp.Vm = -120 [mV]
+amp.Ve = -120 [mV]
 
 [engine]
 time = 0 [ms] in [ms] bind time
@@ -86,7 +86,7 @@ I_obs = I + I_leak + Cm * dot(Vm) - Cm_est * dot(Ve)
 
 [[protocol]]
 # Level Start   Length  Period  Multiplier
--120    0       2       0       0
+-120    0       1       0       0
 +40     1       2       0       0
 
 [[script]]

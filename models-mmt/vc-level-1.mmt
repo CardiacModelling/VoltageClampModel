@@ -2,12 +2,12 @@
 name: voltage-clamp-model-level-1
 version: 20260317
 mmt_authors: Michael Clerx
-display_name: Voltage clamp model, level 1
+display_name: L1 VC Model
 desc: """
     "Level 1" simplified model of a voltage-clamp experiment [1-6].
 
     Simplifications:
-    
+
     - L1: Output filters replaced by a single filter. All filters implemented
       as first order.
 
@@ -116,7 +116,7 @@ I_obs = V_obs / Rf
 
 [[protocol]]
 # Level Start   Length  Period  Multiplier
--120    0       2       0       0
+-120    0       1       0       0
 +40     1       2       0       0
 
 [[script]]

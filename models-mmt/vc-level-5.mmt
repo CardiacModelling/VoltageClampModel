@@ -1,15 +1,15 @@
 [[model]]
 name: voltage-clamp-model-level-5
-version: 20260305
+version: 20260317
 mmt_authors: Michael Clerx
-display_name: Voltage clamp model, level 5
+display_name: L5 VC Model
 desc: """
     "Level 5" simplified model of a voltage-clamp experiment [1-6].
 
     This version assumes perfect slow capacitance cancellation.
 
     Simplifications:
-    
+
     - L2: Idealised op-amp, without stray capacitance Cf.
     - L3: Removed fast capacitative current and its cancellation.
     - L4: All filters removed.
@@ -23,7 +23,7 @@ desc: """
         recordings using a mathematical model of artefacts in voltage-clamp
         experiments. Phil. Trans. R. Soc. A. 378: 20190348
         https://doi.org/10.1098/rsta.2019.0348
-        
+
     [3] Lei, C. L., Clark, A. P., Clerx, M., Wei, S., Bloothooft, M., De Boer,
         T., Christini, D. J., Krogh-Madsen, T., & Mirams, G. R. (2025)
         Resolving Artifacts in Voltage-Clamp Experiments with Computational
@@ -42,13 +42,13 @@ desc: """
         An Integrated Patch-Clamp Potentiostat With Electrode Compensation.
         IEEE Trans. Biomed. Circ. 3-2: 117-125
         https://doi.org/10.1109/TBCAS.2008.2005419
-        
-    [6] Sigworth, F. J. (1995) Electronic design of the patch clamp. 
+
+    [6] Sigworth, F. J. (1995) Electronic design of the patch clamp.
         In: Single-channel recording (1995): 95-127.
         https://doi.org/10.1007/978-1-4419-1229-9_4
-        
+
 """
-amp.Vm = -120
+amp.Vm = -120 [mV]
 
 [engine]
 time = 0 [ms] in [ms] bind time
@@ -81,7 +81,7 @@ I_obs = I + I_leak
 
 [[protocol]]
 # Level Start   Length  Period  Multiplier
--120    0       2       0       0
+-120    0       1       0       0
 +40     1       2       0       0
 
 [[script]]
