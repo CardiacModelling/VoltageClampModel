@@ -249,6 +249,16 @@ def test_syntax_and_meta(path):
         if m.meta[tag] == '':
             return m, f'Empty meta data annotation: {tag}'
 
+    # Check for trailing whitespace
+    with open(path, 'r') as f:
+        trailing = []
+        for i, line in enumerate(f.readlines()):
+            if line.rstrip() != line.rstrip('\n\r'):
+                trailing.append(i)
+        if trailing:
+            trailing = ', '.join(str(1 + i) for i in trailing)
+            return None, f'Trailing whitespace on line(s): {trailing}'
+
     return m, None
 
 
