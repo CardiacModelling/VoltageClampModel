@@ -20,6 +20,9 @@ _mmt_root = _test_root.parent / 'models-mmt'
 _cm1_root = _test_root.parent / 'models-cellml1'
 _cm2_root = _test_root.parent / 'models-cellml2'
 
+# Overwrite expected output files (after prompt)
+_write_expected = False
+
 
 # Test data: state vectors, bound variables, derivative vectors
 class DTest:
@@ -48,8 +51,9 @@ class DTest:
         self._expected = derivatives
         self._cached_vectors = False
         self._prepare = prepare
+        self._org_expected = False
 
-    def run(self, model):
+    def run(self, model, allow_write_expected=False):
         """
         Runs this test on the given model.
 
@@ -65,33 +69,55 @@ class DTest:
                 self._prepare(model)
 
             # Load or check state and derivatives
-            self._state = self._load_or_map(model, self._state)
-            self._expected = self._load_or_map(model, self._expected)
+            if isinstance(self._state, str):
+                path = _test_root / 'data' / self._state
+                self._state = myokit.load_state(path, model)
+            else:
+                self._state = model.map_to_state(self._state)
+
+            if isinstance(self._expected, str):
+                self._org_expected = _test_root / 'data' / self._expected
+                self._expected = myokit.load_state(self._org_expected, model)
+            else:
+                self._expected = model.map_to_state(self._expected)
 
         # Check if derivatives match
-        print(self._inputs)
         dy = model.evaluate_derivatives(
             state=self._state, inputs=self._inputs,
             ignore_unbound_inputs=False)
-        print(dy)
-
         if all([myokit.float.eq(a, b) for (a, b) in zip(dy, self._expected)]):
             return None
-        return myokit.step(model, state=self._state, inputs=self._inputs)
 
-    def _load_or_map(self, model, str_or_vector):
-        if isinstance(str_or_vector, str):
-            return myokit.load_state(
-                _test_root / 'data' / str_or_vector, model)
-        return model.map_to_state(str_or_vector)
+        # Get long error message
+        err = myokit.step(model, state=self._state, inputs=self._inputs,
+                          reference=self._expected)
+
+        # Allow cheeky write or overwrite
+        if _write_expected and allow_write_expected and self._org_expected:
+            print()
+            print(err)
+            print()
+            y = input('Overwrite test output file {self._org_expected} (y/n)?')
+            if y.strip().lower() == 'y':
+                myokit.save_state(self._org_expected, dy)
+                print('New output written to file.')
+            print()
+            return None
+        return err
 
 
 # Derivative tests
 dtests = {
     'vc-level-0': {
         'default': DTest(
-            'vc-level-0-default-in.txt',  'vc-level-0-default-out.txt',
+            'vc-level-0-default-in.txt',  'vc-level-0-default-out.txt'),
+        'steadier': DTest(
+            'vc-level-0-steadier-in.txt',  'vc-level-0-steadier-out.txt',
             {'pace': -120}),
+        'moving': DTest(
+            'vc-level-0-moving-in.txt',  'vc-level-0-moving-out.txt',
+            {'pace': 40}),
+
         },
     'vc-level-1': {},
 }
@@ -175,7 +201,7 @@ def test(path):
     # Run derivative tests for Myokit models
     for test_name, test in tests.items():
         try:
-            err = test.run(model)
+            err = test.run(model, allow_write_expected=True)
         except Exception as e:
             return (f'Exception during derivative test {test_name}: {e}\n' +
                     traceback.format_exc())
@@ -316,5 +342,7 @@ if __name__ == '__main__':
     print()
     print('  Press Ctrl+C to abort.')
     print()
+    if '--write-expected' in sys.argv:
+        _write_expected = True
     if not test_models():
         sys.exit(1)
