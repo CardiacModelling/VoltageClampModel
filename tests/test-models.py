@@ -2,7 +2,6 @@
 #
 # Tests all models' syntax, meta data, and derivatives
 #
-import os
 import re
 import sys
 import traceback
@@ -36,8 +35,9 @@ class DTest:
         A state vector or a path to a file containing one
     ``derivatives``
         A derivatives vector or a path to a file containing one
-    ``inputs``
-        A dictionary mapping bound variables to new values
+    ``inputs=None``
+        A dictionary mapping bound variables to new values, a single numerical
+        value (for the binding ``pace``), or ``None``
     ``prepare=None``
         An optional callable that modifies models before testing (e.g. changing
         parameters). If given, models will be cloned before ``prepare`` is
@@ -45,7 +45,7 @@ class DTest:
 
     """
 
-    def __init__(self, state, derivatives, inputs={}, prepare=None):
+    def __init__(self, state, derivatives, inputs=None, prepare=None):
         self._state = state
         self._inputs = inputs
         self._expected = derivatives
@@ -74,12 +74,19 @@ class DTest:
                 self._state = myokit.load_state(path, model)
             else:
                 self._state = model.map_to_state(self._state)
-
             if isinstance(self._expected, str):
                 self._org_expected = _test_root / 'data' / self._expected
                 self._expected = myokit.load_state(self._org_expected, model)
             else:
                 self._expected = model.map_to_state(self._expected)
+
+            # Check inputs
+            if self._inputs is None:
+                self._inputs = {}
+            elif isinstance(self._inputs, dict):
+                self._inputs = dict(self._inputs)
+            else:
+                self._inputs = {'pace': float(self._inputs)}
 
         # Check if derivatives match
         dy = model.evaluate_derivatives(
@@ -97,7 +104,8 @@ class DTest:
             print()
             print(err)
             print()
-            y = input('Overwrite test output file {self._org_expected} (y/n)?')
+            y = input(
+                f'Overwrite test output file {self._org_expected} (y/n)?')
             if y.strip().lower() == 'y':
                 myokit.save_state(self._org_expected, dy)
                 print('New output written to file.')
@@ -109,17 +117,18 @@ class DTest:
 # Derivative tests
 dtests = {
     'vc-level-0': {
-        'default': DTest(
-            'vc-level-0-default-in.txt',  'vc-level-0-default-out.txt'),
-        'steadier': DTest(
-            'vc-level-0-steadier-in.txt',  'vc-level-0-steadier-out.txt',
-            {'pace': -120}),
-        'moving': DTest(
-            'vc-level-0-moving-in.txt',  'vc-level-0-moving-out.txt',
-            {'pace': 40}),
-
-        },
-    'vc-level-1': {},
+        'default': DTest('vc0-default-in.txt', 'vc0-default-out.txt'),
+        'steady': DTest('vc0-steady-in.txt', 'vc0-steady-out.txt', -120),
+        'moving': DTest('vc0-moving-in.txt', 'vc0-moving-out.txt', 40),
+    },
+    'vc-level-1': {
+        'steady': DTest('vc1-steady-in.txt', 'vc1-steady-out.txt', -120),
+        'moving': DTest('vc1-moving-in.txt', 'vc1-moving-out.txt', 40),
+    },
+    'vc-level-2': {
+        'steady': DTest('vc2-steady-in.txt', 'vc2-steady-out.txt', -120),
+        'moving': DTest('vc2-moving-in.txt', 'vc2-moving-out.txt', 40),
+    },
 }
 
 
@@ -208,15 +217,12 @@ def test(path):
         if err is not None:
             return err
 
-
-
     # Get CellML files
     cellml1, cellml2, err = find_cellml_files(path)
     if err is not None:
         return err
 
-
-
+    #TODO: Test CellML files
 
     return
 
@@ -262,87 +268,8 @@ def test_syntax_and_meta(path):
     return m, None
 
 
-'''
-def find_state_files(model, model_name):
-    """
-    Finds a list of tuples (in, out) for the given model name, where ``in`` is
-    the ``Path`` to a file containing state values, and ``out`` is the ``Path``
-    to the corresponding derivatives.
-
-    Files must take the form ``model-name-(in|out)-(id).txt``, where the input
-    files (``model-name-in-``) must contain states and match an output file
-    with the same ``id``, containing the corresponding derivatives.
-
-    Returns ``(tuples, err)``, where ``err`` is either ``None`` or a string
-    indicating an error occurred.
-    """
-    path = _test_root / 'data'
-
-    # Gather input and output files
-    inputs, outputs = {}, {}
-    reg = re.compile(rf'^{model_name}-(in|out)-([^.]+).txt$')
-    for path in (_test_root / 'data').glob(f'{model_name}-*-*.txt'):
-        m = reg.match(path.name)
-        if m is not None:
-            d = inputs if m.group(1) == 'in' else outputs
-            i = m.group(2)
-            if i in d:
-                return (f'Duplicate index in path {path}: {i} is already used'
-                        f' by {d[i]}.')
-            d[i] = path
-
-    # Match inputs with outputs
-    if inputs.keys() != outputs.keys():
-        a = inputs.keys() - outputs.keys()
-        b = outputs.keys() - inputs.keys()
-        x = '\n  '.join(
-            [f'{model_name}-in-{x}.txt' for x in a] +
-            [f'{model_name}-out-{x}.txt' for x in b])
-        return None, (f'Mismatched input and output files for {model_name}.\n'
-                      f'No matches found for\n  {x}.')
-    if len(inputs) == 0:
-        return None, f'No test states found for {model_name}.mmt'
-
-    # Join dictionaries and return
-    io_pairs = {}
-    for k, v in inputs.items():
-        try:
-            a = myokit.load_state(v, model)
-            v = outputs[k]
-            b = myokit.load_state(v, model)
-        except (ValueError, TypeError, IOError) as e:
-            return None, f'Unable to parse state/derivatives from {v}: {e}'
-        io_pairs[k] = (a, b)
-
-    return io_pairs, None
-'''
-
-
-def test_mmt_derivatives(model, pairs):
-    """
-    Tests if the ``model`` produces the correct derivatives for all given
-    states.
-
-    The dict ``pairs`` maps identifier strings to
-    ``(state_vector, derivative_vector)`` pairs.
-    """
-    for idx, (states, expected) in pairs.items:
-        model.set_state(states)
-
-
-
-
-
 def find_cellml_files(path):
     return None, None, None
-
-
-
-
-
-
-
-
 
 
 if __name__ == '__main__':
