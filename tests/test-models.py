@@ -104,8 +104,7 @@ class DTest:
             print()
             print(err)
             print()
-            y = input(
-                f'Overwrite test output file {self._org_expected} (y/n)?')
+            y = input(f'Overwrite derivatives in {self._org_expected} (y/n)? ')
             if y.strip().lower() == 'y':
                 myokit.save_state(self._org_expected, dy)
                 print('New output written to file.')
@@ -128,6 +127,18 @@ dtests = {
     'vc-level-2': {
         'steady': DTest('vc2-steady-in.txt', 'vc2-steady-out.txt', -120),
         'moving': DTest('vc2-moving-in.txt', 'vc2-moving-out.txt', 40),
+    },
+    'vc-level-3': {
+        'steady': DTest('vc3-steady-in.txt', 'vc3-steady-out.txt', -120),
+        'moving': DTest('vc3-moving-in.txt', 'vc3-moving-out.txt', 40),
+    },
+    'vc-level-4': {
+        'steady': DTest('vc4-steady-in.txt', 'vc4-steady-out.txt', -120),
+        'moving': DTest('vc4-moving-in.txt', 'vc4-moving-out.txt', 40),
+    },
+    'vc-level-5': {
+        'steady': DTest('vc5-steady-in.txt', 'vc5-steady-out.txt', -120),
+        'moving': DTest('vc5-moving-in.txt', 'vc5-moving-out.txt', 40),
     },
 }
 
