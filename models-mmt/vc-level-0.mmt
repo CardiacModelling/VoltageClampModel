@@ -1,6 +1,6 @@
 [[model]]
 name: voltage-clamp-model-level-0
-version: 20260305
+version: 20260317
 mmt_authors: Michael Clerx
 display_name: Voltage clamp model, level 0
 desc: """
@@ -48,17 +48,17 @@ amp.Vp = -120 [mV]
 amp.Vo = -120 [mV]
 amp.Ve = -120 [mV]
 amp.Vrc = -120 [mV]
-amp.Vs1 = -120 [mV]
+amp.Vs1 = 0 [mV/ms]
 amp.Vs = -120 [mV]
-amp.Vf11 = -120 [mV]
+amp.Vf11 = 0 [mV/ms]
 amp.Vf12 = -120 [mV]
-amp.Vf13 = -120 [mV]
+amp.Vf13 = 0 [mV/ms]
 amp.Vf14 = -120 [mV]
-amp.Vf15 = -120 [mV]
+amp.Vf15 = 0 [mV/ms]
 amp.Vf1 = -120 [mV]
-amp.Vf21 = -120 [mV]
+amp.Vf21 = 0 [mV/ms]
 amp.Vf22 = -120 [mV]
-amp.Vf23 = -120 [mV]
+amp.Vf23 = 0 [mV/ms]
 amp.Vf2 = -120 [mV]
 
 [engine]
@@ -159,8 +159,8 @@ I_obs = Vf2 / Rf
 
 [[protocol]]
 # Level Start   Length  Period  Multiplier
--120    0       2       0       0
-+40     1       2       0       0
+-120    0       200       0       0
+#+40     1       2       0       0
 
 [[script]]
 import myokit
