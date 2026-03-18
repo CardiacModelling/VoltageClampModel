@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# Tests all notebooks
+# Tests all tutorial notebooks
 #
 import os
 import re
@@ -13,7 +13,7 @@ import nbconvert
 _natural_sort_regex = re.compile('([0-9]+)')
 
 
-def test_notebooks():
+def test_notebooks(root='.'):
     """
     Tests all voltage clamp notebooks
     """
@@ -39,7 +39,8 @@ def test_notebooks():
 
             # Test notebooks
             if os.path.splitext(filename)[1] == '.ipynb':
-                print('Testing ' + path + '.'*(max(0, 70 - len(path))), end='')
+                print(f'Testing {path}' + '.' * (max(0, 70 - len(path))),
+                      end='')
                 sys.stdout.flush()
                 res = test_notebook(root, filename)
                 if res is None:
@@ -59,7 +60,7 @@ def test_notebooks():
 
         return failed
 
-    failed = scan('.')
+    failed = scan(root)
     if failed:
         for path, stdout, stderr in failed:
             print('-' * 79)
@@ -134,5 +135,6 @@ if __name__ == '__main__':
     print()
     print('  Press Ctrl+C to abort.')
     print()
-    if not test_notebooks():
+    path = os.path.dirname(os.path.abspath(__file__))
+    if not test_notebooks(os.path.join(path, '../tutorial')):
         sys.exit(1)

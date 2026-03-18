@@ -1,24 +1,24 @@
 [[model]]
 name: voltage-clamp-model-level-0
-version: 20260305
+version: 20260317
 mmt_authors: Michael Clerx
-display_name: Voltage clamp model, level 0
+display_name: L0 VC Model
 desc: """
     Model of a voltage-clamp experiment [1-6].
-    
+
     This is the full version of the model, including a 2-pole stimulus filter,
     a 6-pole and 4-pole Bessel output filter, a finite amplifier speed and fast
     capacitance cancellation.
-    
+
     [1] Clerx, M. (2026) Voltage-clamp notebooks.
         https://github.com/CardiacModelling/VoltageClampModel
-       
+
     [2] Lei, C. L., Clerx, M., Whittaker, D. G., Gavaghan, D. J., De Boer, T.
         P., & Mirams, G. R. (2020) Accounting for variability in ion current
         recordings using a mathematical model of artefacts in voltage-clamp
         experiments. Phil. Trans. R. Soc. A. 378: 20190348
         https://doi.org/10.1098/rsta.2019.0348
-        
+
     [3] Lei, C. L., Clark, A. P., Clerx, M., Wei, S., Bloothooft, M., De Boer,
         T., Christini, D. J., Krogh-Madsen, T., & Mirams, G. R. (2025)
         Resolving Artifacts in Voltage-Clamp Experiments with Computational
@@ -37,28 +37,28 @@ desc: """
         An Integrated Patch-Clamp Potentiostat With Electrode Compensation.
         IEEE Trans. Biomed. Circ. 3-2: 117-125
         https://doi.org/10.1109/TBCAS.2008.2005419
-        
-    [6] Sigworth, F. J. (1995) Electronic design of the patch clamp. 
+
+    [6] Sigworth, F. J. (1995) Electronic design of the patch clamp.
         In: Single-channel recording (1995): 95-127.
         https://doi.org/10.1007/978-1-4419-1229-9_4
-                
+
 """
 amp.Vm = -120 [mV]
 amp.Vp = -120 [mV]
 amp.Vo = -120 [mV]
 amp.Ve = -120 [mV]
 amp.Vrc = -120 [mV]
-amp.Vs1 = -120 [mV]
+amp.Vs1 = 0 [mV/ms]
 amp.Vs = -120 [mV]
-amp.Vf11 = -120 [mV]
+amp.Vf11 = 0 [mV/ms]
 amp.Vf12 = -120 [mV]
-amp.Vf13 = -120 [mV]
+amp.Vf13 = 0 [mV/ms]
 amp.Vf14 = -120 [mV]
-amp.Vf15 = -120 [mV]
+amp.Vf15 = 0 [mV/ms]
 amp.Vf1 = -120 [mV]
-amp.Vf21 = -120 [mV]
+amp.Vf21 = 0 [mV/ms]
 amp.Vf22 = -120 [mV]
-amp.Vf23 = -120 [mV]
+amp.Vf23 = 0 [mV/ms]
 amp.Vf2 = -120 [mV]
 
 [engine]
@@ -116,7 +116,7 @@ Vc = engine.pace * 1 [mV]
     in [mV]
 dot(Vs1) = 3 * ((Vc - Vs) / a3^2 - Vs1 / a3)
     in [mV/ms]
-    a3 = 1.3616 / log(9) * tr 
+    a3 = 1.3616 / log(9) * tr
         in [ms]
 dot(Vs) = Vs1
     desc: The 2-pole filtered stimulus
@@ -159,7 +159,7 @@ I_obs = Vf2 / Rf
 
 [[protocol]]
 # Level Start   Length  Period  Multiplier
--120    0       2       0       0
+-120    0       1       0       0
 +40     1       2       0       0
 
 [[script]]

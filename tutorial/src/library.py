@@ -53,6 +53,7 @@ def _fit_exponential(t, I, Iss, i1, i2, cutoff, invert, plot=False):
         print(f'Tau* = {tau:.3f} ms')
         print(f'I0* = {I0:.3f} pA')
 
+        import matplotlib.pyplot as plt
         fig = plt.figure()
         ax = fig.add_subplot()
         ax.plot(tlog, ilog, lw=3, label='Data')
@@ -201,15 +202,15 @@ def _test_one_shot():
     dV = V1 - V2
 
     p = myokit.Protocol()
-    p.schedule(start=0, level=V1, duration=T, period=2*T)
-    p.schedule(start=T, level=V2, duration=T, period=2*T)
+    p.schedule(start=0, level=V1, duration=T, period=2 * T)
+    p.schedule(start=T, level=V2, duration=T, period=2 * T)
 
     if True:
         N = 2000
         dt = (2 * T) / N
         print(f'Using dt={dt} for a total of {N} samples')
     else:
-        dt=None
+        dt = None
         print('Using adaptive time steps')
 
     s = myokit.Simulation(m, p)
@@ -271,9 +272,9 @@ def bode(magnitude, argument, axes=None, lo=1e-2, hi=1e5, **kwargs):
     else:
         ax0, ax1 = axes
 
-    label=None
+    label = None
     if kwargs:
-        label=','.join(f'{k}={v}' for k, v in kwargs.items())
+        label = ','.join(f'{k}={v}' for k, v in kwargs.items())
 
     ax0.plot(w, magnitude(w, **kwargs), label=None)
     ax1.plot(w, argument(w, **kwargs) * 180 / np.pi, label=label)
@@ -349,7 +350,8 @@ def simplification_plot1(model, euler_dt=None):
     ax3.set_ylabel('|dx/dt|')
     ax3.set_yscale('log')
     ax3.set_xticks(ticks)
-    ax3.set_xticklabels(names, rotation=45 if len(names) > 6 else 0, ha='right')
+    ax3.set_xticklabels(
+        names, rotation=45 if len(names) > 6 else 0, ha='right')
     for x, dmax in zip(ticks, dmaxs):
         ax3.bar(x, dmax)
 
