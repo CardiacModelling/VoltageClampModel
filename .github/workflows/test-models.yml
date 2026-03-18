@@ -1,0 +1,35 @@
+name: Model tests
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches:
+      - '**'
+
+jobs:
+
+  build-and-test:
+    name: Model tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set up Python 3.14
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.14
+          architecture: x64
+
+      - name: install Python dependencies
+        run: |
+          python --version
+          python -m pip install --upgrade pip setuptools wheel
+          python -m pip install myokit>=1.39.1
+
+      - name: test models
+        run: |
+          python tests/test-models.py
+
