@@ -27,9 +27,11 @@ Levels 0, 1, and 2 can recreate the _fast_ artefacts seen in patch clamp experim
 To fit experimental data, these fast artefacts are less important, and so **level 3 is good to match data from the fastest currents**.
 For slower currents, levels 4 or 5 can be used.
 
+**For a quick overview of levels 5, 4, 3, and 0, see the [Model Tour](./tutorial/tour.ipynb).**
+
 ## Tutorials
 
-To understand these models, we provide [four tutorial notebooks](./tutorial/README.md).
+To understand these models, we provide four [Tutorial Notebooks](./tutorial/README.md).
 
 The first derives a basic model of a patch clamp amplifier, and the second adds compensation and filtering, leading to the "Level 0" model.
 In the third notebook, this model is used to simulate the early stages of a (manual) patch-clamp experiment.
