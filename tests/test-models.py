@@ -368,7 +368,23 @@ def generate_cellml_models():
         fname = path.stem + '.cellml'
         e.model(_cm1_root / fname, model, version='1.1')
         e.model(_cm2_root / fname, model, version='2.0')
+        add_cellml_meta_data(_cm1_root / fname, model)
+        add_cellml_meta_data(_cm2_root / fname, model)
     print('Done')
+
+
+def add_cellml_meta_data(path, model):
+    """
+    Copies meta data from the Myokit ``model`` into the file at ``path`` as an
+    XML comment (advanced methods are not widely supported).
+    """
+    with open(path, 'r') as f:
+        text = f.read()
+    with open(path, 'w') as f:
+        i = text.index('<model')
+        f.write(text[:i])
+        f.write(f'<!--\n{model.meta["desc"]}\n-->\n')
+        f.write(text[i:])
 
 
 if __name__ == '__main__':
