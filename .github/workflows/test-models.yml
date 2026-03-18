@@ -15,10 +15,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
-      - name: Set up Python 3.14
-        uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v6
         with:
           python-version: 3.14
           architecture: x64
@@ -26,8 +26,7 @@ jobs:
       - name: install Python dependencies
         run: |
           python --version
-          python -m pip install --upgrade pip setuptools wheel
-          python -m pip install myokit>=1.39.1
+          python -m pip install myokit>=1.39.2
 
       - name: test models
         run: |
