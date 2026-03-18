@@ -9,6 +9,9 @@ import traceback
 from pathlib import Path
 
 import myokit
+import myokit.formats.cellml.v1
+import myokit.formats.cellml.v2
+
 
 # Natural sort regex
 _natural_sort_regex = re.compile(r'([0-9]+)')
@@ -16,8 +19,8 @@ _natural_sort_regex = re.compile(r'([0-9]+)')
 # Test directories
 _test_root = Path(__file__).parent
 _mmt_root = _test_root.parent / 'models-mmt'
-_cm1_root = _test_root.parent / 'models-cellml1'
-_cm2_root = _test_root.parent / 'models-cellml2'
+_cm1_root = _test_root.parent / 'models-cellml-v1'
+_cm2_root = _test_root.parent / 'models-cellml-v2'
 
 # Overwrite expected output files (after prompt)
 _write_expected = False
@@ -143,44 +146,58 @@ dtests = {
 }
 
 
-def test_models():
-    """ Scans for and syntax-checks Myokit models. """
+def find_models():
+    """ Scans for and returns paths to Myokit models. """
 
     # Scan directory, running models as we find them.
-    def scan(root, failed=None):
-        if failed is None:
-            failed = []
-
+    def scan(root, paths=[]):
         for path in sorted(root.iterdir(), key=natural_sort_path):
             if path.suffix == '.mmt':
-                fancy = str(path.relative_to(_mmt_root.parent))
-                print(fancy + '.' * (max(0, 70 - len(fancy))), end='')
-                sys.stdout.flush()
-
-                res = test(path)
-                if res is None:
-                    print('ok')
-                else:
-                    print('FAIL')
-                    failed.append((path, res))
+                paths.append(path)
             elif path.is_dir():
                 # Ignore hidden directories
                 if path.name[:1] == '.':
                     continue
-                scan(path, failed)
+                scan(path, paths)
 
-        return failed
+        return paths
 
-    failed = scan(_mmt_root)
+    return scan(_mmt_root)
+
+
+def test_models():
+    """ Scans for and syntax-checks Myokit models. """
+
+    # Scan directory for models
+    paths = find_models()
+
+    # Test models
+    failed = []
+    for path in paths:
+        # Show name, relative to model dir
+        fancy = str(path.relative_to(_mmt_root.parent))
+        print(fancy + '.' * (max(0, 70 - len(fancy))), end='')
+        sys.stdout.flush()
+
+        # Test
+        res = test(path)
+        if res is None:
+            print('ok')
+        else:
+            print('FAIL')
+            failed.append((path, res))
+
+    # Show output of failed tests
     if failed:
         for path, e in failed:
             fancy = str(path.relative_to(_mmt_root.parent))
             fancy = f'Error output for: {fancy}'
-            print(f'== {fancy} ' + '=' * (79 - (4 + len(fancy))))
-            print(f'\n{e}\n')
-        print('=' * 79)
+            print(f'\n== {fancy} ' + '=' * (79 - (4 + len(fancy))))
+            print(f'\n{e}')
+        print('\n' + '=' * 79)
         print(f'Test failed ({len(failed)}) error(s).')
         return False
+
     print('Test passed.')
     return True
 
@@ -213,27 +230,21 @@ def test(path):
     # Isolate model name
     model_name = path.stem
 
-    # Find derivative tests
+    # Find and run derivative tests
     tests = dtests.get(model_name, {})
     if len(tests) == 0:
         return f'No derivative tests found for {model_name}'
-
-    # Run derivative tests for Myokit models
-    for test_name, test in tests.items():
-        try:
-            err = test.run(model, allow_write_expected=True)
-        except Exception as e:
-            return (f'Exception during derivative test {test_name}: {e}\n' +
-                    traceback.format_exc())
-        if err is not None:
-            return err
-
-    # Get CellML files
-    cellml1, cellml2, err = find_cellml_files(path)
+    err = test_derivatives_mmt(model, tests, allow_write_expected=True)
     if err is not None:
         return err
 
-    #TODO: Test CellML files
+    # Run derivative tests for CellML models
+    err = test_derivatives_cellml(model, model_name, tests)
+    if err is not None:
+        return err
+    err = test_derivatives_cellml(model, model_name, tests, v2=True)
+    if err is not None:
+        return err
 
     return
 
@@ -279,17 +290,94 @@ def test_syntax_and_meta(path):
     return m, None
 
 
-def find_cellml_files(path):
-    return None, None, None
+def test_derivatives_mmt(model, tests, allow_write_expected=False):
+    """
+    Run derivative tests for Myokit models
+    """
+    for test_name, test in tests.items():
+        try:
+            err = test.run(model, allow_write_expected=allow_write_expected)
+        except Exception as e:
+            return (f'Exception during derivative test {test_name}: {e}\n' +
+                    traceback.format_exc())
+        if err is not None:
+            return err
+    return None
+
+
+
+def test_derivatives_cellml(model, model_name, tests, v2=False):
+    """
+    Import a CellML v1 or v2 model and run derivative tests.
+
+    Arguments:
+
+    ``model``
+        The corresponding Myokit model (not tested, but used for order of
+        states and variable bindings).
+    ``model_name``
+        Model name, used to identify file
+    ``tests``
+        List of derivative tests to run
+    ``v2``
+        Used to test CellML 2 models
+
+    """
+    if v2:
+        vstr = 'v2'
+        root = _cm2_root
+        cml = myokit.formats.cellml.v2
+    else:
+        vstr = 'v1'
+        root = _cm1_root
+        cml = myokit.formats.cellml.v1
+
+    # Create path
+    path = root / (model_name + '.cellml')
+    if not path.is_file():
+        return f'CellML {vstr} not found for {model_name}.'
+
+    # Import model
+    try:
+        cmodel = cml.parse_file(path)
+        cmodel.validate()
+        mmodel = cmodel.myokit_model()
+    except cml.CellMLParsingError as e:
+        return (f'Error converting CellML {vstr} file: {e}.')
+
+    # Copy bindings and state order from Myokit model
+    mmodel.reorder_state([v.qname() for v in model.states()])
+    for k, v in model.bindings():
+        if k != 'time':
+            mmodel.get(v.qname()).set_binding(k)
+    del(model)
+
+    # Test derivatives
+    return test_derivatives_mmt(mmodel, tests)
+
+
+def generate_cellml_models():
+    """
+    (Re)generate all CellML models.
+    """
+    print('Generating CellML models...')
+    e = myokit.formats.cellml.CellMLExporter()
+    for path in find_models():
+        print(f'  {path.stem}')
+        model = myokit.load_model(path)
+        fname = path.stem + '.cellml'
+        e.model(_cm1_root / fname, model, version='1.1')
+        e.model(_cm2_root / fname, model, version='2.0')
+    print('Done')
 
 
 if __name__ == '__main__':
-    print('Syntax-checking all model files!')
-    print('This is used for regular online testing.')
-    print('If you are not interested in testing the models,')
-    print()
-    print('  Press Ctrl+C to abort.')
-    print()
+    if '--generate-cellml' in sys.argv:
+        print('Generating CellML models!')
+        generate_cellml_models()
+        sys.exit(0)
+
+    print('Checking all model files!')
     if '--write-expected' in sys.argv:
         _write_expected = True
     if not test_models():
