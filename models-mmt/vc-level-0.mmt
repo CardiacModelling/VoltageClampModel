@@ -1,6 +1,6 @@
 [[model]]
 name: voltage-clamp-model-level-0
-version: 20260317
+version: 20260318
 mmt_authors: Michael Clerx
 display_name: L0 VC Model
 desc: """
@@ -10,8 +10,12 @@ desc: """
     a 6-pole and 4-pole Bessel output filter, a finite amplifier speed and fast
     capacitance cancellation.
 
-    [1] Clerx, M. (2026) Voltage-clamp notebooks.
-        https://github.com/CardiacModelling/VoltageClampModel
+    [1] Lei, C. L., Clark, A. P., Clerx, M., Wei, S., Bloothooft, M., De Boer,
+        T., Christini, D. J., Krogh-Madsen, T., & Mirams, G. R. (2025)
+        Resolving Artifacts in Voltage-Clamp Experiments with Computational
+        Modeling: An Application to Fast Sodium Current Recordings. Advanced
+        Science.
+        https://doi.org/10.1002/advs.202500691
 
     [2] Lei, C. L., Clerx, M., Whittaker, D. G., Gavaghan, D. J., De Boer, T.
         P., & Mirams, G. R. (2020) Accounting for variability in ion current
@@ -19,28 +23,24 @@ desc: """
         experiments. Phil. Trans. R. Soc. A. 378: 20190348
         https://doi.org/10.1098/rsta.2019.0348
 
-    [3] Lei, C. L., Clark, A. P., Clerx, M., Wei, S., Bloothooft, M., De Boer,
-        T., Christini, D. J., Krogh-Madsen, T., & Mirams, G. R. (2025)
-        Resolving Artifacts in Voltage-Clamp Experiments with Computational
-        Modeling: An Application to Fast Sodium Current Recordings. Advanced
-        Science.
-        https://doi.org/10.1002/advs.202500691
-
-    [4] Abrasheva, V. O., Kovalenko, S. G., Slotvitsky, M., Romanova, S. A.,
+    [3] Abrasheva, V. O., Kovalenko, S. G., Slotvitsky, M., Romanova, S. A.,
         Aitova, A. A., Frolova, S., Tsvelaya, V., & Syunyaev, R. A. (2024)
         Human sodium current voltage-dependence at physiological temperature
         measured by coupling a patch-clamp experiment to a mathematical model.
         J. Physiol., 602: 633-661.
         https://doi.org/10.1113/JP285162
 
-    [5] Weerakoon, P., Culurciello, E., Klemic, K. G., & Sigworth, F. J. (2009)
+    [4] Weerakoon, P., Culurciello, E., Klemic, K. G., & Sigworth, F. J. (2009)
         An Integrated Patch-Clamp Potentiostat With Electrode Compensation.
         IEEE Trans. Biomed. Circ. 3-2: 117-125
         https://doi.org/10.1109/TBCAS.2008.2005419
 
-    [6] Sigworth, F. J. (1995) Electronic design of the patch clamp.
+    [5] Sigworth, F. J. (1995) Electronic design of the patch clamp.
         In: Single-channel recording (1995): 95-127.
         https://doi.org/10.1007/978-1-4419-1229-9_4
+
+    [6] Clerx, M. (2026) Voltage-clamp model tutorial.
+        https://github.com/CardiacModelling/VoltageClampModel
 
 """
 amp.Vm = -120 [mV]
