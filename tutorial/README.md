@@ -1,7 +1,7 @@
 # Voltage clamp model tutorials
 
 In these notebooks we retrace the steps taken in the supplement to [Lei et al., 2020](https://doi.org/10.1098/rsta.2019.0348) and [2025](https://doi.org/10.1002/advs.202500691), and construct (1) a model of a patch-clamp experiment with various experimental artefacts, and (2) a model of the corrections applied by patch-clamp amplifiers to mitigate these effects.
-The exposition draws on a book chapter by [Sigworth (1995a)](https://doi.org/10.1007/978-1-4419-1229-9_4), but replaces Laplace-domain analysis with an ODE formulation.
+The initial exposition draws on a book chapter by [Sigworth (1995a)](https://doi.org/10.1007/978-1-4419-1229-9_4), but replaces Laplace-domain analysis with an ODE formulation.
 
 To view the notebooks, use the GitHub or nbviewer links below, or clone the repository and run jupyter notebook locally.
 Running locally will require the dependencies from `requirements.txt`.
