@@ -3,11 +3,11 @@
 This repository contains up-to-date reference versions of the voltage clamp model developed in Lei et al. 2020 and 2025.
 These models can be used to simulate manual or planar patch-clamp experiments in voltage-clamp mode.
 
-_Note: This URL originally hosted the data for the 2020 Lei et al. publication. This is now found at https://github.com/CardiacModelling/VoltageClampModel2020_
+_Note: This URL originally hosted data and code for the 2020 Lei et al. publication. This is now found at https://github.com/CardiacModelling/VoltageClampModel2020_
 
 ## The latest models
 
-We recently updated the voltage clamp model with improved filtering of input (stimulus filter) and output (Bessel filters), and an improved time-delay in the series resistance compensation pathway.
+We recently updated the voltage clamp model with improved filtering of input (stimulus filter) and output, and an improved time-delay in the series resistance compensation pathway.
 
 In addition to this full-featured model, we provide a set of increasingly simplified models:
 
@@ -26,14 +26,15 @@ All models are provided in Myokit ([models-mmt](./models-mmt)) and CellML ([mode
 
 In brief:
 - Levels 0, 1, and 2 can recreate the _fast_ artefacts seen in patch clamp experiments, and are very useful _to understand the patch clamp process_.
-- _To fit experimental data_, these fast artefacts are less important, and so level 3 is good to match data from the fastest currents. For slower currents, levels 4 or 5 can be used.
+- _To fit experimental data_, these fast artefacts are less important, and so level 3 is good to match data from the fastest currents.
+For slower currents, levels 4 or 5 can be used.
 
 ## Tutorials
 
-We provide four [Tutorial Notebooks](./tutorial/README.md) to understand these notebooks, and how they were derived.
+We provide four [Tutorial Notebooks](./tutorial/README.md) to understand these models, and how they were derived.
 
 The first notebook establishes a basic model of a patch clamp amplifier, and the second adds compensation and filtering, leading to the "Level 0" model.
-In the third notebook, this model is used to simulate the early stages of a (manual) patch-clamp experiment.
+In the third notebook, this model is used to simulate a manual patch-clamp experiment.
 
 The final notebook derives the Level 1 to 5 simplifications, and shows how they relate to our previous work (Lei et al., 2020 and 2025).
 
@@ -91,5 +92,5 @@ Code: https://github.com/CardiacModelling/VoltageClampModel2020
 
 ## Acknowledging this work
 
-If you publish any work based on the contents of this repository please cite the papers listed above.
+If you use the contents of this repository in your work, please cite the papers listed above.
 
