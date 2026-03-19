@@ -1,6 +1,6 @@
 # Voltage clamp model
 
-This repository contains up-to-date reference versions of the voltage clamp model used in Lei et al. 2020, 2025, and other publications.
+This repository contains up-to-date reference versions of the voltage clamp model developed in Lei et al. 2020 and 2025.
 These models can be used to simulate manual or planar patch-clamp experiments in voltage-clamp mode.
 
 _Note: This URL originally hosted the data for the 2020 Lei et al. publication. This is now found at https://github.com/CardiacModelling/VoltageClampModel2020_
@@ -9,10 +9,10 @@ _Note: This URL originally hosted the data for the 2020 Lei et al. publication. 
 
 We recently updated the voltage clamp model with improved filtering of input (stimulus filter) and output (Bessel filters), and an improved time-delay in the series resistance compensation pathway.
 
-In addition to this full-featured model, we now also provide a series of increasingly simplified models:
+In addition to this full-featured model, we provide a set of increasingly simplified models:
 
 - The "Level 0" model includes all features.
-- The "Level 1" model simplifies this, by replacing all filters with first-order approximations.
+- "Level 1" simplifies this by replacing all filters with first-order approximations.
 - "Level 2" further assumes an ideal measuring op-amp without stray capacitance.
 - "Level 3" removes fast capacitance currents and their correction.
 - "Level 4" removes all filtering entirely.
@@ -26,17 +26,16 @@ All models are provided in Myokit ([models-mmt](./models-mmt)) and CellML ([mode
 
 In brief:
 - Levels 0, 1, and 2 can recreate the _fast_ artefacts seen in patch clamp experiments, and are very useful _to understand the patch clamp process_.
-- _To fit experimental data_, these fast artefacts are less important, and so level 3 is good to match data from the fastest currents.
-- For slower currents, levels 4 or 5 can be used.
+- _To fit experimental data_, these fast artefacts are less important, and so level 3 is good to match data from the fastest currents. For slower currents, levels 4 or 5 can be used.
 
 ## Tutorials
 
-To understand these models, we provide four [Tutorial Notebooks](./tutorial/README.md).
+We provide four [Tutorial Notebooks](./tutorial/README.md) to understand these notebooks, and how they were derived.
 
-The first derives a basic model of a patch clamp amplifier, and the second adds compensation and filtering, leading to the "Level 0" model.
+The first notebook establishes a basic model of a patch clamp amplifier, and the second adds compensation and filtering, leading to the "Level 0" model.
 In the third notebook, this model is used to simulate the early stages of a (manual) patch-clamp experiment.
 
-The final notebook derives the simplifications, and shows how they relate to our previous work (Lei et al., 2020 and 2025).
+The final notebook derives the Level 1 to 5 simplifications, and shows how they relate to our previous work (Lei et al., 2020 and 2025).
 
 ## Previous versions
 
