@@ -43,7 +43,7 @@ Finally, there are several appendices:
 
 - [Appendix A](./appendix-a/README.md) adds details on electronics and filters.
 - [Appendix B](./appendix-b/README.md) looks at details of the model derivation.
-- [Appendix C](./appendix-c/README.md) **provides default parameter values**, and amplifier-specific ones.
+- [Appendix C](./appendix-c/README.md) provides default parameter values, and amplifier-specific ones.
 - [Appendix D](./appendix-d/README.md) discusses remaining sources of error.
 - [Appendix E](./appendix-e/README.md) looks at Rs and Cm estimates.
 
