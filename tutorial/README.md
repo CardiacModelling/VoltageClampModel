@@ -37,13 +37,23 @@ In the final notebook, we derive simplified models and compare with previous wor
 
 ---
 
+## Names and symbols
+
+[![github](./img/github.svg)](./symbols.ipynb) 
+[![nbviewer](./img/nbviewer.svg)](https://nbviewer.jupyter.org/github/CardiacModelling/VoltageClampModel-new/tree/main/tutorial/symbols.ipynb)
+
+A table of all symbols, their meanings, and names used in other publications.
+
+## Parameter values
+
+[![github](./img/github.svg)](./tour.ipynb) 
+[![nbviewer](./img/nbviewer.svg)](https://nbviewer.jupyter.org/github/CardiacModelling/VoltageClampModel-new/tree/main/tutorial/tour.ipynb)
+
+Default parameter values, and comments on how to reparameterise the model, are given in the Model Tour.
+
+---
+
 ## Appendices
 
-Finally, there are several appendices:
-
-- [Appendix A](./appendix-a/README.md) adds details on electronics and filters.
-- [Appendix B](./appendix-b/README.md) looks at details of the model derivation.
-- [Appendix C](./appendix-c/README.md) provides default parameter values, and amplifier-specific ones.
-- [Appendix D](./appendix-d/README.md) discusses remaining sources of error.
-- [Appendix E](./appendix-e/README.md) looks at Rs and Cm estimates.
+Finally, there are [several appendices](./appendix), which provide background on electronics and details of the model derivation.
 
