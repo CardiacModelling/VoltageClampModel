@@ -45,8 +45,8 @@ These appendices provide background or technical details that did not fit the ma
 2. [![github](../img/github.svg)](./d-filters/2-bessel-filters-ode.ipynb)
    [![nbviewer](../img/nbviewer.svg)](https://nbviewer.jupyter.org/github/CardiacModelling/VoltageClampModel/tree/main/tutorial/appendix/d-filters/2-bessel-filters-ode.ipynb)
    Bessel low-pass filters in ODE form
-3. [![github](../img/github.svg)](./d-filters/3-bessel-filter-ode-summary.ipynb)
-   [![nbviewer](../img/nbviewer.svg)](https://nbviewer.jupyter.org/github/CardiacModelling/VoltageClampModel/tree/main/tutorial/appendix/d-filters/3-bessel-filter-ode-summary.ipynb)
+3. [![github](../img/github.svg)](./d-filters/3-bessel-filters-ode-summary.ipynb)
+   [![nbviewer](../img/nbviewer.svg)](https://nbviewer.jupyter.org/github/CardiacModelling/VoltageClampModel/tree/main/tutorial/appendix/d-filters/3-bessel-filters-ode-summary.ipynb)
    Summary of ODE forms
 4. [![github](../img/github.svg)](./d-filters/4-stimulus-filter.ipynb)
    [![nbviewer](../img/nbviewer.svg)](https://nbviewer.jupyter.org/github/CardiacModelling/VoltageClampModel/tree/main/tutorial/appendix/d-filters/4-stimulus-filter.ipynb)
