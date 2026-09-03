@@ -6,44 +6,46 @@ The initial exposition draws on a book chapter by [Sigworth (1995a)](https://doi
 To view the notebooks, use the GitHub or nbviewer links below, or clone the repository and run Jupyter notebook locally.
 Running locally will require the dependencies from `requirements.txt`.
 
-A list of references and further reading is provided [here](./references.ipynb).
-
-[↩ Back to the main repository](https://github.com/CardiacModelling/VoltageClampModel-new)
+[↩ Back to the main repository](https://github.com/CardiacModelling/VoltageClampModel)
 
 
-## Modelling patch-clamp experiments 
+## 1. Modelling patch-clamp experiments 
 [![github](./img/github.svg)](./1-modelling-patch-clamp.ipynb)
-[![nbviewer](./img/nbviewer.svg)](https://nbviewer.jupyter.org/github/CardiacModelling/VoltageClampModel-new/tree/main/tutorial/1-modelling-patch-clamp.ipynb)
+[![nbviewer](./img/nbviewer.svg)](https://nbviewer.jupyter.org/github/CardiacModelling/VoltageClampModel/tree/main/tutorial/1-modelling-patch-clamp.ipynb)
 
 The first notebook describes the uncompensated patch-clamp set up, and derives an ODE model from the electrical schematics.
 
-## Modelling electronic compensation
+## 2. Modelling electronic compensation
 [![github](./img/github.svg)](./2-compensation.ipynb)
-[![nbviewer](./img/nbviewer.svg)](https://nbviewer.jupyter.org/github/CardiacModelling/VoltageClampModel-new/tree/main/tutorial/2-compensation.ipynb)
+[![nbviewer](./img/nbviewer.svg)](https://nbviewer.jupyter.org/github/CardiacModelling/VoltageClampModel/tree/main/tutorial/2-compensation.ipynb)
 
 The model is updated to include the compensation circuitry commonly used in patch-clamp amplifiers.
 
-## Simulating a manual patch clamp experiment 
+## 3. Simulating a manual patch clamp experiment 
 [![github](./img/github.svg)](./3-simulations.ipynb) 
-[![nbviewer](./img/nbviewer.svg)](https://nbviewer.jupyter.org/github/CardiacModelling/VoltageClampModel-new/tree/main/tutorial/3-simulations.ipynb)
+[![nbviewer](./img/nbviewer.svg)](https://nbviewer.jupyter.org/github/CardiacModelling/VoltageClampModel/tree/main/tutorial/3-simulations.ipynb)
 
 We walk through and simulate the early steps of a manual patch-clamp experiment.
 
-## Simplified models 
+## 4. Simplified models 
 [![github](./img/github.svg)](./4-simplifications.ipynb) 
-[![nbviewer](./img/nbviewer.svg)](https://nbviewer.jupyter.org/github/CardiacModelling/VoltageClampModel-new/tree/main/tutorial/4-simplifications.ipynb)
+[![nbviewer](./img/nbviewer.svg)](https://nbviewer.jupyter.org/github/CardiacModelling/VoltageClampModel/tree/main/tutorial/4-simplifications.ipynb)
 
 In the final notebook, we derive simplified models and compare with previous work.
 
----
+## Resources
 
-## Appendices
+- [![github](./img/github.svg)](./symbols.ipynb) 
+  [![nbviewer](./img/nbviewer.svg)](https://nbviewer.jupyter.org/github/CardiacModelling/VoltageClampModel/tree/main/tutorial/symbols.ipynb)
+  **Names and symbols** A table of all symbols, their meanings, and names used in other publications.
 
-Finally, there are several appendices:
+- [![github](./img/github.svg)](./tour.ipynb) 
+  [![nbviewer](./img/nbviewer.svg)](https://nbviewer.jupyter.org/github/CardiacModelling/VoltageClampModel/tree/main/tutorial/tour.ipynb)
+  **Default parameter values** and comments on how to reparameterise the model, are given in the Model Tour.
 
-- [Appendix A](./appendix-a/README.md) adds details on electronics and filters.
-- [Appendix B](./appendix-b/README.md) looks at details of the model derivation.
-- [Appendix C](./appendix-c/README.md) provides default parameter values, and amplifier-specific ones.
-- [Appendix D](./appendix-d/README.md) discusses remaining sources of error.
-- [Appendix E](./appendix-e/README.md) looks at Rs and Cm estimates.
+- [![github](./img/github.svg)](./references.ipynb) 
+  [![nbviewer](./img/nbviewer.svg)](https://nbviewer.jupyter.org/github/CardiacModelling/VoltageClampModel/tree/main/tutorial/references.ipynb)
+  **References** and further reading.
+
+Finally, there are [several appendices](./appendix), which provide background on electronics and details of the model derivation.
 

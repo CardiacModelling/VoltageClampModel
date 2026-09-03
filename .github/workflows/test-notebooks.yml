@@ -1,8 +1,8 @@
 name: Tutorials
 on:
   schedule:
-    # 1am on wednesday (minute, hour, day, month, day-of-the-week)
-    - cron:  '0 1 * * 3'
+    # 11am on wednesday (minute, hour, day, month, day-of-the-week)
+    - cron:  '0 11 * * 3'
 
 jobs:
 
