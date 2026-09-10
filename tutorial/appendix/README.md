@@ -60,6 +60,15 @@ These appendices provide background or technical details that did not fit the ma
 2. [![github](../img/github.svg)](./e-offsets/2-offset-correction.ipynb)
    [![nbviewer](../img/nbviewer.svg)](https://nbviewer.jupyter.org/github/CardiacModelling/VoltageClampModel/tree/main/tutorial/appendix/e-offsets/2-offset-correction.ipynb)
    Offset correction
+   
+## G: Bath and pipette solutions
+
+1. [![github](../img/github.svg)](./g-solutions/1-bath-and-pipette-solutions.ipynb)
+   [![nbviewer](../img/nbviewer.svg)](https://nbviewer.jupyter.org/github/CardiacModelling/VoltageClampModel/tree/main/tutorial/appendix/g-solutions/1-bath-and-pipette-solutions.ipynb) Bath & pipette solutions
+2.[![github](../img/github.svg)](./g-solutions/2-example-1.ipynb)
+   [![nbviewer](../img/nbviewer.svg)](https://nbviewer.jupyter.org/github/CardiacModelling/VoltageClampModel/tree/main/tutorial/appendix/g-solutions/2-example-1.ipynb) Example 1
+3.[![github](../img/github.svg)](./g-solutions/3-example-2.ipynb)
+   [![nbviewer](../img/nbviewer.svg)](https://nbviewer.jupyter.org/github/CardiacModelling/VoltageClampModel/tree/main/tutorial/appendix/g-solutions/3-example-2.ipynb) Example 2
 
 ## Z: Parameter values
 
